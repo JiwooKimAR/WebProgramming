@@ -1,0 +1,243 @@
+/**** COMMON ****/
+*{
+  list-style: none;
+  text-decoration: none;
+  color: black;
+}
+
+dl {
+  display: block;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+li {
+  display: list-item;
+}
+
+.wrapper {
+  position: relative;
+  z-index: 1;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 calc(95% - 320px);
+  flex: 0 0 calc(95% - 320px);
+  width: calc(95% - 320px);
+  max-width: calc(95% - 320px);
+}
+
+.list-wrapper{
+  position: relative;
+  display: grid;
+  grid-column-gap: 30px;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "sidebar list"
+}
+
+/**** SIDE BAR ****/
+.list-sidebar-area {
+  grid-area: sidebar;
+
+  width: 100%;
+  background-color: #efefef;
+  padding: 15px;
+  font-size: 1.2em;
+}
+
+.list-sidebar-area h2{
+  font-weight: normal;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+.list-sidebar-area ul li{ padding: 10px; }
+.list-sidebar-area ul li a:hover{ color: #ffc107; }
+
+.price .slider-range{
+  padding: 10px;
+  position: relative;
+}
+
+.price .range{ text-align: center; width: 100%;}
+.price .slider-range{ margin-left: 30px; }
+.price .slider-range input[type="range"]{
+  -webkit-appearance: none;
+  appearance: none;
+  width: 85%;
+  height: 15px;
+  border-radius: 5px;
+  background: #e1e1e1;
+  outline: none;
+
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+}
+.price .slider-range input[type="range"]:hover{ opacity: 1; }
+.price .slider-range input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #ffc107;
+  cursor: pointer;
+
+  pointer-events: all;
+  position: relative;
+  z-index: 1;
+}
+.price .slider-range input[type="range"]::-moz-range-thumb{
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #ffc107;
+  cursor: pointer;
+
+  pointer-events: all;
+  position: relative;
+  z-index: 10;
+  -moz-appearance: none;
+}
+
+.price .slider-range .range-value{ position: absolute; margin-top: 25px; right: 50px; }
+
+
+/**** NOT SIDE BAR ****/
+.top-list-page{
+  grid-area: list;
+
+  position: relative;
+
+  width: 100%;
+  padding: 30px;
+}
+
+/**** TOP BAR ****/
+.list-topbar{
+  margin-top: 50px;
+  font-size: 1.0em;
+  font-weight: bold;
+  width: 100%;
+  height: 60px;
+}
+
+.list-topbar .showing {float: left; height: 20px; padding: 20px;}
+.list-topbar .product-sorting{
+  float: right;
+  position: relative;
+  display: inline-block;
+  background-color: #efefef;
+  margin: 10px;
+}
+
+.list-topbar .product-sorting select {
+  display: none; /*hide original SELECT element: */
+}
+
+.select-selected {
+  background-color: #efefef;
+  width: 70px;
+  height: 20px;
+  text-align: center;
+  color: #727272;
+}
+
+/* Style the arrow inside the select element: */
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 14px;
+  right: 5px;
+  border: 6px solid transparent;
+  border-color: #fff transparent transparent transparent;
+  color: #727272;
+}
+
+/* Point the arrow upwards when the select box is open (active): */
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent #fff transparent;
+  top: 7px;
+}
+
+/* style the items (options), including the selected item: */
+.select-items div,.select-selected {
+  padding: 8px 16px;
+  border: transparent;
+  cursor: pointer;
+  color: #727272;
+}
+
+/* Style items (options): */
+.select-items {
+  background-color: #efefef;
+  text-align: center;
+  color: #727272;
+}
+
+/* Hide the items when the select box is closed: */
+.select-hide {
+  display: none;
+}
+
+.select-items div:hover, .same-as-selected {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/**** LIST ****/
+.product-list{
+  display: grid;
+  grid-column-gap: 50px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas:
+    "itm1 itm2"
+    "itm3 itm4"
+    "itm5 itm6"
+
+  width: 100%;
+  margin: 30px;
+}
+
+.single-product-wrapper{
+  width: 100%;
+  font-size: 1.2em;
+  margin-bottom: 30px;
+}
+.single-product-wrapper .product-meta-data{ width: 70%; float: left;}
+.single-product-wrapper p{ color: #ffc107; }
+.single-product-wrapper h6{ font-size: 1.0em; }
+.single-product-wrapper .cart{
+  width: 20%;
+  float: right;
+}
+.single-product-wrapper .cart img{
+  width: 40%;
+  margin-top: 7px;
+  float: right;
+}
+
+.single-product-wrapper .itm1{ grid-area: itm1; }
+.single-product-wrapper .itm2{ grid-area: itm2; }
+.single-product-wrapper .itm3{ grid-area: itm3; }
+.single-product-wrapper .itm4{ grid-area: itm4; }
+.single-product-wrapper .itm5{ grid-area: itm5; }
+.single-product-wrapper .itm6{ grid-area: itm6; }
+
+.single-product-wrapper .product-img img{
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+/**** PAGE ****/
+.pagination{ float: right; //height: 70px; }
+.pagination button{ background-color: transparent; border: transparent; padding: 10px; text-align: center;}
+.pagination button img{ width: 25px; }
+.pagination .previous{ float: left; width: 33%; }
+.pagination p{ float: left; text-align: center; padding: 10px;}
+.pagination .next{ float: left; width: 33%; }

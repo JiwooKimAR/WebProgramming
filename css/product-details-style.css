@@ -1,0 +1,160 @@
+body{
+  margin: 0px;
+}
+div{
+  display: block;
+  position: relative;
+}
+dl{
+  display: block;
+}
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.wrapper {
+  position: relative;
+  z-index: 1;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 calc(95% - 320px);
+  flex: 0 0 calc(95% - 320px);
+  width: calc(95% - 320px);
+  max-width: calc(95% - 320px);
+}
+
+.prod-outline{
+  padding-top: 100px;
+  position: relative;
+}
+.product {
+  position: relative;
+  display: grid;
+  grid-template-columns: 40% 60%;
+  //border: solid #B9BCBD 1px;
+  margin-top: 30px;
+  overflow: hidden;
+}
+.product .product-left{
+  max-width: 100%;
+  height: auto;
+  float: left;
+  position: relative;
+}
+
+.product .product-right{
+  display: inline-block;
+  vertical-align: middle;
+  padding-left: 30px;
+  float: right;
+  position: relative;
+}
+.product .prod-info{
+  margin: 30px 0 30px;
+  position: relative;
+}
+
+.prod-info .prod-right .prod-dl{
+  position: relative;
+}
+.prod-bid-lst .prod-dl dt{
+  float: left;
+  padding-right: 10px;
+  position: relative;
+}
+
+.prod-bid-lst .prod-dl dd{
+  position: relative;
+}
+
+.product .prod-btn-lst{
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  list-style: none;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+}
+.product .prod-btn-lst .prod-btn-tbl{
+  border-collapse: collapse;
+  position: relative;
+}
+.product .prod-btn-lst ul{
+  list-style: none;
+  padding: 0px;
+  position: relative;
+}
+
+.product .prod-btn-lst li{
+  display: table-cell;
+  list-style: none;
+  //border: solid 1px black;
+  padding: 10px 0;
+}
+.product .prod-btn-lst .prod-wish-lst-btn{
+  background-color: #ffc107;
+
+}
+.product .prod-btn-lst .prod-prtcp-actn-btn{
+  background-color: black;
+}
+
+.product .prod-btn-lst .prod-btn-tbl a{
+  padding: 0 30px;
+  text-decoration: none;
+  color: white;
+}
+.button{
+  display: inline-block;
+  margin-top: 0;
+  float: right;
+}
+.prod-outline .prod-detail{
+  width: 100%;
+  margin-top: 30px;
+  padding-top: 20px;
+}
+.prod-outline .prod-detail .prod-detail-img{
+  height:auto;
+  width: 400px;
+}
+
+.tab{
+  position: relative;
+  margin: 0px;
+  padding: 0px;
+}
+.tab .tab-title li.active { //자바로 클릭한 애들 class를 active로 만들어줘야하는 듯
+    margin-bottom: -2px;
+    background: #ffffff;
+    border-bottom: 1px solid #fff;
+    color: #111;
+}
+.tab .tab-title{
+  border-top: 2px solid #555;
+  border-bottom: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  user-select: none;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  font-size: 0;
+}
+
+.tab .tab-title li{
+  font-weight: bold;
+    font-size: 16px;
+  display: inline-block;
+  width: 50%;
+  padding: 15px 20px 14px;
+  text-align: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.tab-content{
+  text-align: center;
+  margin-top: 40px;
+}
