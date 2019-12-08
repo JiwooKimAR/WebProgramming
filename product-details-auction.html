@@ -7,12 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>SKKU Flea Markget | Product Details Auction</title>
+    <title>SKKU Flea Markget | Product Details</title>
 
     <!-- Core Style CSS -->
+    <link rel="stylesheet" href="/css/mobile-nav-header.css">
     <link rel="stylesheet" href="css/core-style.css">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="css/product-details-style.css">
+    <link rel="stylesheet" href="css/product-details-auction.css">
   </head>
   <body>
     <!-- Search Wrapper Area Start -->
@@ -44,6 +44,12 @@
             <div class="amado-navbar-brand">
                 <a href="index.html"><img src="img/core-img/logo.png" alt=""></a>
             </div>
+            <div class="amado-navbar-search">
+              <div id="header" class="common-header">
+                <div class="header-inner">
+                </div>
+              </div>
+            </div>
             <!-- Navbar Toggler -->
             <div class="amado-navbar-toggler">
                 <span></span><span></span><span></span>
@@ -68,8 +74,7 @@
                     <li><a href="product_list_buyer.html">Product List (Buyer)</a></li>
                     <li><a href="member_list.html">Member List (Administrator)</a></li>
                     <li><a href="product-registration.html">Product Registration (Seller)</a></li>
-                    <li><a href="product-details.html">Product Details</a></li>
-                    <li><a href="product-details-auction.html">Product Details Auction</a></li>
+                    <li><a href="product-details.html">Product</a></li>
                     <li><a href="cart.html">Cart</a></li>
                     <li><a href="checkout.html">Checkout</a></li>
                 </ul>
@@ -105,51 +110,50 @@
             </div>
             <div class="prod-info">
               <div class="prod-seller">
-                Seller
+                Seller/Phone Number
+              </div>
+              <div class="remain-time">
+                Remaining time
+              </div>
+              <div class="current-price">
+                Current Product Price
               </div>
               <div class="prod-date">
-                Date
+                Trading Place
               </div>
-              <div class="prod-price">
-                Price
-              </div>
+              <button class="prod-price">
+                Add to Wish List
+              </button>
             </div>
             <div class="prod-btn-lst">
-              <ul class="prod-btn-tbl">
-                <li class="prod-wish-lst-btn">
-                  <div class="prod-wish-lst">
-                    <a href="#">Wish List</a>
-                  </div>
-                </li>
-                <li class="prod-prtcp-actn-btn">
-                  <div class="prod-prtcp-actn">
-                    <a href="#">Go to Auction</a>
-                  </div>
-                </li>
-              </ul>
+              <form class="prod-bid-lst" action="http://localhost:8080/form.jsp" method="post">
+                <div><input type="text" name="" value="" placeholder="Type your Bid price"></div>
+                <div><button class="bid"type="submit" name="button">BID!</button></div>
+              </form>
             </div>
           </div>
         </div>
         <div class="prod-detail">
           <div class="tab">
             <ul class="tab-title">
-              <li class="detail">Product Detail</li>
-              <li class="auction">Seller Information</li>
+              <li name="detail"class="active" data-tab="con1">Product Detail</li>
+              <li name="auction" data-tab="con2">Auction Detail</li>
             </ul>
             <ul class="tab-content">
-              <li class="product-detail">
+              <li class="content-detail active" id="con1">
                 <div class="detail-item">
-                  <img class="prod-detail-img" src="img/product-img/bicycle2.jpeg" alt="bicycle"> <br>
-                  <img class="prod-detail-img" src="img/product-img/bicycle2.jpeg" alt="bicycle"> <br>
-                  <img class="prod-detail-img" src="img/product-img/bicycle2.jpeg" alt="bicycle"> <br>
-                  <img class="prod-detail-img" src="img/product-img/bicycle2.jpeg" alt="bicycle">
-                  <div class="prod-detail-txt">
+                  <img class="prod-detail-img" src="bicycle2.jpeg" alt="bicycle"> <br><br>
+                  <img class="prod-detail-img" src="bicycle2.jpeg" alt="bicycle"> <br><br>
+                  <img class="prod-detail-img" src="bicycle2.jpeg" alt="bicycle"> <br><br>
+                  <img class="prod-detail-img" src="bicycle2.jpeg" alt="bicycle"> <br><br>
+                  <div classs="prod-detail-txt">
                     <p>설명을 적어주세용</p>
                   </div>
                 </div>
               </li>
-              <li class="seller-detail">
-
+              <li class="content-detail" id="con2">
+                Seller ID :
+                Phone Number :
               </li>
             </ul>
           </div>
@@ -171,7 +175,7 @@
                       </div>
                       <!-- Copywrite Text -->
                       <p class="copywrite"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with WebProgrammingClas
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
                   </div>
               </div>
@@ -221,5 +225,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="js/plugins.js"></script>
     <!-- Active js -->
     <script src="js/active.js"></script>
+     <script src="js/product.js"></script>
+     <script type="text/javascript" src="js/mobile-nav-header.js">
+
+     </script>
     </body>
 </html>
