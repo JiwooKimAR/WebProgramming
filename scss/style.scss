@@ -41,7 +41,6 @@
 }
 
 body {
-    font-family: $font-hn-med;
     font-size: 16px;
 }
 
@@ -61,7 +60,6 @@ p {
     color: $text-color;
     font-size: 16px;
     line-height: 1.9;
-    font-weight: 400;
 }
 
 
@@ -1353,7 +1351,7 @@ img {
     position: relative;
     z-index: 1;
     background-color: #252525;
-    padding: 10px 0;
+    padding: 20px 0;
     .single_widget_area {
         .copywrite {
             font-size: 12px;
