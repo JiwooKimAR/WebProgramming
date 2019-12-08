@@ -257,7 +257,7 @@ img {
   justify-content: space-between;
   box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.15);
   display: none; }
-  @media only screen and (max-width: 767px) {
+  @media only screen and (max-width: 800px) {
     .mobile-nav {
       display: -webkit-box;
       display: -ms-flexbox;
@@ -382,7 +382,7 @@ img {
   transition-duration: 500ms;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap; }
-  @media only screen and (max-width: 767px) {
+  @media only screen and (max-width: 800px) {
     .main-content-wrapper {
       margin-top: 70px;
       z-index: 100; } }
@@ -398,7 +398,7 @@ img {
     max-width: 320px;
     background-color: #fff;
     padding: 60px 75px; }
-    @media only screen and (min-width: 768px) and (max-width: 991px) {
+    @media only screen and (min-width: 800px) and (max-width: 991px) {
       .main-content-wrapper .header-area {
         -webkit-box-flex: 0;
         -ms-flex: 0 0 280px;
@@ -406,7 +406,7 @@ img {
         width: 280px;
         max-width: 280px;
         padding: 50px; } }
-    @media only screen and (max-width: 767px) {
+    @media only screen and (max-width: 800px) {
       .main-content-wrapper .header-area {
         -webkit-transition-duration: 500ms;
         transition-duration: 500ms;
@@ -1156,7 +1156,7 @@ img {
   position: relative;
   z-index: 1;
   background-color: #252525;
-  padding: 80px 0; }
+  padding: 50px 0; }
   .footer_area .single_widget_area .copywrite {
     font-size: 12px;
     color: rgba(255, 255, 255, 0.4);
