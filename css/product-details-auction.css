@@ -13,6 +13,11 @@ ul {
     margin: 0;
     list-style: none;
 }
+
+button{
+  cursor: pointer;
+  color: white;
+}
 .wrapper {
   position: relative;
   z-index: 1;
@@ -33,7 +38,6 @@ ul {
   grid-template-columns: 40% 60%;
   //border: solid #B9BCBD 1px;
   margin-top: 30px;
-  overflow: hidden;
 }
 .product .product-left{
   max-width: 100%;
@@ -54,77 +58,50 @@ ul {
   margin: 30px 0 30px;
   position: relative;
 }
-
-.prod-btn-tbl{
-  width: 100%;
-  box-sizing: border-box;
-  display: grid;
-  grid-template-columns: repeat(2,1fr);
+.product .prod-info div, .product .prod-info button{
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 
-.prod-bid-lst .prod-dl dt{
-  float: left;
-  padding-right: 10px;
-  position: relative;
-}
-
-.prod-bid-lst .prod-dl dd{
-  position: relative;
+.product .prod-info button{
+  padding: 5px 10px;
+  background-color: #ffc107;
+  border: 0;
 }
 
 .product .prod-btn-lst{
-  display: table;
+  position: relative;
+}
+
+.product .prod-btn-lst .prod-bid-lst{
+  display: grid;
+  grid-template-columns: 80% 20%;
+}
+
+.product .prod-btn-lst input{
+  border: solid #fcc107 2px;
+  height: 40px;
+  padding-left: 10px;
+  float: left;
+  position: relative;
   width: 100%;
-  box-sizing: border-box;
-  table-layout: fixed;
-  list-style: none;
-  cursor: pointer;
-  outline: none;
-  position: absolute;
-  bottom: 0px;
-}
-.product .prod-btn-lst .prod-btn-tbl{
-  border-collapse: collapse;
-  position: relative;
-}
-.product .prod-btn-lst ul{
-  list-style: none;
-  padding: 0px;
-  position: relative;
 }
 
-.product .prod-btn-lst li{
-  display: table-cell;
-  list-style: none;
-  //border: solid 1px black;
-  padding: 10px 0;
-  width:100%;
+.prduct .prod-btn-lst div{
+  width: 100%;
 }
-
-.product .prod-btn-lst .prod-wish-lst-btn,.product .prod-btn-lst .prod-price-lst-btn {
-  background: #ffc107;
+.product .prod-btn-lst .bid{
+  height: 40px;
+  background-color: #ffc107;
+  border: 0;
   text-align: center;
+  float: left;
+  position: relative;
+  padding-left: 10px;
+  padding-right: 10px;
+  right: 0px;
 }
 
-.product .prod-btn-lst .prod-prtcp-actn-btn{
-  background: black;
-  text-align: center;
-}
-
-.product .prod-btn-lst .prod-btn-tbl a, p{
-  text-decoration: none;
-  color: white;
-  margin-bottom: 0;
-  font-size: initial;
-  font-family: "helveticaneue";
-  margin-left: auto;
-  margin-right: auto;
-}
-.button{
-  display: inline-block;
-  margin-top: 0;
-  float: right;
-}
 .prod-outline .prod-detail{
   width: 100%;
   margin-top: 30px;

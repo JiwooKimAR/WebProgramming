@@ -33,19 +33,9 @@ li{
 .common-header .header-inner{
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   align-items: center;
 }
-.common-header .logo-section{
-  margin: 0px;
-  padding: 0px;
-  position: relative;
-}
-.logo-section img{
-  height: 67px;
-  width: auto;
-  position: relative;
-}
+
 .common-header .searching-box{
   position: relative;
   margin-left: 30px;
