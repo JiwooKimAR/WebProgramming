@@ -6,7 +6,6 @@ body{
 }
 .wrap{
   padding: 0;
-  width: -webkit-calc( 100% - 320px );
   box-sizing: border-box;
 }
 .pad{
@@ -82,4 +81,9 @@ img{
   .wrap{
     width: calc( 100% - 280px );
   }
+}
+
+/** After header adding **/
+.top-area {
+	display: none;
 }
