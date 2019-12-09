@@ -40,7 +40,7 @@
 	<%
 	try {
 		String id = request.getParameter("id");
-		Class.forName("com.mysql.cj.jdbc.Driver");
+		Class.forName("com.mysql.jdbc.Driver");
 		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/final_project?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
 		PreparedStatement pst = conn.prepareStatement("Select id from user_info where id=?");
 		pst.setString(1, id);
@@ -71,7 +71,8 @@
 	<%
 		}
 	} catch (Exception e) {
-		out.println("Something went wrong !! Please try again");
+		//out.println("Something went wrong !! Please try again");
+		out.println(e.toString());
 	}
 	%>
 	<script src="../js/jquery/jquery-2.2.4.min.js"></script>
