@@ -19,17 +19,9 @@ button{
   color: white;
 }
 .wrapper {
-  position: relative;
-  z-index: 1;
-  -webkit-box-flex: 0;
-  -ms-flex: 0 0 calc(95% - 320px);
-  flex: 0 0 calc(95% - 320px);
-  width: calc(95% - 320px);
-  max-width: calc(95% - 320px);
 }
 
-.prod-outline{
-  padding-top: 100px;
+.prod-outline {
   position: relative;
 }
 .product {

@@ -7,12 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>SKKU Flea Markget | Product Details</title>
+    <title>SKKU Flea Market | Product Details</title>
 
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="/css/mobile-nav-header.css">
-    <link rel="stylesheet" href="css/core-style.css">
     <link rel="stylesheet" href="css/header-style.css">
+    <link rel="stylesheet" href="css/core-style.css">
     <link rel="stylesheet" href="css/product-details-auction.css">
   </head>
   <body>
