@@ -1,6 +1,10 @@
 
-
-
+.form-check-label{ margin-left: 10px; }
+.total-products{margin-left: 15px;}
+.product-sorting{float: right;}
+.single-product-wrapper .product-description .product-meta-data .line{
+  width: 100%;
+}
 
 
 .price{
@@ -31,9 +35,21 @@
   text-align: center;
 }
 
-
-.cart img{
+.wish, .cart_{
+  width: 80%;
+  display: inline-block;
+}
+.wish p, .cart_ p{ 
+  float: right; 
+  width: 50%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.wish img, .cart_ img{
   max-width: 30px;
+  float: left;
+  width: 50%;
 }
 
 .single-product-wrapper{
@@ -55,31 +71,58 @@
 
 .product-meta-data{
   margin-left: 10px;
-  width: 70%;
+  width: 80%;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
-.product-status-name{
+.product-status-name, .product-price-seller{
   width: 100%;
   display: inline-block;
 }
 
-.product-status{
-  width: 30%;
+.product-status, .product-price{
+  width: 40%;
+  height: 30px;
   float: left;
   margin-top: auto;
   margin-bottom: auto;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
-.product-name{
-  width: 70%;
+.product-name, .product-seller{
+  width: 60%;
+  height: 30px;
   float: right;
   margin-top: auto;
   margin-bottom: auto;
-  font-size: 2em;
-  text-align: right;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
+.product-status p{
+  font-size: 1em;
+}
+.product-name p{
+  color: black;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 1.5em;
+}
 
+.single-product-wrapper .product-description .product-meta-data .product-price{
+  vertical-align: middle;
+  margin-top: auto;
+  margin-bottom: 0px;
+}
+
+.ratings-cart{
+  width: 20%;
+}
 
 
 /**** COMMON ****/
