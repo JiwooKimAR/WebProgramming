@@ -19,7 +19,7 @@ try {
 	Class.forName("com.mysql.cj.jdbc.Driver");
 	Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/final_project?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
 	// In "user_info" table, users have their unique key
-	PreparedStatement pst = conn.prepareStatement("select max(user_number) from user_info");
+	PreparedStatement pst = conn.prepareStatement("select max(uid) from user_info");
 	ResultSet rs = pst.executeQuery();
 	int count = 0;
 	if (rs.next()) {
