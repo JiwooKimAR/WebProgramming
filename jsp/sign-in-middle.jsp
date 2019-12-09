@@ -5,7 +5,7 @@ String user_name = "";
 try {
 	String id = request.getParameter("id");
 	String password = request.getParameter("password");
-	Class.forName("com.mysql.cj.jdbc.Driver");
+	Class.forName("com.mysql.jdbc.Driver");
 	Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/final_project?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
 	PreparedStatement pst = conn.prepareStatement("Select id, password, classification, name from user_info where id=? and password=?");
 	pst.setString(1, id);
@@ -38,6 +38,6 @@ try {
 		response.sendRedirect("login.jsp?lErr=There's no matching ID or PASSWORD. Please try agian.");
 	}
 } catch(Exception e) {
-	out.println("Something went wrong !! Please try again");
+	out.println(e.toString());
 }
 %>
