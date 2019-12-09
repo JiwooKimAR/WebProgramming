@@ -13,17 +13,14 @@
   <link rel="icon" href="img/core-img/favicon.ico">
 
   <link rel="stylesheet" href="css/core-style.css">
+  <link rel="stylesheet" href="css/header-style.css">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="css/cart_list-style.css">
 </head>
 <body>
+	<%@ include file="header.jsp" %>
 
-    <!-- ##### Main Content Wrapper Start ##### -->
-    <div class="main-content-wrapper d-flex clearfix">
-
-    
-
-        <div class="cart-table-area section-padding-100">
+        <div class="cart-list-table-area">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12 col-lg-8">
@@ -154,6 +151,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <!-- ##### Main Content Wrapper End ##### -->
 

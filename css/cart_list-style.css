@@ -3,33 +3,33 @@
   text-align: center;
 }
 
-.main-content-wrapper .cart-table-area table thead tr{
+.cart-list-table-area table thead tr{
   display: table-row;
   text-align: center;
 }
 
-.main-content-wrapper .cart-table-area table tbody tr{
+.cart-list-table-area table tbody tr{
   display: table-row;
   
 }
 
-.main-content-wrapper .cart-table-area table thead tr th{
+.cart-list-table-area table thead tr th{
   width: 17%;
   max-width: 17%;
 }
-.main-content-wrapper .cart-table-area table tbody tr td{
+.cart-list-table-area table tbody tr td{
   width: 17%;
   max-width: 17%;
   margin-top: auto;
   margin-bottom: auto;
   vertical-align: middle;
 }
-.main-content-wrapper .cart-table-area table thead tr .check-table{
+.cart-list-table-area table thead tr .check-table{
   width: 5%;
   text-align: center;
 }
 
-.main-content-wrapper .cart-table-area table tbody tr .check-table{
+.cart-list-table-area table tbody tr .check-table{
   width: 5%;
   text-align: center;
 }
@@ -67,8 +67,8 @@ h5{margin-bottom: 0px;}
   padding-right: 5px;
 }
 
-.main-content-wrapper .cart-table-area table tbody tr td .qty-btn .quantity .qty-minus{ text-align: left; }
-.main-content-wrapper .cart-table-area table tbody tr td .qty-btn .quantity .qty-plus{ text-align: left; }
+.cart-list-table-area table tbody tr td .qty-btn .quantity .qty-minus{ text-align: left; }
+.cart-list-table-area table tbody tr td .qty-btn .quantity .qty-plus{ text-align: left; }
 .quantity .qty-text{ margin-left: 5px;text-align: center; }
 
 
