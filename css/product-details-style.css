@@ -14,17 +14,10 @@ ul {
     list-style: none;
 }
 .wrapper {
-  position: relative;
-  z-index: 1;
-  -webkit-box-flex: 0;
-  -ms-flex: 0 0 calc(95% - 320px);
-  flex: 0 0 calc(95% - 320px);
-  width: calc(95% - 320px);
-  max-width: calc(95% - 320px);
+
 }
 
 .prod-outline{
-  padding-top: 100px;
   position: relative;
 }
 .product {
@@ -56,52 +49,50 @@ ul {
 }
 
 .prod-btn-tbl{
-  width: 100%;
+  padding-left: 15px;
   box-sizing: border-box;
-  display: grid;
-  grid-template-columns: repeat(2,1fr);
-}
-
-.prod-bid-lst .prod-dl dt{
   float: left;
-  padding-right: 10px;
-  position: relative;
-}
-
-.prod-bid-lst .prod-dl dd{
-  position: relative;
 }
 
 .product .prod-btn-lst{
-  display: table;
-  width: 100%;
   box-sizing: border-box;
-  table-layout: fixed;
   list-style: none;
   cursor: pointer;
   outline: none;
   position: absolute;
   bottom: 0px;
+  overflow: hidden;
+  width: 95%;
+  display: grid;
+  grid-template-columns: 10% 45% 45%;
 }
 .product .prod-btn-lst .prod-btn-tbl{
   border-collapse: collapse;
   position: relative;
-}
-.product .prod-btn-lst ul{
-  list-style: none;
-  padding: 0px;
-  position: relative;
+  float: left;
 }
 
 .product .prod-btn-lst li{
-  display: table-cell;
   list-style: none;
-  //border: solid 1px black;
   padding: 10px 0;
-  width:100%;
+}
+.product .prod-btn-lst .prod-wish-list-btn{
+  background-image: url("../img/core-img/wish-star.png");
+  background-size: 80%;
+  background-position: center;
+  border: solid 3px #ffc107;
+  border-radius: 0.5em;
+    box-sizing: border-box;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  float: left;
+  width: auto;
+  height: 100%;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
-.product .prod-btn-lst .prod-wish-lst-btn,.product .prod-btn-lst .prod-price-lst-btn {
+.product .prod-btn-lst .prod-add-cart-btn{
   background: #ffc107;
   text-align: center;
 }
@@ -111,7 +102,7 @@ ul {
   text-align: center;
 }
 
-.product .prod-btn-lst .prod-btn-tbl a, p{
+.product .prod-btn-lst  a, p{
   text-decoration: none;
   color: white;
   margin-bottom: 0;
@@ -119,12 +110,9 @@ ul {
   font-family: "helveticaneue";
   margin-left: auto;
   margin-right: auto;
+  box-sizing:border-box;
 }
-.button{
-  display: inline-block;
-  margin-top: 0;
-  float: right;
-}
+
 .prod-outline .prod-detail{
   width: 100%;
   margin-top: 30px;
@@ -181,11 +169,13 @@ ul {
 .tab .tab-content li.active{
   display: block;
 }
+
 @media (max-width:1200px) {
   .product .prod-btn-lst{
     position: relative;
   }
 }
+
 @media (max-width:800px) {
   .wrapper{
     -webkit-box-flex: 0;
