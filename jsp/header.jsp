@@ -117,7 +117,7 @@
 						<a href="#" class="search-nav"><img src="img/core-img/search-icon.png" alt=""></a>
 					</div>
 					<div class="user-specific">
-						<a href="#"><img src="img/core-img/mypage-icon.png"></a>
+						<a href="mypage.jsp"><img src="img/core-img/mypage-icon.png"></a>
 					</div>
 				</div>
 	 		</div>
