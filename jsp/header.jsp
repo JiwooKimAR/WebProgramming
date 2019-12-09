@@ -61,11 +61,11 @@
             <!-- Amado Nav -->
             <nav class="amado-nav">
                 <ul>
-                    <li class="active"><a href="index.html">Home</a></li>
-                    <li><a href="product_list_buyer.html">Product List</a></li>
-                    <li><a href="product-registration.html">Product Registration</a></li>
-                    <li><a href="product-details.html">Product Details</a></li>
-                    <li><a href="product-details-auction.html">Product Details Auction</a></li>
+                    <li class="active"><a href="index.jsp">Home</a></li>
+                    <li><a href="product_list_buyer.jsp">Product List</a></li>
+                    <li><a href="product_registration.jsp">Product Registration</a></li>
+                    <li><a href="product-details.jsp">Product Details</a></li>
+                    <li><a href="product-details-auction.jsp">Product Details Auction</a></li>
                 </ul>
             </nav>
             <!-- Button Group -->
@@ -75,8 +75,8 @@
             </div>
             <!-- Cart Menu -->
             <div class="cart-fav-search mb-100">
-                <a href="cart.html" class="cart-nav"><img src="img/core-img/cart.png" alt=""> Cart <span>(0)</span></a>
-                <a href="#" class="fav-nav"><img src="img/core-img/wish-star.png" alt=""> Wish List </a>
+                <a href="cart_list.jsp" class="cart-nav"><img src="img/core-img/cart.png" alt=""> Cart <span>(0)</span></a>
+                <a href="wish_list.jsp" class="fav-nav"><img src="img/core-img/wish-star.png" alt=""> Wish List </a>
             </div>
             <!-- Social Button -->
             <div class="social-info d-flex justify-content-between">
