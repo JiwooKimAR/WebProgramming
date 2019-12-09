@@ -1,0 +1,83 @@
+.cart-table .table{
+
+  text-align: center;
+}
+
+.main-content-wrapper .cart-table-area table thead tr{
+  display: table-row;
+  text-align: center;
+}
+
+.main-content-wrapper .cart-table-area table tbody tr{
+  display: table-row;
+  
+}
+
+.main-content-wrapper .cart-table-area table thead tr th{
+  width: 17%;
+  max-width: 17%;
+}
+.main-content-wrapper .cart-table-area table tbody tr td{
+  width: 17%;
+  max-width: 17%;
+  margin-top: auto;
+  margin-bottom: auto;
+  vertical-align: middle;
+}
+.main-content-wrapper .cart-table-area table thead tr .check-table{
+  width: 5%;
+  text-align: center;
+}
+
+.main-content-wrapper .cart-table-area table tbody tr .check-table{
+  width: 5%;
+  text-align: center;
+}
+
+.cart-summary{
+
+}
+
+.row{
+  display: inline-block;
+}
+
+.col-lg-8{
+  width: 75%;
+  float: left;
+  flex: none;
+  max-width: 75%;
+}
+
+.col-lg-4{
+  width: 25%;
+  float: right;
+}
+
+.form-check{ margin-top: auto; margin-bottom: auto; }
+.cart-product-img{margin-top: auto; margin-bottom: auto;}
+h5{margin-bottom: 0px;}
+
+.quantity{
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #f5f7fa;
+  padding: 0px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.main-content-wrapper .cart-table-area table tbody tr td .qty-btn .quantity .qty-minus{ text-align: left; }
+.main-content-wrapper .cart-table-area table tbody tr td .qty-btn .quantity .qty-plus{ text-align: left; }
+.quantity .qty-text{ margin-left: 5px;text-align: center; }
+
+
+.amado-btn{ min-width: 100%; }
+
+
+
+
+
+
+
+
