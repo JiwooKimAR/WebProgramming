@@ -11,6 +11,10 @@
     /* ---------------------------------------
     ##### - PLACE YOUR CUSTOM CSS HERE - #####
     --------------------------------------- */
+
+    label{
+      margin-bottom: 0;
+    }
     .fileBox .fileName {
       display:inline-block;
       width:190px;

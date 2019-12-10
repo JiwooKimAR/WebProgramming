@@ -39,7 +39,7 @@
             <div class="number">
               Number : <span class="info-inner">Number</span>
             </div>
-
+            <button class="chng-usr-info" type="button" name="button">Change User Info</button>
             </div>
           </div>
           <div class="prod-bid pad outer">
@@ -64,7 +64,7 @@
       </div>
     </div>
     </div>
-    
+
     <!-- ##### Footer Area Start ##### -->
     <footer class="footer_area clearfix">
         <div class="container">
