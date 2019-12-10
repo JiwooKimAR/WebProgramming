@@ -49,10 +49,23 @@ body{
   padding-bottom: 40px;
   margin-bottom: 30px;
 }
-
+.title-outer{
+	overflow:hidden;
+	position:relative;
+}
 .user-info-title{
 	font-size:25px;
 	color:black;
+}
+
+.title-outer .more_btn{
+	position:absolute;
+	right: 0px;
+	top:10px;
+	border:0px;
+	border-bottom:solid 1px black;
+	cursor: pointer;
+	background-color:transparent;
 }
 
 .user-info-inner{
@@ -83,18 +96,6 @@ img{
   height: auto;
   margin-bottom: 20px;
   text-align: center;
-}
-
-@media (max-width:800px) {
-  .uploaded-prod-lst{
-    grid-template-columns: repeat(2,1fr);
-  }
-}
-
-@media (max-width:500px) {
-  .uploaded-prod-lst{
-    grid-template-columns: repeat(1,1fr);
-  }
 }
 
 /** After header adding **/
