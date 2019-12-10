@@ -98,7 +98,7 @@
 /**** LIST ****/
 .member-list {
   width: 100%;
-
+  display: block;
 }
 
 .member-list table{
@@ -138,5 +138,13 @@
 .pagination button{ background-color: transparent; border: transparent; padding: 10px; text-align: center;}
 .pagination button img{ width: 25px; }
 .pagination .previous{ float: left; width: 33%; }
-.pagination p{ float: left; text-align: center; padding: 10px;}
+.pagination p{ float: left; text-align: center; padding: 10px; width: 100px;}
 .pagination .next{ float: left; width: 33%; }
+
+
+/**** Logout button ****/
+#logout-btn {
+	margin-top: 80%;
+	background-color: black;
+	color: white;
+}
