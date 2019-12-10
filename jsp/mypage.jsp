@@ -1,4 +1,24 @@
 <!DOCTYPE html>
+<%@ page import="java.sql.*"%>
+<%
+int classification;
+String user_name = ""; 
+String id=session.getAttribute("user_name").toString();
+try{
+	Class.forName("com.mysql.jdbc.Driver");
+	Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/final_project?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
+	PreparedStatement pst = conn.prepareStatement("Select * from user_info where id=?");
+	pst.setString(1,id);
+	ResultSet rs = pst.executeQuery();
+	if (rs.next()) {
+		classification = rs.getInt("classification");
+		user_name = rs.getString("name");
+		// classification: 0(admin) / 1(normal user)
+	}
+}catch(Exception e){
+	out.println(e.toString());
+}
+%>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
@@ -18,7 +38,7 @@
       <div class="title pad">
         <div class="title-inner">
           <div class="logout">
-            <button type="button" name="button">Logout</button>
+            <a href="logout-function.jsp" name="button">Logout</a>
           </div>
           <div class="mypage">
             <p class="mypage-inner">My page</p>
@@ -28,36 +48,34 @@
       </div>
       <div class="wrap-inner">
         <div class="user-info outer pad">
-          User Information
+          <p class="user-info-title">User Information</p>
           <div class="user-info-inner">
-            <div class="name">
-              NAME : <span class="info-inner name-inner">Name</span>
+            <div class="con">
+              NAME : <%=user_name%>
             </div>
-            <div class="id">
-              ID : <span class="info-inner id-inner">id</span>
+            <div class="con">
+              ID : <%=id%>
             </div>
-            <div class="number">
-              Number : <span class="info-inner">Number</span>
-            </div>
+            <br>
             <button class="chng-usr-info" type="button" name="button">Change User Info</button>
             </div>
           </div>
           <div class="prod-bid pad outer">
-            Bid product
+            <p class="user-info-title">Bid product</p>
             <div class="prod-bid-lst inner">
-              요기는 내용
+              
             </div>
           </div>
           <div class="prod-wish pad outer">
-            Cart list
+            <p class="user-info-title">Cart list</p>
             <div class="uploaded-prod-lst inner">
-              요기도 내용
+              
             </div>
           </div>
           <div class="prod-wish pad outer">
-            Wish list
+            <p class="user-info-title">Wish list</p>
             <div class="uploaded-prod-lst inner">
-              요기도 내용
+              
             </div>
           </div>
         </div>
@@ -127,7 +145,6 @@
     <!-- Plugins js -->
     <script src="js/plugins.js"></script>
     <script src="js/active.js"></script>
-
      </script>
   </body>
 

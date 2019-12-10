@@ -1,6 +1,11 @@
 body{
   background-color: #f4f4f4;
 }
+
+.main-wrapper{
+	padding:0px;
+}
+
 .header-inner{
   margin-bottom: 30px;
 }
@@ -8,6 +13,7 @@ body{
   padding: 0;
   box-sizing: border-box;
 }
+
 .pad{
   padding: 10px 50px;
 }
@@ -24,22 +30,29 @@ body{
 .logout{
   text-align: right;
   float: right;
-}
-.logout button{
   font-size: 15px;
   border: 0;
   background-color: black;
   border-radius: 0.5em;
   color: white;
   padding: 10px;
+}
+.logout a{
+  color:white;
+  background-color: black;
   cursor: pointer;
 }
 
 .outer{
   background-color: white;
   padding-top: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 40px;
   margin-bottom: 30px;
+}
+
+.user-info-title{
+	font-size:25px;
+	color:black;
 }
 
 .user-info-inner{
@@ -49,10 +62,13 @@ body{
 .user-info-inner .chng-usr-info{
   background-color: #ffc107;
   border: 0;
-  padding: 5px;
+  padding: 5px 20px;
   margin-top: 10px;
   color: white;
   cursor: pointer;
+}
+.con{
+	font-family:"helveticaneue";
 }
 .inner{
   padding: 10px;
