@@ -148,3 +148,11 @@
 	background-color: black;
 	color: white;
 }
+
+.hello-admin {
+	transition: all 0.5s
+}
+
+.hello-admin:hover {
+	color: rgba(255, 0, 76, 1);
+}

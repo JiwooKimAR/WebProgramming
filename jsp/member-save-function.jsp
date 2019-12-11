@@ -1,5 +1,13 @@
 <%@ page import="java.sql.*"%>
 <%
+	int c = 0;
+	if (session.getAttribute("classification") == null) {
+		session.invalidate();
+		response.sendRedirect("authority-error-message.jsp");
+	}
+	else {
+		c = (int)session.getAttribute("classification");
+	}
 	try {
 		int uid = Integer.parseInt(request.getParameter("uid"));
 		String id = request.getParameter("id");
@@ -19,8 +27,15 @@
 		// user_info table schema (user_number(PK), id, password, name, email, classification)
 		int rr = pst.executeUpdate();
 		// Alwayrs rr value is 1
-		
-		response.sendRedirect("member_list.jsp");
+		if (c == 0) {
+			response.sendRedirect("member_list.jsp");
+		}
+		else {
+			// Change the session information
+			session.setAttribute("id", id);
+			session.setAttribute("classification", classification);
+			response.sendRedirect("mypage.jsp");
+		}
 	} catch(Exception e) {
 		out.println("Something went wrong !! Please try again");
 	}
