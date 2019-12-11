@@ -225,17 +225,24 @@ if(request.getParameter("cur_status") != null){
                                     <div class="product-status-name">
                                         <% if(status_list.get(i) == 0){%>
                                         <p class="product-status" style="color: blue; ">AUCTION</p>
+                                        <a href="product-details-auction.jsp?pid=<%=pid_list.get(i)%>" class="product-name">
+                                            <p><%= pname_list.get(i)%></p>
+                                        </a>
                                         <%}
                                         if(status_list.get(i) == 1){%>
                                         <p class="product-status">IN PROGRESS</p>
-                                        <%}
-                                        if(status_list.get(i) == 2){%>
-                                        <p class="product-status" style="color: red;">SOLD OUT</p>
-                                        <%}%>
-
                                         <a href="product-details.jsp?pid=<%=pid_list.get(i)%>" class="product-name">
                                             <p><%= pname_list.get(i)%></p>
                                         </a>
+                                        <%}
+                                        if(status_list.get(i) == 2){%>
+                                        <p class="product-status" style="color: red;">SOLD OUT</p>
+                                        <a href="product-details.jsp?pid=<%=pid_list.get(i)%>" class="product-name">
+                                            <p><%= pname_list.get(i)%></p>
+                                        </a>
+                                        <%}%>
+
+                                        
                                     </div>
                                     <div class="product-price-seller">
                                         <p class="product-price">$<%= price_list.get(i)%></p>

@@ -19,7 +19,7 @@
   <%@ include file="header.jsp" %>
   <%@ page import="java.sql.*"%>
   <% 
-  	//String id=session.getAttribute("id").toString();
+  	String id=session.getAttribute("id").toString();
 
   
   	String pid = request.getParameter("pid"); 
