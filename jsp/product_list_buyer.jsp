@@ -133,7 +133,7 @@ if(request.getParameter("cur_status") != null){
                     <!-- Single Form Check -->
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="ikea">
-                        <label class="form-check-label" for="progress">SELLING</label>
+                        <label class="form-check-label" for="progress">In Progress</label>
                     </div>
                     <!-- Single Form Check -->
                     <div class="form-check">
@@ -230,7 +230,7 @@ if(request.getParameter("cur_status") != null){
                                         </a>
                                         <%}
                                         if(status_list.get(i) == 1){%>
-                                        <p class="product-status">IN PROGRESS</p>
+                                        <p class="product-status">SELLING</p>
                                         <a href="product-details.jsp?pid=<%=pid_list.get(i)%>" class="product-name">
                                             <p><%= pname_list.get(i)%></p>
                                         </a>
