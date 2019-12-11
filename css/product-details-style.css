@@ -28,7 +28,7 @@ ul {
   overflow: hidden;
 }
 .product .product-left{
-  height: 300px;
+  max-height: 300px;
   width:auto;
   float: left;
   position: relative;

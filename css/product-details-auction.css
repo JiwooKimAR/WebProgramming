@@ -32,8 +32,8 @@ button{
   margin-top: 30px;
 }
 .product .product-left{
-  max-width: 100%;
-  height: auto;
+  max-height: 300px;
+  width:auto;
   float: left;
   position: relative;
 }
@@ -44,7 +44,7 @@ button{
   padding-left: 30px;
   float: right;
   position: relative;
-  height: auto;
+  height: 300px;
 }
 .product .prod-info{
   margin: 30px 0 30px;
@@ -70,7 +70,9 @@ button{
 }
 
 .product .prod-btn-lst{
-  position: relative;
+  position: absolute;
+  bottom:0px;
+  width:100%;
 }
 
 .product .prod-btn-lst .prod-bid-lst{
