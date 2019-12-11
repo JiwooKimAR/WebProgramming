@@ -6,8 +6,7 @@ alert("Press Add Cart Button");
 <%
 	//Session value checking for security
 System.out.println("????");
-	//String id = session.getAttribute("id").toString();
-	String id="hj";
+	String id = session.getAttribute("id").toString();
 	String pid = request.getParameter("pid"); 
 	int uid=0;
 	Class.forName("com.mysql.jdbc.Driver");
