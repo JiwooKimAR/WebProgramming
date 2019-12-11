@@ -13,7 +13,7 @@
 		if (rs.next()) {
 			uid=rs.getInt("uid");
 		}
-		PreparedStatement pst2 = conn.prepareStatement("Select * from wish_cart_info where buyer_id=? and prod_id=? and status=1");
+		PreparedStatement pst2 = conn.prepareStatement("Select * from wish_cart_info where buyer_id=? and prod_id=? and status=0");
 		System.out.println(uid+" "+pid);
 		pst2.setInt(1,uid);
 		pst2.setInt(2,pid_);
@@ -21,12 +21,12 @@
 		if(rs2.next()){
 	%>
 <script>
-	alert("This Product is already existed in your cart.")
+	alert("This Product is already existed in your wish list.")
 	history.go(-1); 
 </script>
 	<%
 		}else{
-			PreparedStatement pst3 = conn.prepareStatement("Insert into wish_cart_info (buyer_id, prod_id, status, amount)values (?,?,1,1)");
+			PreparedStatement pst3 = conn.prepareStatement("Insert into wish_cart_info (buyer_id, prod_id, status, amount)values (?,?,0,1)");
 			System.out.println(uid+" "+pid);
 			pst3.setInt(1,uid);
 			
@@ -35,7 +35,7 @@
 		}				
 %> 
 <script>
-	alert("This Product is added to your cart.")
+	alert("This Product is added to your wish list.")
 	history.go(-1); </script>
 <%
 	}catch(Exception e){
