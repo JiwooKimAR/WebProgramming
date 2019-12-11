@@ -22,7 +22,7 @@
   <%@ page import="java.text.SimpleDateFormat" %>
   
   <% 
-  	//String id=session.getAttribute("id").toString();
+  	String id=session.getAttribute("id").toString();
   
   	String pid = request.getParameter("pid"); 
   	String prod_name="";

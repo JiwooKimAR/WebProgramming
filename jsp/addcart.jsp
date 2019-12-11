@@ -1,5 +1,9 @@
 <%@ page import="java.sql.*"%>
 <%
+
+	//Session value checking for security
+System.out.println("????");
+
 	String id = session.getAttribute("id").toString();
 	String pid = request.getParameter("pid"); 
 	int uid=0;
