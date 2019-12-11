@@ -108,7 +108,8 @@ int classification = 0;
             				<form action="#" method="post">
                                 <div class="row">
                                     <div class="col-md-12 mb-3">
-                                        <input type="text" class="form-control" id="id" value=<%=id %> placeholder="ID: <%=id %>" required>
+                                        <input type="hidden" class="form-control" id="id" value=<%=id %> readonly>
+                                        <input type="text" class="form-control" id="fake-id" placeholder="ID: <%=id %>" readonly>
                                     </div>
                                     <div class="col-md-12 mb-3">
                                         <input type="text" class="form-control" id="pass" value=<%=password %> placeholder="Password: <%=password %>" required>

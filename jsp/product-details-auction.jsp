@@ -16,28 +16,114 @@
     <link rel="stylesheet" href="css/product-details-auction.css">
   </head>
   <body>
-  <%@ include file="header.jsp" %>
+  <%@ include file="header.jsp"%>
+  <%@ page import="java.sql.*"%>
+  <%@ page import="java.util.Date" %>
+  <%@ page import="java.text.SimpleDateFormat" %>
+  
+  <% 
+  	//String id=session.getAttribute("id").toString();
+  
+  	String pid = request.getParameter("pid"); 
+  	String prod_name="";
+  	int price;
+  	String seller_uid="";
+  	String seller_id="";
+  	String seller_phone="";
+  	String trading="";
+	String prod_content="";
+  	Date today=new Date();
+  	Date duedate;
+  	System.out.println(today);
+ 	
+	Class.forName("com.mysql.jdbc.Driver");
+	Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/final_project?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
+	PreparedStatement pst = conn.prepareStatement("Select * from product_info where pid=?");
+	pst.setString(1,pid);
+	ResultSet rs = pst.executeQuery();
+	try{
+		if (rs.next()) {
+			prod_name=rs.getString("name");
+			price=rs.getInt("price");
+			seller_uid=rs.getString("seller_id");
+			seller_phone=rs.getString("phone");
+			trading=rs.getString("trading_place");
+			duedate=rs.getDate("duedate");
+			prod_content=rs.getString("content");
+					  		
+			long daydiff=(Math.abs(new Date().getTime()-duedate.getTime()));
+			
+			Date daydif=new Date();
+			daydif.setTime(daydiff);	
+
+			double days = (daydiff / (1000.0 * 60.0 * 60.0 * 24.0));
+			double hours=days%1.0*24;
+			double minutes=hours%1.0*60;
+			int daysToInt=(int)Math.floor(days);
+			int hoursToInt=(int)Math.floor(hours);
+			int minutesToInt=(int)Math.ceil(minutes);
+			PreparedStatement pst2 = conn.prepareStatement("Select * from user_info where uid=?");
+			pst2.setString(1,pid);
+			ResultSet rs2 = pst2.executeQuery();
+			try{
+				if(rs2.next()){
+					seller_id=rs2.getString("id");
+				}
+			}catch(Exception e){
+				out.println(e.toString());
+			}
+			PreparedStatement pst3 = conn.prepareStatement("Select * from img_info where pid=?");
+			pst3.setString(1,pid);
+			ResultSet rs3 = pst3.executeQuery();
+			String prod_img_path="";
+			try{
+				if(rs3.next()){
+					prod_img_path=rs3.getString("path");
+				}
+			}catch(Exception e){
+				out.println(e.toString());
+			}
+			PreparedStatement pst4 = conn.prepareStatement("Select * from history where pid=? order by hid desc limit 1");
+			pst4.setString(1,pid);
+			System.out.println(pid);
+			ResultSet rs4 = pst4.executeQuery();
+			int cur_price;
+			try{
+				if(rs4.next()){
+					cur_price=rs4.getInt("price");
+	%>
     <div class="wrapper">
       <div class="prod-outline">
         <div class="product">
           <img class="product-left" src="img/product-img/bicycle.jpeg" alt="bicyle">
           <div class="product-right">
             <div class="prod-header">
-              Product Name
+              Product Name : <%=prod_name %>
             </div>
             <div class="prod-info">
               <div class="prod-seller">
-                Seller/Phone Number
+                Seller : <%=seller_id %> <br>
+                Phone Number : <%=seller_phone %>
               </div>
               <div class="remain-time">
-                Remaining time
+                Remaining time : <%=daysToInt %>D <%=hoursToInt%>H <%=minutesToInt%>M
               </div>
               <div class="current-price">
-                Current Product Price
+                Current Product Price : $<%=cur_price %>
               </div>
               <div class="prod-date">
-                Trading Place
+                Trading Place : <%=trading %>
               </div>
+             <% 
+				}
+			}catch(Exception e){
+				System.out.println(e.toString());
+			}
+	}
+	}catch(Exception e){
+		out.println(e);
+	}
+	%> 
             </div>
             <div class="prod-btn-lst">
               <button class="prod-wish-list-btn" title="Add to Wish list">
@@ -58,18 +144,33 @@
             <ul class="tab-content">
               <li class="content-detail active" id="con1">
                 <div class="detail-item">
-                  <img class="prod-detail-img" src="bicycle2.jpeg" alt="bicycle"> <br><br>
-                  <img class="prod-detail-img" src="bicycle2.jpeg" alt="bicycle"> <br><br>
-                  <img class="prod-detail-img" src="bicycle2.jpeg" alt="bicycle"> <br><br>
-                  <img class="prod-detail-img" src="bicycle2.jpeg" alt="bicycle"> <br><br>
+                <%
+                PreparedStatement pst3 = conn.prepareStatement("Select * from img_info where pid=?");
+    			pst3.setString(1,pid);
+    			ResultSet rs3 = pst3.executeQuery();
+    			String prod_img_path="";
+    			while(rs3.next()){
+    				prod_img_path=rs3.getString("path");
+    				System.out.println(prod_img_path);
+                %>
+                  <img class="prod-detail-img" src="<%=prod_img_path%>" alt="bicycle"> <br><br>
+                  <%
+        			}
+                	%>
                   <div classs="prod-detail-txt">
-                    <p>설명을 적어주세용</p>
-                  </div>
+                  <%
+                  	if(prod_content!=null){
+                  %>
+                    <p> <%=prod_content %> </p>
+                    <%
+                                      		
+                  	}%>
+                   </div>
                 </div>
               </li>
               <li class="content-detail" id="con2">
-                Seller ID :
-                Phone Number :
+                <div> Seller : <%=seller_id %></div>
+                <div> Phone Number : <%=seller_phone %></div>
               </li>
             </ul>
           </div>
@@ -131,7 +232,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
   </footer>
   <!-- ##### Footer Area End ##### -->
 
-
+	<script type="text/javascript" src="calDate.js"></script> 
     <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
     <script src="js/jquery/jquery-2.2.4.min.js"></script>
     <!-- Popper js -->
