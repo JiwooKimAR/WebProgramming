@@ -1,3 +1,35 @@
+<%@ page import = "java.sql.*" %>
+<%
+String product_name = "";
+String product_status = "";
+String seller_name = "";
+int product_price = 0;
+int wish_num = 0; 
+int cart_num = 0;
+
+try {
+	String id = request.getParameter("id");
+	String password = request.getParameter("password");
+	Class.forName("com.mysql.jdbc.Driver");
+	Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/final_project?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
+	PreparedStatement pst = conn.prepareStatement("Select * from product_info");
+	ResultSet rs = pst.executeQuery();
+	// If there's such a user, then move to another website
+	if (rs.next()) {
+		//classification = rs.getInt("classification");
+		//user_name = rs.getString("name");
+		//session.setAttribute("user_name", user_name);
+		// classification: 0(admin) / 1(normal user)
+		
+		product_name = rs.getString("name");
+		int status = rs.getInt("status");
+		
+	}
+} catch(Exception e) {
+	out.println("Something went wrong !! Please try again");
+}
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
