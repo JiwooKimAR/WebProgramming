@@ -61,7 +61,8 @@
             <!-- Amado Nav -->
             <nav class="amado-nav">
                 <ul>
-                    <li class="active"><a href="index.jsp">Home</a></li>
+                	<% // TODO: [JW]Make class="active" according to current page %>
+                    <li><a href="index.jsp">Home</a></li>
                     <li><a href="product_list_buyer.jsp">Product List</a></li>
                     <li><a href="product_registration.jsp">Product Registration</a></li>
                     <li><a href="product-details.jsp">Product Details</a></li>

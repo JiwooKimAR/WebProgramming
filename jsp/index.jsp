@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <%
-	String user_name = (String)session.getAttribute("user_name");
+	String id = (String)session.getAttribute("id");
 	
 %>
 

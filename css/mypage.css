@@ -1,6 +1,11 @@
 body{
   background-color: #f4f4f4;
 }
+
+.main-wrapper{
+	padding:0px;
+}
+
 .header-inner{
   margin-bottom: 30px;
 }
@@ -8,6 +13,7 @@ body{
   padding: 0;
   box-sizing: border-box;
 }
+
 .pad{
   padding: 10px 50px;
 }
@@ -24,8 +30,6 @@ body{
 .logout{
   text-align: right;
   float: right;
-}
-.logout button{
   font-size: 15px;
   border: 0;
   background-color: black;
@@ -33,19 +37,52 @@ body{
   color: white;
   padding: 10px;
 }
+.logout a{
+  color:white;
+  background-color: black;
+  cursor: pointer;
+}
 
 .outer{
   background-color: white;
   padding-top: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 40px;
   margin-bottom: 30px;
+}
+.title-outer{
+	overflow:hidden;
+	position:relative;
+}
+.user-info-title{
+	font-size:25px;
+	color:black;
+}
+
+.title-outer .more_btn{
+	position:absolute;
+	right: 0px;
+	top:10px;
+	border:0px;
+	border-bottom:solid 1px black;
+	cursor: pointer;
+	background-color:transparent;
 }
 
 .user-info-inner{
   padding: 0 10px;
   margin-top: 10px;
 }
-
+.user-info-inner .chng-usr-info{
+  background-color: #ffc107;
+  border: 0;
+  padding: 5px 20px;
+  margin-top: 10px;
+  color: white;
+  cursor: pointer;
+}
+.con{
+	font-family:"helveticaneue";
+}
 .inner{
   padding: 10px;
   display: grid;
@@ -61,29 +98,11 @@ img{
   text-align: center;
 }
 
-@media (max-width:800px) {
-  .wrap{
-    width: 100%;
-    left: 0;
-  }
-  .uploaded-prod-lst{
-    grid-template-columns: repeat(2,1fr);
-  }
-}
-
-@media (max-width:500px) {
-  .uploaded-prod-lst{
-    grid-template-columns: repeat(1,1fr);
-  }
-}
-
-@media only screen and (max-width: 991px) and (min-width: 800px) {
-  .wrap{
-    width: calc( 100% - 280px );
-  }
-}
-
 /** After header adding **/
 .top-area {
 	display: none;
+}
+
+.footer_area {
+	width: 100%;
 }

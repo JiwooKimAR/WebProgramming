@@ -31,12 +31,12 @@
 
 .top-area-line {
 	display: flex;
-	justify-content: space-between;	
+	justify-content: space-between;
 }
 
 @media only screen and (max-width: 995px) {
 	.top-area .top-area-line .search-area {
-		display: none;	
+		display: none;
 	}
 	.search-area-small {
 		display: block;
@@ -118,4 +118,20 @@
 	border: none;
 	background-repeat: no-repeat;
 	opacity: 0.8;
+}
+
+@media only screen and (max-width: 991px) and (min-width: 800px){
+	.main-wrapper{
+		flex: 0 0 calc(100% - 280px);
+		width: calc(100% - 280px);
+		max-width: calc(100% - 280px);
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	.main-wrapper{
+		width: 100%;
+		flex: 100%;
+		max-width: 100%;
+	}
 }

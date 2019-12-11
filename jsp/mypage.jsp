@@ -1,4 +1,39 @@
 <!DOCTYPE html>
+<%@ page import="java.sql.*"%>
+<%@include file="header.jsp" %>
+<%
+	//Session value checking for security
+	String id = "";
+	if (session.getAttribute("id") == null) {
+		response.sendRedirect("authority-error-message.jsp");
+	}
+	else {
+		id=session.getAttribute("id").toString();
+	}
+	int classification;
+	String user_name = "";
+	Class.forName("com.mysql.jdbc.Driver");
+	Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/final_project?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
+	PreparedStatement pst = conn.prepareStatement("Select * from user_info where id=?");
+	pst.setString(1,id);
+	ResultSet rs = pst.executeQuery();
+	try{
+		if (rs.next()) {
+			classification = rs.getInt("classification");
+			user_name = rs.getString("name");
+			// classification: 0(admin) / 1(normal user)
+		}
+		PreparedStatement pst3 = conn.prepareStatement("Select * from wish_cart_info where buyer_id=?");
+		pst3.setString(1,id);
+		ResultSet rs3 = pst3.executeQuery();
+		if (rs3.next()) {
+			classification = rs3.getInt("classification");
+			user_name = rs3.getString("name");
+		}
+	}catch(Exception e){
+		out.println(e.toString());
+	}
+%>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
@@ -13,12 +48,11 @@
 
   </head>
   <body>
-  <%@ include file="header.jsp" %>
     <div class="wrap">
       <div class="title pad">
         <div class="title-inner">
           <div class="logout">
-            <button type="button" name="button">Logout</button>
+            <a href="logout-function.jsp" name="button">Logout</a>
           </div>
           <div class="mypage">
             <p class="mypage-inner">My page</p>
@@ -28,43 +62,173 @@
       </div>
       <div class="wrap-inner">
         <div class="user-info outer pad">
-          User Information
+          <p class="user-info-title">User Information</p>
           <div class="user-info-inner">
-            <div class="name">
-              NAME : <span class="info-inner name-inner">Name</span>
+            <div class="con">
+              NAME : <%=user_name%>
             </div>
-            <div class="id">
-              ID : <span class="info-inner id-inner">id</span>
+            <div class="con">
+              ID : <%=id%>
             </div>
-            <div class="number">
-              Number : <span class="info-inner">Number</span>
-            </div>
-
+            <br>
+            <button class="chng-usr-info" type="button" name="button" onclick="location.href='user-info-modification.jsp'">Change User Info</button>
             </div>
           </div>
           <div class="prod-bid pad outer">
-            Bid product
+          	<div class="title-outer">
+          	 <p class="user-info-title">Bid List</p>
+             <button class="more_btn" type="button" name="button">More</button>
+          	</div>
             <div class="prod-bid-lst inner">
-              요기는 내용
+              <%
+              try{
+      			  int uid=rs.getInt("uid");
+            	  PreparedStatement pst2 = conn.prepareStatement("Select * from history where buyer_id=?");
+            	  pst2.setInt(1,uid);
+  	          	  ResultSet rs2 = pst2.executeQuery();
+  	          	  int i=0;
+  	          	  System.out.print("BID");
+  	          	  while(rs2.next()) {
+  	          		System.out.print(i);
+  	          		if(i==3){
+  	          		 System.out.print("BREAK");
+  	          			break;
+  	          		}
+  	          		i++;
+            		int pid_ = rs2.getInt("pid");
+            		PreparedStatement pst2_prod = conn.prepareStatement("Select * from product_info where pid=?");
+            		PreparedStatement pst2_prod_path = conn.prepareStatement("Select * from img_info where pid=?");
+            		pst2_prod.setInt(1,pid_);
+            		pst2_prod_path.setInt(1,pid_);
+            		ResultSet rs2_prod = pst2_prod.executeQuery();
+            		ResultSet rs2_prod_path = pst2_prod_path.executeQuery();
+            		String prod_name="";
+            		String prod_path="";
+            		if (rs2_prod.next()&&rs2_prod_path.next()) {
+            			prod_name=rs2_prod.getString("name");
+            			prod_path=rs2_prod_path.getString("path");
+            			System.out.print(prod_name+prod_path);
+            		}
+
+           		%>
+					<img src="<%=prod_path%>" alt="<%=prod_name%>">
+            	<%
+           	      }
+  	          	  if(i==0){ %>
+           	      The Bid List is Empty
+           	    <%
+           	      }
+              }catch(Exception e){
+            	  out.println(e.toString());
+              }
+            %>
             </div>
           </div>
           <div class="prod-wish pad outer">
-            Cart list
+            <div class="title-outer">
+          	 <p class="user-info-title">Cart List</p>
+             <button class="more_btn" type="button" name="button">More</button>
+          	</div>
             <div class="uploaded-prod-lst inner">
-              요기도 내용
+            <%
+            try{
+            	int uid=rs.getInt("uid");
+          	  	PreparedStatement pst2 = conn.prepareStatement("Select * from wish_cart_info where buyer_id=? and status=1");
+          	  	pst2.setInt(1,uid);
+	          	ResultSet rs2 = pst2.executeQuery();
+          	    int i=0;
+          	    System.out.print("WISH");
+          	    while(rs2.next()) {
+	          	 	System.out.print(i);
+	          		if(i==3){
+	          		 System.out.print("BREAK");
+	          			break;
+	          		}
+	          		i++;
+	          		int pid_ = rs2.getInt("prod_id");
+	          		PreparedStatement pst2_prod = conn.prepareStatement("Select * from product_info where pid=?");
+	          		PreparedStatement pst2_prod_path = conn.prepareStatement("Select * from img_info where pid=?");
+	          		pst2_prod.setInt(1,pid_);
+	          		pst2_prod_path.setInt(1,pid_);
+	          		ResultSet rs2_prod = pst2_prod.executeQuery();
+	          		ResultSet rs2_prod_path = pst2_prod_path.executeQuery();
+	          		String prod_name="";
+	          		String prod_path="";
+	          		if (rs2_prod.next()&&rs2_prod_path.next()) {
+	          			prod_name=rs2_prod.getString("name");
+	          			prod_path=rs2_prod_path.getString("path");
+	          			System.out.print(prod_name+prod_path);
+	          		}
+
+         		%>
+					<img src="<%=prod_path%>" alt="<%=prod_name%>">
+          	<%
+         	      }
+	          	  if(i==0){ %>
+         	      The Cart List is Empty
+         	    <%
+         	      }
+            }catch(Exception e){
+          	  out.println(e.toString());
+            }
+            %>
             </div>
           </div>
           <div class="prod-wish pad outer">
-            Wish list
+           <div class="title-outer">
+          	 <p class="user-info-title">Wish List</p>
+             <button class="more_btn" type="button" name="button">More</button>
+          	</div>
             <div class="uploaded-prod-lst inner">
-              요기도 내용
+			<%
+            try{
+            	int uid=rs.getInt("uid");
+          	  	PreparedStatement pst2 = conn.prepareStatement("Select * from wish_cart_info where buyer_id=? and status=0");
+          	  	pst2.setInt(1,uid);
+	          	ResultSet rs2 = pst2.executeQuery();
+          	    int i=0;
+          	    System.out.print("WISH");
+          	    while(rs2.next()) {
+	          	 	System.out.print(i);
+	          		if(i==3){
+	          		 System.out.print("BREAK");
+	          			break;
+	          		}
+	          		i++;
+	          		int pid_ = rs2.getInt("prod_id");
+	          		PreparedStatement pst2_prod = conn.prepareStatement("Select * from product_info where pid=?");
+	          		PreparedStatement pst2_prod_path = conn.prepareStatement("Select * from img_info where pid=?");
+	          		pst2_prod.setInt(1,pid_);
+	          		pst2_prod_path.setInt(1,pid_);
+	          		ResultSet rs2_prod = pst2_prod.executeQuery();
+	          		ResultSet rs2_prod_path = pst2_prod_path.executeQuery();
+	          		String prod_name="";
+	          		String prod_path="";
+	          		if (rs2_prod.next()&&rs2_prod_path.next()) {
+	          			prod_name=rs2_prod.getString("name");
+	          			prod_path=rs2_prod_path.getString("path");
+	          			System.out.print(prod_name+prod_path);
+	          		}
+
+         		%>
+					<img src="<%=prod_path%>" alt="<%=prod_name%>">
+          	<%
+         	      }
+	          	  if(i==0){ %>
+         	      The Wish List is Empty
+         	    <%
+         	      }
+            }catch(Exception e){
+          	  out.println(e.toString());
+            }
+            %>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    </div>
-    
+      </div>
+      
+
     <!-- ##### Footer Area Start ##### -->
     <footer class="footer_area clearfix">
         <div class="container">
@@ -74,7 +238,7 @@
                     <div class="single_widget_area">
                         <!-- Logo -->
                         <div class="footer-logo mr-50">
-                            <a href="index.html"><img src="../img/core-img/logo2.png" alt=""></a>
+                            <a href="index.html"><img src="img/core-img/logo2.png" alt=""></a>
                         </div>
                         <!-- Copywrite Text -->
                         <p class="copywrite"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
@@ -115,23 +279,31 @@
             </div>
         </div>
     </footer>
-    <!-- ##### Footer Area End ##### -->
 
 
-    <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
-    <script src="../js/jquery/jquery-2.2.4.min.js"></script>
-    <!-- Popper js -->
-    <script src="../js/popper.min.js"></script>
-    <!-- Bootstrap js -->
-    <script src="../js/bootstrap.min.js"></script>
-    <!-- Plugins js -->
-    <script src="../js/plugins.js"></script>
-    <!-- Active js -->
-    <script src="../js/active.js"></script>
+    <script src="js/jquery/jquery-2.2.4.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/active.js"></script>
 
-     </script>
-  </body>
-
-
-  </script>
-</html>
+</body>
+  </html>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
