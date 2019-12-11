@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<%@ page import="java.sql.*"%>
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="">
@@ -19,6 +20,32 @@
 </head>
 <body>
 	<%@ include file="header.jsp" %>
+	<% 
+	int id_=0;
+	String prod_name="";
+	String prod_img_path="";
+	double price=0;
+	int qnt=0;
+	int status=0;
+
+	int prod_id=0;
+	String status_="";
+	
+  	String id=session.getAttribute("id").toString();
+  	try{
+  	Class.forName("com.mysql.jdbc.Driver");	
+	Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/final_project?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
+	PreparedStatement pst_id = conn.prepareStatement("Select * from user_info where id=?");
+	pst_id.setString(1,id);
+	ResultSet rs_id = pst_id.executeQuery();
+	if(rs_id.next()){
+		id_=rs_id.getInt("uid");
+	}
+	PreparedStatement pst = conn.prepareStatement("Select * from wish_cart_info where buyer_id=? and status=1");
+	pst.setInt(1,id_);
+	ResultSet rs = pst.executeQuery();
+		
+	%>
 
         <div class="cart-list-table-area">
             <div class="container-fluid">
@@ -45,7 +72,31 @@
                                         <th>Status</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <% 
+                                while(rs.next()){
+			prod_id=rs.getInt("prod_id");
+			PreparedStatement pst2 = conn.prepareStatement("Select * from product_info where pid=?");
+			pst2.setInt(1,prod_id);
+			ResultSet rs2 = pst2.executeQuery();			
+			if(rs2.next()){
+				prod_name=rs2.getString("name");
+				price=rs2.getDouble("price");
+				status=rs2.getInt("status");
+				if(status==0){
+					status_="auction";
+				}else if(status==1){
+					status_="Sold Out";
+				}else{
+					status_="Selling";
+				}
+			}
+			PreparedStatement pst3 = conn.prepareStatement("Select * from img_info where pid=?");
+			pst3.setInt(1,prod_id);
+			ResultSet rs3 = pst3.executeQuery();
+			if(rs3.next()){
+				prod_img_path=rs3.getString("path");
+			}	%>
+                     <tbody>
                                     <tr>
                                         <td class="check-table">
                                             <div class="form-check">
@@ -54,13 +105,13 @@
                                             </div>
                                         </td>
                                         <td class="cart_product_img">
-                                            <a href="#"><img src="img/bg-img/cart1.jpg" alt="Product"></a>
+                                            <a href="#"><img src="<%=prod_img_path%>" alt="Product"></a>
                                         </td>
                                         <td class="cart_product_desc">
-                                            <h5>White Modern Chair</h5>
+                                            <h5><%=prod_name %></h5>
                                         </td>
                                         <td class="price">
-                                            <span>$130</span>
+                                            <span>$<%=price %></span>
                                         </td>
                                         <td class="qty">
                                             <div class="qty-btn d-flex">
@@ -72,67 +123,16 @@
                                             </div>
                                         </td>
                                         <td class="status">
-                                            <span>status</span>
+                                            <span><%=status_ %></span>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td class="check-table">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="check">
-                                                <label class="form-check-label" for="all"></label>
-                                            </div>
-                                        </td>
-                                        <td class="cart_product_img">
-                                            <a href="#"><img src="img/bg-img/cart2.jpg" alt="Product"></a>
-                                        </td>
-                                        <td class="cart_product_desc">
-                                            <h5>Minimal Plant Pot</h5>
-                                        </td>
-                                        <td class="price">
-                                            <span>$10</span>
-                                        </td>
-                                        <td class="qty">
-                                            <div class="qty-btn d-flex">
-                                                <div class="quantity">
-                                                    <span class="qty-minus" onclick="var effect = document.getElementById('qty2'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                                    <input type="number" class="qty-text" id="qty2" step="1" min="1" max="300" name="quantity" value="1">
-                                                    <span class="qty-plus" onclick="var effect = document.getElementById('qty2'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="status">
-                                            <span>status</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="check-table">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="check">
-                                                <label class="form-check-label" for="all"></label>
-                                            </div>
-                                        </td>
-                                        <td class="cart_product_img">
-                                            <a href="#"><img src="img/bg-img/cart3.jpg" alt="Product"></a>
-                                        </td>
-                                        <td class="cart_product_desc">
-                                            <h5>Minimal Plant Pot</h5>
-                                        </td>
-                                        <td class="price">
-                                            <span>$10</span>
-                                        </td>
-                                        <td class="qty">
-                                            <div class="qty-btn d-flex">
-                                                <div class="quantity">
-                                                    <span class="qty-minus" onclick="var effect = document.getElementById('qty3'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                                    <input type="number" class="qty-text" id="qty3" step="1" min="1" max="300" name="quantity" value="1">
-                                                    <span class="qty-plus" onclick="var effect = document.getElementById('qty3'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="status">
-                                            <span>status</span>
-                                        </td>
-                                    </tr>
+                                                                    
+                                <%
+                                }
+	}catch(Exception e){
+		System.out.println(e.toString());
+	}%>
+          
                                 </tbody>
                             </table>
                         </div>

@@ -31,6 +31,8 @@
   	String trading="";
   	String prod_content="";
   	int amount;
+  	int status;
+  	String status_="";
  	
 	Class.forName("com.mysql.jdbc.Driver");
 	Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/final_project?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
@@ -46,6 +48,14 @@
 			trading=rs.getString("trading_place");
 			amount=rs.getInt("amount");
 			prod_content=rs.getString("content");
+			status=rs.getInt("status");
+			if(status==0){
+				status_="Auction";
+			}else if(status==1){
+				status_="Sold Out";
+			}else{
+				status_="Selling";
+			}
 			PreparedStatement pst2 = conn.prepareStatement("Select * from user_info where uid=?");
 			pst2.setString(1,pid);
 			ResultSet rs2 = pst2.executeQuery();
@@ -91,6 +101,11 @@
               <div class="amnt">
               	Amount : <%=amount %>
               </div>
+            </div>
+            <div>
+	           	<div>
+	           	 <%=status_ %>
+	           	</div>
             </div>
             <%
 				
@@ -140,11 +155,7 @@
         			}
                 	%>
                   <div classs="prod-detail-txt">
-                  <%
-                  	if(prod_content!=null){
-                  %>
-                    <p><%=prod_content %></div>
-                    <%} %>
+                  	<%=prod_content %>
                 </div>
               </li>
               <li class="content-detail" id="con2">
