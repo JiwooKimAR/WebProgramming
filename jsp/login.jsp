@@ -67,7 +67,8 @@
             </div>
             <div class="hr"></div>
             <div class="foot-lnk">
-              <a href="#forgot">Forgot Password?</a>
+            	<!-- Extra Function Implementation | When user forgot the password, they can find it -->
+              <a href="forgot-password.jsp">Forgot Password?</a>
             </div>
             <br><br><br><div class="group" style="color: red"><%=err %></div>
           </div>
