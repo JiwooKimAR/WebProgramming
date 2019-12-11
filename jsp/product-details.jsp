@@ -19,7 +19,7 @@
   <%@ include file="header.jsp" %>
   <%@ page import="java.sql.*"%>
   <% 
-  	//String id=session.getAttribute("user_name").toString();
+  	//String id=session.getAttribute("id").toString();
 
   
   	String pid = request.getParameter("pid"); 
@@ -104,7 +104,7 @@
               </button>
                 <li class="prod-add-cart-btn">
                   <div class="prod-add-cart">
-                    <a href="#">Add Cart</a>
+                    <a href="#" onclick="location.href='addcart.jsp?pid=<%=pid%>'">Add Cart</a>
                   </div>
                 </li>
                 <li class="prod-prtcp-actn-btn">
@@ -211,7 +211,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
   </footer>
   <!-- ##### Footer Area End ##### -->
 
-
+	<script src="js/addcart.js"></</script>
     <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
     <script src="js/jquery/jquery-2.2.4.min.js"></script>
     <!-- Popper js -->
