@@ -72,10 +72,12 @@ if(request.getParameter("cur_status") != null){
 
         String query = "Select * from product_info";
 
-        /*if(cur_status > 0) {
-            query += " where status=0";
-
-        }*/
+        if(cur_status > 0) {
+            query += " where status in (";
+            if(cur_status == 1) query += "0"; // auction
+            if(cur_status == 2) query +=
+            query += ");";
+        }
 
 
         PreparedStatement pst = conn.prepareStatement(query);
@@ -122,22 +124,22 @@ if(request.getParameter("cur_status") != null){
                 <div class="widget-desc">
                     <!-- Single Form Check -->
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="amado">
+                        <input class="form-check-input" type="checkbox" value="0" name="status" id="all">
                         <label class="form-check-label" for="all">All</label>
                     </div>
                     <!-- Single Form Check -->
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="amado">
+                        <input class="form-check-input" type="checkbox" value="1" name="status" id="auction">
                         <label class="form-check-label" for="auction">Auction</label>
                     </div>
                     <!-- Single Form Check -->
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="ikea">
+                        <input class="form-check-input" type="checkbox" value="2" name="status" id="progress">
                         <label class="form-check-label" for="progress">In Progress</label>
                     </div>
                     <!-- Single Form Check -->
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="furniture">
+                        <input class="form-check-input" type="checkbox" value="3" name="status" id="sold_out">
                         <label class="form-check-label" for="sold_out">Sold Out</label>
                     </div>
                 </div>
@@ -229,13 +231,13 @@ if(request.getParameter("cur_status") != null){
                                             <p><%= pname_list.get(i)%></p>
                                         </a>
                                         <%}
-                                        if(status_list.get(i) == 1){%>
+                                        if(status_list.get(i) == 2){%>
                                         <p class="product-status">SELLING</p>
                                         <a href="product-details.jsp?pid=<%=pid_list.get(i)%>" class="product-name">
                                             <p><%= pname_list.get(i)%></p>
                                         </a>
                                         <%}
-                                        if(status_list.get(i) == 2){%>
+                                        if(status_list.get(i) == 1){%>
                                         <p class="product-status" style="color: red;">SOLD OUT</p>
                                         <a href="product-details.jsp?pid=<%=pid_list.get(i)%>" class="product-name">
                                             <p><%= pname_list.get(i)%></p>
