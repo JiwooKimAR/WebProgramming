@@ -27,6 +27,7 @@
 	double price=0;
 	int qnt=0;
 	int status=0;
+	int amount=0;
 
 	int prod_id=0;
 	String status_="";
@@ -77,11 +78,13 @@
 			prod_id=rs.getInt("prod_id");
 			PreparedStatement pst2 = conn.prepareStatement("Select * from product_info where pid=?");
 			pst2.setInt(1,prod_id);
+			System.out.println(prod_id);
 			ResultSet rs2 = pst2.executeQuery();			
 			if(rs2.next()){
 				prod_name=rs2.getString("name");
 				price=rs2.getDouble("price");
 				status=rs2.getInt("status");
+				amount=rs2.getInt("amount");
 				if(status==0){
 					status_="auction";
 				}else if(status==1){
@@ -105,7 +108,7 @@
                                             </div>
                                         </td>
                                         <td class="cart_product_img">
-                                            <a href="#"><img src="<%=prod_img_path%>" alt="Product"></a>
+                                            <a href='product-details.jsp?pid=<%=prod_id%>'"><img src="<%=prod_img_path%>" alt="Product"></a>
                                         </td>
                                         <td class="cart_product_desc">
                                             <h5><%=prod_name %></h5>
@@ -116,9 +119,7 @@
                                         <td class="qty">
                                             <div class="qty-btn d-flex">
                                                 <div class="quantity">
-                                                    <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                                    <input type="number" class="qty-text" id="qty" step="1" min="1" max="300" name="quantity" value="1">
-                                                    <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                                                    <input type="number" class="qty-text" id="qty" step="1" min="1" max="<%=amount %>" name="quantity" value="1">
                                                 </div>
                                             </div>
                                         </td>
