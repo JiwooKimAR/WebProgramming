@@ -7,7 +7,7 @@ try {
 	String password = request.getParameter("password");
 	Class.forName("com.mysql.jdbc.Driver");
 	Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/final_project?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
-	PreparedStatement pst = conn.prepareStatement("Select id, password, classification, name from user_info where id=? and password=?");
+	PreparedStatement pst = conn.prepareStatement("Select id, password, classification from user_info where id=? and password=?");
 	pst.setString(1, id);
 	pst.setString(2, password);
 	// user_info table schema (user_number(PK), id, password, name, email, classification)
@@ -15,8 +15,8 @@ try {
 	// If there's such a user, then move to another website
 	if (rs.next()) {
 		classification = rs.getInt("classification");
-		user_name = rs.getString("name");
-		session.setAttribute("user_name", user_name);
+		id = rs.getString("id");
+		session.setAttribute("id", id);
 		session.setAttribute("classification", classification);
 		// classification: 0(admin) / 1(normal user)
 		if (classification == 0) {

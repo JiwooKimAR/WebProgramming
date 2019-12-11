@@ -19,6 +19,21 @@
   </head>
   <body>
   <%
+  	// Don't show login page again when user already login
+  	if (session.getAttribute("classification") != null) {
+  		int c = (int)session.getAttribute("classification");
+  		if (c == 0) {
+  			response.sendRedirect("member_list.jsp");
+  		}
+  		// TODO: [JW] buyer and seller division
+  		else if (c == 1) {
+  			response.sendRedirect("index.jsp");
+  		}
+  		else {
+  			response.sendRedirect("index.jsp");
+  		}
+  	}
+  
   	// For login error detection
   	String err = (String)request.getParameter("lErr");
   	if (err == null) {

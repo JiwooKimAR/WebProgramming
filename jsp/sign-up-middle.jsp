@@ -36,7 +36,8 @@ try {
 	// user_info table schema (user_number(PK), id, password, name, email, classification)
 	int rr = pst.executeUpdate();
 	
-	session.setAttribute("user_name", name);
+	session.setAttribute("id", id);
+	session.setAttribute("classification", classification);
 	// TODO: [JW]Differnt page for buyer and seller
 	// If user is only a buyer, then go to buyer page
 	if (classification == 1) {
@@ -47,6 +48,6 @@ try {
 		response.sendRedirect("index.jsp");
 	}
 } catch(Exception e) {
-	out.println(e.toString());
+	out.println("Something went wrong !! Please try again");
 }
 %>
