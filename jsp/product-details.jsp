@@ -17,25 +17,85 @@
   </head>
   <body>
   <%@ include file="header.jsp" %>
+  <%@ page import="java.sql.*"%>
+  <% 
+  	//String id=session.getAttribute("user_name").toString();
+
+  
+  	String pid = request.getParameter("pid"); 
+  	String prod_name="";
+  	int price;
+  	String seller_uid="";
+  	String seller_id="";
+  	String seller_phone="";
+  	String trading="";
+  	int amount;
+ 	
+	Class.forName("com.mysql.jdbc.Driver");
+	Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/final_project?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
+	PreparedStatement pst = conn.prepareStatement("Select * from product_info where pid=?");
+	pst.setString(1,pid);
+	ResultSet rs = pst.executeQuery();
+	try{
+		if (rs.next()) {
+			prod_name=rs.getString("name");
+			price=rs.getInt("price");
+			seller_uid=rs.getString("seller_id");
+			seller_phone=rs.getString("phone");
+			trading=rs.getString("trading_place");
+			amount=rs.getInt("amount");
+			PreparedStatement pst2 = conn.prepareStatement("Select * from user_info where uid=?");
+			pst2.setString(1,pid);
+			ResultSet rs2 = pst2.executeQuery();
+			try{
+				if(rs2.next()){
+					seller_id=rs2.getString("id");
+				}
+			}catch(Exception e){
+				out.println(e.toString());
+			}
+			PreparedStatement pst3 = conn.prepareStatement("Select * from img_info where pid=?");
+			pst3.setString(1,pid);
+			ResultSet rs3 = pst3.executeQuery();
+			String prod_img_path="";
+			try{
+				if(rs3.next()){
+					prod_img_path=rs3.getString("path");
+				}
+			}catch(Exception e){
+				out.println(e.toString());
+			}
+	%>
     <div class="wrapper">
       <div class="prod-outline">
         <div class="product">
-          <img class="product-left" src="img/product-img/bicycle.jpeg" alt="bicyle">
+          <img class="product-left" src="<%=prod_img_path %>" alt="bicyle">
           <div class="product-right">
             <div class="prod-header">
-              Product Name
+              Product Name : <%=prod_name %>
             </div>
             <div class="prod-info">
               <div class="prod-price">
-                Price
+                Price : $<%=price %>
               </div>
               <div class="prod-seller">
-                Seller/Phone Number
+                Seller : <%=seller_id %> <br>
+                Phone Number : <%=seller_phone %>
               </div>
               <div class="trdng-plc">
-                Trading Place
+                Trading Place : <%=trading %>
+              </div>
+              <div class="amnt">
+              	Amount : <%=amount %>
               </div>
             </div>
+            <%
+				
+           }
+		}catch(Exception e){
+			out.println(e.toString());
+	}
+	%>
             <div class="prod-btn-lst">
               <button class="prod-wish-list-btn" title="Add to Wish list">
               </button>
@@ -62,18 +122,27 @@
             <ul class="tab-content">
               <li class="content-detail active" id="con1">
                 <div class="detail-item">
-                  <img class="prod-detail-img" src="bicycle2.jpeg" alt="bicycle"> <br><br>
-                  <img class="prod-detail-img" src="bicycle2.jpeg" alt="bicycle"> <br><br>
-                  <img class="prod-detail-img" src="bicycle2.jpeg" alt="bicycle"> <br><br>
-                  <img class="prod-detail-img" src="bicycle2.jpeg" alt="bicycle"> <br><br>
+                	<%
+                	PreparedStatement pst3 = conn.prepareStatement("Select * from img_info where pid=?");
+        			pst3.setString(1,pid);
+        			ResultSet rs3 = pst3.executeQuery();
+        			String prod_img_path="";
+        			while(rs3.next()){
+        				prod_img_path=rs3.getString("path");
+        				System.out.println(prod_img_path);
+        			%>
+        			
+                  <img class="prod-detail-img" src="<%=prod_img_path%>" alt="bicycle"> <br><br>
+					<%
+        			}
+                	%>
                   <div classs="prod-detail-txt">
-                    <p>설명을 적어주세용</p>
-                  </div>
+                    <p>Something</div>
                 </div>
               </li>
               <li class="content-detail" id="con2">
-                Seller ID :
-                Phone Number :
+                Seller ID : <%=seller_id %> <br>
+                Phone Number : <%= seller_phone %>
               </li>
             </ul>
           </div>

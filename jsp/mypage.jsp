@@ -71,7 +71,7 @@
           	<div class="title-outer">
           	 <p class="user-info-title">Bid List</p>
              <button class="more_btn" type="button" name="button">More</button>
-          	</div>           
+          	</div>
             <div class="prod-bid-lst inner">
               <%
               try{
@@ -102,7 +102,7 @@
             			prod_path=rs2_prod_path.getString("path");
             			System.out.print(prod_name+prod_path);
             		}
-            		
+
            		%>
 					<img src="<%=prod_path%>" alt="<%=prod_name%>">
             	<%
@@ -121,7 +121,7 @@
             <div class="title-outer">
           	 <p class="user-info-title">Cart List</p>
              <button class="more_btn" type="button" name="button">More</button>
-          	</div>           
+          	</div>
             <div class="uploaded-prod-lst inner">
             <%
             try{
@@ -152,7 +152,7 @@
 	          			prod_path=rs2_prod_path.getString("path");
 	          			System.out.print(prod_name+prod_path);
 	          		}
-          		
+
          		%>
 					<img src="<%=prod_path%>" alt="<%=prod_name%>">
           	<%
@@ -171,7 +171,7 @@
            <div class="title-outer">
           	 <p class="user-info-title">Wish List</p>
              <button class="more_btn" type="button" name="button">More</button>
-          	</div>           
+          	</div>
             <div class="uploaded-prod-lst inner">
 			<%
             try{
@@ -202,7 +202,7 @@
 	          			prod_path=rs2_prod_path.getString("path");
 	          			System.out.print(prod_name+prod_path);
 	          		}
-          		
+
          		%>
 					<img src="<%=prod_path%>" alt="<%=prod_name%>">
           	<%
@@ -219,7 +219,7 @@
           </div>
         </div>
       </div>
-
+          <!-- ##### Main Content Wrapper End ##### -->
 
     <!-- ##### Footer Area Start ##### -->
     <footer class="footer_area clearfix">
@@ -271,20 +271,31 @@
             </div>
         </div>
     </footer>
-    <!-- ##### Footer Area End ##### -->
 
 
-    <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
     <script src="js/jquery/jquery-2.2.4.min.js"></script>
     <script src="js/popper.min.js"></script>
-    <!-- Bootstrap js -->
     <script src="js/bootstrap.min.js"></script>
-    <!-- Plugins js -->
     <script src="js/plugins.js"></script>
     <script src="js/active.js"></script>
-     </script>
-  </body>
 
-
-  </script>
-</html>
+</body>
+  </html>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
