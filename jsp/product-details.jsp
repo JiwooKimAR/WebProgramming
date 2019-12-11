@@ -29,6 +29,7 @@
   	String seller_id="";
   	String seller_phone="";
   	String trading="";
+  	String prod_content="";
   	int amount;
  	
 	Class.forName("com.mysql.jdbc.Driver");
@@ -44,6 +45,7 @@
 			seller_phone=rs.getString("phone");
 			trading=rs.getString("trading_place");
 			amount=rs.getInt("amount");
+			prod_content=rs.getString("content");
 			PreparedStatement pst2 = conn.prepareStatement("Select * from user_info where uid=?");
 			pst2.setString(1,pid);
 			ResultSet rs2 = pst2.executeQuery();
@@ -79,8 +81,9 @@
                 Price : $<%=price %>
               </div>
               <div class="prod-seller">
-                Seller : <%=seller_id %> <br>
-                Phone Number : <%=seller_phone %>
+              	<div> Seller : <%=seller_id %></div>
+                <div> Phone Number : <%=seller_phone %></div>
+               
               </div>
               <div class="trdng-plc">
                 Trading Place : <%=trading %>
@@ -137,7 +140,11 @@
         			}
                 	%>
                   <div classs="prod-detail-txt">
-                    <p>Something</div>
+                  <%
+                  	if(prod_content!=null){
+                  %>
+                    <p><%=prod_content %></div>
+                    <%} %>
                 </div>
               </li>
               <li class="content-detail" id="con2">
