@@ -1,34 +1,45 @@
 <%@ page import = "java.sql.*" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*"%>
 <%
-String product_name = "";
-String product_status = "";
-String seller_name = "";
-int product_price = 0;
+
+String id=session.getAttribute("id").toString();
+
+
+ArrayList<Integer> pid_list = new ArrayList<Integer>();
+ArrayList<String> pname_list = new ArrayList<String>();
+ArrayList<Integer> seller_list = new ArrayList<Integer>();
+ArrayList<Double> price_list = new ArrayList<Double>();
+ArrayList<Integer> status_list = new ArrayList<Integer>();
+ArrayList<Integer> amount_list = new ArrayList<Integer>();
+
+int total = 0;
+int page_num = 1; 
+int cur_page = 1; // start from 1 page
+int cur_status = 0; // select all
+
+// current item idx range
+int cur_start = 1; 
+int cur_end = 0;
+
 int wish_num = 0; 
 int cart_num = 0;
 
-try {
-	String id = request.getParameter("id");
-	String password = request.getParameter("password");
-	Class.forName("com.mysql.jdbc.Driver");
-	Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/final_project?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
-	PreparedStatement pst = conn.prepareStatement("Select * from product_info");
-	ResultSet rs = pst.executeQuery();
-	// If there's such a user, then move to another website
-	if (rs.next()) {
-		//classification = rs.getInt("classification");
-		//user_name = rs.getString("name");
-		//session.setAttribute("user_name", user_name);
-		// classification: 0(admin) / 1(normal user)
-		
-		product_name = rs.getString("name");
-		int status = rs.getInt("status");
-		
-	}
-} catch(Exception e) {
-	out.println("Something went wrong !! Please try again");
+String seller_name = "";
+String img_path = "";
+
+if(request.getParameter("cur_page") != null){
+    cur_page = Integer.parseInt(request.getParameter("cur_page"));
 }
+
+if(request.getParameter("cur_status") != null){
+    cur_status = Integer.parseInt(request.getParameter("cur_status"));
+}
+
+
+
 %>
+
 
 <!DOCTYPE html>
 <html>
@@ -52,27 +63,56 @@ try {
 <body>
      <%@ include file="header.jsp" %>
 
+    <input type="hidden" id="cur_status" value="<%=cur_status%>">
+    <%
+    // cur_status : 0 - all, 1 - auction, 2 - in progress, 3 - sold out
+    try {
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/final_project?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
+
+        String query = "Select * from product_info";
+
+        /*if(cur_status > 0) {
+            query += " where status=0";
+
+        }*/
+
+
+        PreparedStatement pst = conn.prepareStatement(query);
+        ResultSet rs = pst.executeQuery();
+
+        while(rs.next()){
+            pid_list.add(rs.getInt("pid"));
+            pname_list.add(rs.getString("name"));
+            seller_list.add(rs.getInt("seller_id"));
+            price_list.add(rs.getDouble("price"));
+            status_list.add(rs.getInt("status"));
+            amount_list.add(rs.getInt("amount"));
+            total += 1;
+        }
+
+        page_num = total / 6 + 1; // total page number
+
+    %>
+
+    <input type="hidden" id="cur_page" value="<%=cur_page%>">
+
+    <% 
+    cur_start = (cur_page - 1) * 6 + 1;
+
+    if(cur_page < page_num) { cur_end = cur_start + 5; }
+    else if (cur_page == page_num){ cur_end = cur_start + total % 6 - 1; }
+
+    //System.out.println("cur_page: " + cur_page);
+    //System.out.println("cur_start: " + cur_start);
+    //System.out.println("cur_end: " + cur_end);
+
+
+
+    %>
 	<div class="product-list-buyer-area">
         <div class="shop_sidebar_area">
 
-            <!-- ##### Single Widget ##### -->
-            <div class="widget catagory mb-50">
-                <!-- Widget Title -->
-                <h6 class="widget-title mb-30">Catagories</h6>
-
-                <!--  Catagories  -->
-                <div class="catagories-menu">
-                    <ul>
-                        <li class="active"><a href="#">Chairs</a></li>
-                        <li><a href="#">Beds</a></li>
-                        <li><a href="#">Accesories</a></li>
-                        <li><a href="#">Furniture</a></li>
-                        <li><a href="#">Home Deco</a></li>
-                        <li><a href="#">Dressings</a></li>
-                        <li><a href="#">Tables</a></li>
-                    </ul>
-                </div>
-            </div>
 
             <!-- ##### Single Widget ##### -->
             <div class="widget brands mb-50">
@@ -93,7 +133,7 @@ try {
                     <!-- Single Form Check -->
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" value="" id="ikea">
-                        <label class="form-check-label" for="progress">In Progress</label>
+                        <label class="form-check-label" for="progress">SELLING</label>
                     </div>
                     <!-- Single Form Check -->
                     <div class="form-check">
@@ -102,8 +142,6 @@ try {
                     </div>
                 </div>
             </div>
-
-
             
         </div>
 
@@ -115,7 +153,7 @@ try {
                         <div class="product-topbar d-xl-flex align-items-end justify-content-between">
                             <!-- Total Products -->
                             <div class="total-products">
-                                <p>Showing 1-8 0f 25</p>
+                                <p>Showing <%=cur_start%>-<%=cur_end%> 0f <%=total %></p>
                                 <!--<div class="view d-flex">
                                     <a href="#"><i class="fa fa-th-large" aria-hidden="true"></i></a>
                                     <a href="#"><i class="fa fa-bars" aria-hidden="true"></i></a>
@@ -158,14 +196,25 @@ try {
 
                 <div class="row">
 
+                    <%
+                    for(int i = cur_start - 1; i < cur_end; i++){
+
+                
+                    %>
                     <!-- Single Product Area -->
                     <div class="col-12 col-sm-6 col-md-12 col-xl-6">
                         <div class="single-product-wrapper">
                             <!-- Product Image -->
                             <div class="product-img">
-                                <img src="img/product-img/product1.jpg" alt="">
+                                <% 
+                                PreparedStatement img_pst = conn.prepareStatement("Select * from img_info where pid=?");
+                                img_pst.setInt(1, pid_list.get(i));
+                                ResultSet img_rs = img_pst.executeQuery();
+                                if(img_rs.next()) {img_path = img_rs.getString("path"); }
+                                %>
+                                <img src="<%=img_path%>" alt="">
                                 <!-- Hover Thumb -->
-                                <img class="hover-img" src="img/product-img/product2.jpg" alt="">
+                                <!--<img class="hover-img" src="img/product-img/product2.jpg" alt="">-->
                             </div>
 
                             <!-- Product Description -->
@@ -174,235 +223,70 @@ try {
                                 <div class="product-meta-data">
                                     <div class="line"></div>
                                     <div class="product-status-name">
-                                        <p class="product-status">AUCTION</p>
-                                        <a href="product-details.html" class="product-name">
-                                            <p>Modern Crheloohl?eleoeoo</p>
+                                        <% if(status_list.get(i) == 0){%>
+                                        <p class="product-status" style="color: blue; ">AUCTION</p>
+                                        <%}
+                                        if(status_list.get(i) == 1){%>
+                                        <p class="product-status">IN PROGRESS</p>
+                                        <%}
+                                        if(status_list.get(i) == 2){%>
+                                        <p class="product-status" style="color: red;">SOLD OUT</p>
+                                        <%}%>
+
+                                        <a href="product-details.jsp?pid=<%=pid_list.get(i)%>" class="product-name">
+                                            <p><%= pname_list.get(i)%></p>
                                         </a>
                                     </div>
                                     <div class="product-price-seller">
-                                        <p class="product-price">$180</p>
-                                        <p class="product-seller">sellezsfsfsfsfsfsfjlkjjlkrname</p>
+                                        <p class="product-price">$<%= price_list.get(i)%></p>
+                                        <% 
+                                        PreparedStatement seller_pst = conn.prepareStatement("Select * from user_info where uid=?");
+                                        seller_pst.setInt(1, seller_list.get(i));
+                                        ResultSet seller_rs = seller_pst.executeQuery();
+                                        if(seller_rs.next()) seller_name = seller_rs.getString("id");
+                                        %>
+                                        <p class="product-seller"><%=seller_name%></p>
                                     </div>
                                 </div>
                                 <!-- Ratings & Cart -->
                                 <div class="ratings-cart text-right">
                                     <div class="wish">
-                                        <p>4</p>
+                                        <% 
+                                        PreparedStatement wish_pst = conn.prepareStatement("Select * from wish_cart_info where prod_id=?");
+                                        wish_pst.setInt(1, pid_list.get(i));
+                                        ResultSet wish_rs = wish_pst.executeQuery();
+                                        wish_num = 0;
+                                        while(wish_rs.next()){ 
+                                            if(wish_rs.getInt("status") == 0) wish_num += 1; 
+                                        }
+                                        %>
+                                        <p><%=wish_num%></p>
                                         <a href="cart.html" data-toggle="tooltip" data-placement="left" title="Add to wish list"><img src="img/core-img/wish-star.png" alt=""></a>
                                     </div>
                                     <div class="cart_">
-                                        <p>4</p>
+                                        <% 
+                                        PreparedStatement cart_pst = conn.prepareStatement("Select * from wish_cart_info where prod_id=?");
+                                        cart_pst.setInt(1, pid_list.get(i));
+                                        ResultSet cart_rs = cart_pst.executeQuery();
+                                        cart_num = 0;
+                                        while(cart_rs.next()){ 
+                                            if(cart_rs.getInt("status") == 1) cart_num += 1; 
+                                        }
+                                        %>
+                                        <p><%=cart_num%></p>
                                         <a href="cart.html" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="img/core-img/cart.png" alt=""></a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <% } 
+                    if(cur_end % 2 == 1){
+                        %> <div class="col-12 col-sm-6 col-md-12 col-xl-6"> </div>
+                    <%}
+                    %>
 
-                    <!-- Single Product Area -->
-                    <div class="col-12 col-sm-6 col-md-12 col-xl-6">
-                        <div class="single-product-wrapper">
-                            <!-- Product Image -->
-                            <div class="product-img">
-                                <img src="img/product-img/product2.jpg" alt="">
-                                <!-- Hover Thumb -->
-                                <img class="hover-img" src="img/product-img/product3.jpg" alt="">
-                            </div>
-
-                            <!-- Product Description -->
-                            <div class="product-description d-flex align-items-center justify-content-between">
-                                <!-- Product Meta Data -->
-                                <div class="product-meta-data">
-                                    <div class="line"></div>
-                                    <div class="product-status-name">
-                                        <p class="product-status">AUCTION</p>
-                                        <a href="product-details.html" class="product-name">
-                                            <p>Modern Crheloohl?eleoeoo</p>
-                                        </a>
-                                    </div>
-                                    <div class="product-price-seller">
-                                        <p class="product-price">$180</p>
-                                        <p class="product-seller">sellezsfsfsfsfsfsfjlkjjlkrname</p>
-                                    </div>
-                                </div>
-                                <!-- Ratings & Cart -->
-                                <div class="ratings-cart text-right">
-                                    <div class="wish">
-                                        <p>4</p>
-                                        <a href="cart.html" data-toggle="tooltip" data-placement="left" title="Add to wish list"><img src="img/core-img/wish-star.png" alt=""></a>
-                                    </div>
-                                    <div class="cart_">
-                                        <p>4</p>
-                                        <a href="cart.html" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="img/core-img/cart.png" alt=""></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Single Product Area -->
-                    <div class="col-12 col-sm-6 col-md-12 col-xl-6">
-                        <div class="single-product-wrapper">
-                            <!-- Product Image -->
-                            <div class="product-img">
-                                <img src="img/product-img/product3.jpg" alt="">
-                                <!-- Hover Thumb -->
-                                <img class="hover-img" src="img/product-img/product4.jpg" alt="">
-                            </div>
-
-                            <!-- Product Description -->
-                            <div class="product-description d-flex align-items-center justify-content-between">
-                                <!-- Product Meta Data -->
-                                <div class="product-meta-data">
-                                    <div class="line"></div>
-                                    <div class="product-status-name">
-                                        <p class="product-status">AUCTION</p>
-                                        <a href="product-details.html" class="product-name">
-                                            <p>Modern Crheloohl?eleoeoo</p>
-                                        </a>
-                                    </div>
-                                    <div class="product-price-seller">
-                                        <p class="product-price">$180</p>
-                                        <p class="product-seller">sellezsfsfsfsfsfsfjlkjjlkrname</p>
-                                    </div>
-                                </div>
-                                <!-- Ratings & Cart -->
-                                <div class="ratings-cart text-right">
-                                    <div class="wish">
-                                        <p>4</p>
-                                        <a href="cart.html" data-toggle="tooltip" data-placement="left" title="Add to wish list"><img src="img/core-img/wish-star.png" alt=""></a>
-                                    </div>
-                                    <div class="cart_">
-                                        <p>4</p>
-                                        <a href="cart.html" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="img/core-img/cart.png" alt=""></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Single Product Area -->
-                    <div class="col-12 col-sm-6 col-md-12 col-xl-6">
-                        <div class="single-product-wrapper">
-                            <!-- Product Image -->
-                            <div class="product-img">
-                                <img src="img/product-img/product4.jpg" alt="">
-                                <!-- Hover Thumb -->
-                                <img class="hover-img" src="img/product-img/product5.jpg" alt="">
-                            </div>
-
-                            <!-- Product Description -->
-                            <div class="product-description d-flex align-items-center justify-content-between">
-                                <!-- Product Meta Data -->
-                                <div class="product-meta-data">
-                                    <div class="line"></div>
-                                    <div class="product-status-name">
-                                        <p class="product-status">AUCTION</p>
-                                        <a href="product-details.html" class="product-name">
-                                            <p>Modern Crheloohl?eleoeoo</p>
-                                        </a>
-                                    </div>
-                                    <div class="product-price-seller">
-                                        <p class="product-price">$180</p>
-                                        <p class="product-seller">sellezsfsfsfsfsfsfjlkjjlkrname</p>
-                                    </div>
-                                </div>
-                                <!-- Ratings & Cart -->
-                                <div class="ratings-cart text-right">
-                                    <div class="wish">
-                                        <p>4</p>
-                                        <a href="cart.html" data-toggle="tooltip" data-placement="left" title="Add to wish list"><img src="img/core-img/wish-star.png" alt=""></a>
-                                    </div>
-                                    <div class="cart_">
-                                        <p>4</p>
-                                        <a href="cart.html" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="img/core-img/cart.png" alt=""></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Single Product Area -->
-                    <div class="col-12 col-sm-6 col-md-12 col-xl-6">
-                        <div class="single-product-wrapper">
-                            <!-- Product Image -->
-                            <div class="product-img">
-                                <img src="img/product-img/product5.jpg" alt="">
-                                <!-- Hover Thumb -->
-                                <img class="hover-img" src="img/product-img/product6.jpg" alt="">
-                            </div>
-
-                            <!-- Product Description -->
-                            <div class="product-description d-flex align-items-center justify-content-between">
-                                <!-- Product Meta Data -->
-                                <div class="product-meta-data">
-                                    <div class="line"></div>
-                                    <div class="product-status-name">
-                                        <p class="product-status">AUCTION</p>
-                                        <a href="product-details.html" class="product-name">
-                                            <p>Modern Crheloohl?eleoeoo</p>
-                                        </a>
-                                    </div>
-                                    <div class="product-price-seller">
-                                        <p class="product-price">$180</p>
-                                        <p class="product-seller">sellezsfsfsfsfsfsfjlkjjlkrname</p>
-                                    </div>
-                                </div>
-                                <!-- Ratings & Cart -->
-                                <div class="ratings-cart text-right">
-                                    <div class="wish">
-                                        <p>4</p>
-                                        <a href="cart.html" data-toggle="tooltip" data-placement="left" title="Add to wish list"><img src="img/core-img/wish-star.png" alt=""></a>
-                                    </div>
-                                    <div class="cart_">
-                                        <p>4</p>
-                                        <a href="cart.html" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="img/core-img/cart.png" alt=""></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Single Product Area -->
-                    <div class="col-12 col-sm-6 col-md-12 col-xl-6">
-                        <div class="single-product-wrapper">
-                            <!-- Product Image -->
-                            <div class="product-img">
-                                <img src="img/product-img/product6.jpg" alt="">
-                                <!-- Hover Thumb -->
-                                <img class="hover-img" src="img/product-img/product1.jpg" alt="">
-                            </div>
-
-                            <!-- Product Description -->
-                            <div class="product-description d-flex align-items-center justify-content-between">
-                                <!-- Product Meta Data -->
-                                <div class="product-meta-data">
-                                    <div class="line"></div>
-                                    <div class="product-status-name">
-                                        <p class="product-status">AUCTION</p>
-                                        <a href="product-details.html" class="product-name">
-                                            <p>Modern Crheloohl?eleoeoo</p>
-                                        </a>
-                                    </div>
-                                    <div class="product-price-seller">
-                                        <p class="product-price">$180</p>
-                                        <p class="product-seller">sellezsfsfsfsfsfsfjlkjjlkrname</p>
-                                    </div>
-                                </div>
-                                <!-- Ratings & Cart -->
-                                <div class="ratings-cart text-right">
-                                    <div class="wish">
-                                        <p>4</p>
-                                        <a href="cart.html" data-toggle="tooltip" data-placement="left" title="Add to wish list"><img src="img/core-img/wish-star.png" alt=""></a>
-                                    </div>
-                                    <div class="cart_">
-                                        <p>4</p>
-                                        <a href="cart.html" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="img/core-img/cart.png" alt=""></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
 
                 <div class="row">
@@ -410,10 +294,14 @@ try {
                         <!-- Pagination -->
                         <nav aria-label="navigation">
                             <ul class="pagination justify-content-end mt-50">
-                                <li class="page-item active"><a class="page-link" href="#">01.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">02.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">03.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">04.</a></li>
+                                <% for(int i = 1; i <= page_num; i++) {
+                                    if(i != cur_page) {
+                                %>
+                                    <li class="page-item"><a class="page-link" href="product_list_buyer.jsp?cur_page=<%=i%>">0<%=i%>.</a></li>
+                                <% }
+                                    else{ %>
+                                    <li class="page-item active"><a class="page-link" href="product_list_buyer.jsp?cur_page=<%=i%>">0<%=i%>.</a></li>
+                                <%} }%>
                             </ul>
                         </nav>
                     </div>
@@ -458,7 +346,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                                             <a class="nav-link" href="Product_list_seller.html">Product List (Seller)</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="product-details.html">나중에 카테고리 완전히 정해지면 고침</a>
+                                            <a class="nav-link" href="product-details.html">ëì¤ì ì¹´íê³ ë¦¬ ìì í ì í´ì§ë©´ ê³ ì¹¨</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="cart.html">Cart</a>
@@ -491,3 +379,11 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 </body>
 </html>
+<% 
+    rs.close();
+    conn.close();
+
+} catch(Exception e) {
+	out.println("Something went wrong !! Please try again");
+}
+%>
