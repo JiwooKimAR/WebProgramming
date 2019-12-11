@@ -2,9 +2,16 @@
 <%@ page import="java.sql.*"%>
 <%@include file="header.jsp" %>
 <%
+	//Session value checking for security
+	String id = "";
+	if (session.getAttribute("id") == null) {
+		response.sendRedirect("authority-error-message.jsp");
+	}
+	else {
+		id=session.getAttribute("id").toString();
+	}
 	int classification;
 	String user_name = "";
-	String id=session.getAttribute("user_name").toString();
 	Class.forName("com.mysql.jdbc.Driver");
 	Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/final_project?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
 	PreparedStatement pst = conn.prepareStatement("Select * from user_info where id=?");
@@ -64,7 +71,7 @@
               ID : <%=id%>
             </div>
             <br>
-            <button class="chng-usr-info" type="button" name="button">Change User Info</button>
+            <button class="chng-usr-info" type="button" name="button" onclick="location.href='user-info-modification.jsp'">Change User Info</button>
             </div>
           </div>
           <div class="prod-bid pad outer">
@@ -219,7 +226,8 @@
           </div>
         </div>
       </div>
-          <!-- ##### Main Content Wrapper End ##### -->
+      </div>
+      
 
     <!-- ##### Footer Area Start ##### -->
     <footer class="footer_area clearfix">
