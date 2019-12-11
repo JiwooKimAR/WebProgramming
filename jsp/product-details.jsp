@@ -100,7 +100,7 @@
 	}
 	%>
             <div class="prod-btn-lst">
-              <button class="prod-wish-list-btn" title="Add to Wish list">
+              <button class="prod-wish-list-btn" title="Add to Wish list" onclick="location.href='addwish.jsp?pid=<%=pid%>'">
               </button>
                 <li class="prod-add-cart-btn">
                   <div class="prod-add-cart">
