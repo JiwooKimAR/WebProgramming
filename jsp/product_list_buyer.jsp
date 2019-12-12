@@ -17,6 +17,7 @@ int total = 0;
 int page_num = 1; 
 int cur_page = 1; // start from 1 page
 int cur_status = 0; // select all
+int cur_sort = 0; // newest 
 
 // current item idx range
 int cur_start = 1; 
@@ -28,6 +29,10 @@ int cart_num = 0;
 String seller_name = "";
 String img_path = "";
 
+String auction_var = "";
+String soldout_var = "";
+String progress_var = "";
+
 if(request.getParameter("cur_page") != null){
     cur_page = Integer.parseInt(request.getParameter("cur_page"));
 }
@@ -36,7 +41,9 @@ if(request.getParameter("cur_status") != null){
     cur_status = Integer.parseInt(request.getParameter("cur_status"));
 }
 
-
+if(request.getParameter("cur_sort") != null){
+    cur_sort = Integer.parseInt(request.getParameter("cur_sort"));
+}
 
 %>
 
@@ -60,12 +67,14 @@ if(request.getParameter("cur_status") != null){
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="css/product_list-style.css">
 </head>
-<body>
+<body onload=check();>
      <%@ include file="header.jsp" %>
 
     <input type="hidden" id="cur_status" value="<%=cur_status%>">
+    <input type="hidden" id="cur_sort" value="<%=cur_sort%>">
+
     <%
-    // cur_status : 0 - all, 1 - auction, 2 - in progress, 3 - sold out
+    // cur_status : 0 - all, 1 - auction, 2 - sold out, 3 - in progress
     try {
         Class.forName("com.mysql.jdbc.Driver");
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/final_project?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
@@ -74,11 +83,45 @@ if(request.getParameter("cur_status") != null){
 
         if(cur_status > 0) {
             query += " where status in (";
-            if(cur_status == 1) query += "0"; // auction
-            if(cur_status == 2) query +=
-            query += ");";
+            // 1-a, 2-s, 3-p, 4-a/s, 5-a/p, 6-s/p, 7-all
+            if(cur_status == 1) {
+                query += "0";
+                auction_var = "a";
+            }else if(cur_status == 2) {
+                query += "1";
+                soldout_var = "s";
+            }else if(cur_status == 3) {
+                query += "2";
+                progress_var = "p";
+            }else{
+                if(cur_status == 4) {
+                    query += "0, 1";
+                    auction_var = "a";
+                    soldout_var = "s";
+                }else if(cur_status == 5) {
+                    query += "0, 2";
+                    auction_var = "a";
+                    progress_var = "p";
+                }else if(cur_status == 6) {
+                    query += "1, 2";
+                    soldout_var = "s";
+                    progress_var = "p";
+                }else {
+                    query += "0, 1, 2";
+                    auction_var = "a";
+                    soldout_var = "s";
+                    progress_var = "p";
+                }
+            }
+
+            query += ")";
         }
 
+        if(cur_sort == 1) {
+            query += " order by price desc";
+        }
+
+        query += ";";
 
         PreparedStatement pst = conn.prepareStatement(query);
         ResultSet rs = pst.executeQuery();
@@ -93,7 +136,16 @@ if(request.getParameter("cur_status") != null){
             total += 1;
         }
 
-        page_num = total / 6 + 1; // total page number
+        Collections.reverse(pid_list);
+        Collections.reverse(pname_list);
+        Collections.reverse(seller_list);
+        Collections.reverse(price_list);
+        Collections.reverse(status_list);
+        Collections.reverse(amount_list);
+
+        page_num = (total / 6) + 1; // total page number
+        if(total % 6 == 0) page_num -= 1; 
+        
 
     %>
 
@@ -103,13 +155,12 @@ if(request.getParameter("cur_status") != null){
     cur_start = (cur_page - 1) * 6 + 1;
 
     if(cur_page < page_num) { cur_end = cur_start + 5; }
-    else if (cur_page == page_num){ cur_end = cur_start + total % 6 - 1; }
-
-    //System.out.println("cur_page: " + cur_page);
-    //System.out.println("cur_start: " + cur_start);
-    //System.out.println("cur_end: " + cur_end);
-
-
+    else if (cur_page == page_num){ 
+    	cur_end = cur_start - 1 + total % 6; 
+    	if(total != 0) {
+    		if(total % 6 == 0) cur_end = cur_start - 1 + 6; 
+    	}
+    }
 
     %>
 	<div class="product-list-buyer-area">
@@ -120,29 +171,26 @@ if(request.getParameter("cur_status") != null){
             <div class="widget brands mb-50">
                 <!-- Widget Title -->
                 <h6 class="widget-title mb-30">Status</h6>
+                <form id="status_form">
+                    <div class="widget-desc">
+                        <!-- Single Form Check -->
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="status_auction" id="auction" value="<%=auction_var%>">
+                            <label class="form-check-label" for="auction">Auction</label>
+                        </div>
+                        <!-- Single Form Check -->
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="status_progress" id="progress" value="<%=progress_var%>">
+                            <label class="form-check-label" for="progress">In Progress</label>
+                        </div>
+                        <!-- Single Form Check -->
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="status_soldout" id="sold_out" value="<%=soldout_var%>">
+                            <label class="form-check-label" for="sold_out">Sold Out</label>
+                        </div>
+                    </div>
+                </form>
 
-                <div class="widget-desc">
-                    <!-- Single Form Check -->
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="0" name="status" id="all">
-                        <label class="form-check-label" for="all">All</label>
-                    </div>
-                    <!-- Single Form Check -->
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="1" name="status" id="auction">
-                        <label class="form-check-label" for="auction">Auction</label>
-                    </div>
-                    <!-- Single Form Check -->
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="2" name="status" id="progress">
-                        <label class="form-check-label" for="progress">In Progress</label>
-                    </div>
-                    <!-- Single Form Check -->
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="3" name="status" id="sold_out">
-                        <label class="form-check-label" for="sold_out">Sold Out</label>
-                    </div>
-                </div>
             </div>
             
         </div>
@@ -184,10 +232,9 @@ if(request.getParameter("cur_status") != null){
                                 <div class="sort-by-date d-flex align-items-center mr-15">
                                     <p>Sort by</p>
                                     <form action="#" method="get">
-                                        <select name="select" id="sortBydate">
-                                            <option value="value">Newest</option>
-                                            <option value="value">Price</option>
-                                            <option value="value">Popular</option>
+                                        <select name="select" id="sortBy">
+                                            <option value="newest" <%if(cur_sort == 0) { %> selected <% } %>>Newest</option>
+                                            <option value="price" <%if(cur_sort == 1) { %> selected <% } %>>Price</option>
                                         </select>
                                     </form>
                                 </div>
@@ -225,7 +272,7 @@ if(request.getParameter("cur_status") != null){
                                 <div class="product-meta-data">
                                     <div class="line"></div>
                                     <div class="product-status-name">
-                                        <% if(status_list.get(i) == 0){%>
+                                        <% if(status_list.get(i) == 0){%> 
                                         <p class="product-status" style="color: blue; ">AUCTION</p>
                                         <a href="product-details-auction.jsp?pid=<%=pid_list.get(i)%>" class="product-name">
                                             <p><%= pname_list.get(i)%></p>
@@ -306,10 +353,10 @@ if(request.getParameter("cur_status") != null){
                                 <% for(int i = 1; i <= page_num; i++) {
                                     if(i != cur_page) {
                                 %>
-                                    <li class="page-item"><a class="page-link" href="product_list_buyer.jsp?cur_page=<%=i%>">0<%=i%>.</a></li>
+                                    <li class="page-item"><a class="page-link" href="product_list_buyer.jsp?cur_page=<%=i%>&cur_status=<%=cur_status%>">0<%=i%>.</a></li>
                                 <% }
                                     else{ %>
-                                    <li class="page-item active"><a class="page-link" href="product_list_buyer.jsp?cur_page=<%=i%>">0<%=i%>.</a></li>
+                                    <li class="page-item active"><a class="page-link" href="product_list_buyer.jsp?cur_page=<%=i%>&cur_status=<%=cur_status%>">0<%=i%>.</a></li>
                                 <%} }%>
                             </ul>
                         </nav>
@@ -384,6 +431,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="js/plugins.js"></script>
     <!-- Active js -->
     <script src="js/active.js"></script>
+
+    <script src="js/product-list.js"></script>
 
 
 </body>
