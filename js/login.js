@@ -40,7 +40,7 @@ function dtestPass() {
 	}
 }
 
-// Check that all the input is filled
+// Check that all the input is filled in sign up
 // Return value is boolean
 function formCheck() {
 	if (!document.getElementById("user2").value) {
@@ -65,6 +65,20 @@ function formCheck() {
 	}
 	if (!$('input:radio[id="check1"]').is(":checked") && !$('input:radio[id="check2"]').is(":checked")) {
 		alert("Please check your type [Buyer or Seller].");
+		return false;
+	}
+	return true;
+}
+
+//Check that all the input is filled in sign in
+//Return value is boolean
+function formCheckI() {
+	if (!document.getElementById("user").value) {
+		alert("ID is empty. Please enter your ID.");
+		return false;
+	}
+	if (!document.getElementById("pass").value) {
+		alert("PASSWORD is empty. Please enter your PASSWORD.");
 		return false;
 	}
 	return true;
