@@ -103,7 +103,7 @@
                                     <tr>
                                         <td class="check-table">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="check">
+                                                <input class="form-check-input" name="check" type="checkbox" value="<%=price %>" id="check">
                                                 <label class="form-check-label" for="all"></label>
                                             </div>
                                         </td>
@@ -130,9 +130,68 @@
                                                                     
                                 <%
                                 }
+                                PreparedStatement pst1 = conn.prepareStatement("Select * from product_info where buyer_id=? and status=0");
+                               	pst1.setInt(1,id_);
+                                ResultSet rs1 = pst1.executeQuery();
+                                
+                                while(rs1.next()){
+                                	String name=rs1.getString("name");
+                                	prod_id=rs1.getInt("pid");
+                                	PreparedStatement pst2 = conn.prepareStatement("Select * from history where buyer_id=? and pid=?");
+                                   	pst2.setInt(1,id_);
+                                   	pst2.setInt(2,prod_id);
+                                    ResultSet rs2 = pst2.executeQuery();
+                                    double cur_price=0.0;
+                                	if(rs2.next()){
+                                		cur_price=rs2.getDouble("price");
+                                	}
+                                	PreparedStatement pst3 = conn.prepareStatement("Select * from img_info where pid=?");
+                                   	pst3.setInt(1,prod_id);
+                                    ResultSet rs3 = pst3.executeQuery();
+                                    String img_path="";
+                                    if(rs3.next()){
+                                    	img_path=rs3.getString("path");
+                                    }
+                                   %>
+                                   <tr>
+                                        <td class="check-table">
+                                            <div class="form-check">
+                                                <input class="form-check-input" name="check" type="checkbox" value="<%=cur_price %>" id="check">
+                                                <label class="form-check-label" for="all"></label>
+                                            </div>
+                                        </td>
+                                        <td class="cart_product_img">
+                                            <a href='product-details.jsp?pid=<%=prod_id%>'"><img src="<%=prod_img_path%>" alt="Product"></a>
+                                        </td>
+                                        <td class="cart_product_desc">
+                                            <h5><%=prod_name %></h5>
+                                        </td>
+                                        <td class="price">
+                                            <span>$<%=cur_price %></span>
+                                        </td>
+                                        <td class="qty">
+                                            <div class="qty-btn d-flex">
+                                                <div class="quantity">
+                                                    <input type="number" class="qty-text" id="qty" step="1" min="1" max="<%=amount %>" name="quantity" value="1">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="status">
+                                            <span>Successful Bid</span>
+                                        </td>
+                                    </tr>
+                                   
+                                   <%
+                                    
+                                		
+                                }
 	}catch(Exception e){
 		System.out.println(e.toString());
-	}%>
+	}
+	
+	
+	%>
+    
           
                                 </tbody>
                             </table>
@@ -142,10 +201,10 @@
                         <div class="cart-summary">
                             <h5>Cart Total</h5>
                             <ul class="summary-table">
-                                <li><span>total:</span> <span>$140.00</span></li>
+                                <li><span>total:</span> <span id="total"></span></li>
                             </ul>
                             <div class="cart-btn">
-                                <a href="cart.html" class="btn amado-btn w-100">Checkout</a>
+                                <button class="btn amado-btn w-100" onclick="changeRadioValues()">Checkout</button>
                             </div>
                         </div>
                     </div>
@@ -156,8 +215,11 @@
     </div>
     <!-- ##### Main Content Wrapper End ##### -->
 
+
     <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
     <script src="js/jquery/jquery-2.2.4.min.js"></script>
+    
+	<script src="js/checkout.js"></script>
     <!-- Popper js -->
     <script src="js/popper.min.js"></script>
     <!-- Bootstrap js -->
