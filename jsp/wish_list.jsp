@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="css/product_list-style.css">
 </head>
 <body>
-<%@ include file="header.jsp" %>
+<%@ include file="header-buyer.jsp" %>
     <!-- ##### Main Content Wrapper Start ##### -->
     <div class="product-list-buyer-area">
         <div class="shop_sidebar_area">
@@ -392,7 +392,7 @@
     </div>
     <!-- ##### Main Content Wrapper End ##### -->
 
-    
+    <%@ include file="footer-buyer.jsp" %>
 
     <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
     <script src="js/jquery/jquery-2.2.4.min.js"></script>
