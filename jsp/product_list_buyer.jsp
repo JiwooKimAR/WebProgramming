@@ -17,6 +17,7 @@ int total = 0;
 int page_num = 1; 
 int cur_page = 1; // start from 1 page
 int cur_status = 0; // select all
+int cur_sort = 0; // newest 
 
 // current item idx range
 int cur_start = 1; 
@@ -38,6 +39,10 @@ if(request.getParameter("cur_page") != null){
 
 if(request.getParameter("cur_status") != null){
     cur_status = Integer.parseInt(request.getParameter("cur_status"));
+}
+
+if(request.getParameter("cur_sort") != null){
+    cur_sort = Integer.parseInt(request.getParameter("cur_sort"));
 }
 
 %>
@@ -66,6 +71,7 @@ if(request.getParameter("cur_status") != null){
      <%@ include file="header.jsp" %>
 
     <input type="hidden" id="cur_status" value="<%=cur_status%>">
+    <input type="hidden" id="cur_sort" value="<%=cur_sort%>">
 
     <%
     // cur_status : 0 - all, 1 - auction, 2 - sold out, 3 - in progress
@@ -111,6 +117,10 @@ if(request.getParameter("cur_status") != null){
             query += ")";
         }
 
+        if(cur_sort == 1) {
+            query += " order by price desc";
+        }
+
         query += ";";
 
         PreparedStatement pst = conn.prepareStatement(query);
@@ -125,6 +135,13 @@ if(request.getParameter("cur_status") != null){
             amount_list.add(rs.getInt("amount"));
             total += 1;
         }
+
+        Collections.reverse(pid_list);
+        Collections.reverse(pname_list);
+        Collections.reverse(seller_list);
+        Collections.reverse(price_list);
+        Collections.reverse(status_list);
+        Collections.reverse(amount_list);
 
         page_num = (total / 6) + 1; // total page number
         if(total % 6 == 0) page_num -= 1; 
@@ -215,10 +232,9 @@ if(request.getParameter("cur_status") != null){
                                 <div class="sort-by-date d-flex align-items-center mr-15">
                                     <p>Sort by</p>
                                     <form action="#" method="get">
-                                        <select name="select" id="sortBydate">
-                                            <option value="value">Newest</option>
-                                            <option value="value">Price</option>
-                                            <option value="value">Popular</option>
+                                        <select name="select" id="sortBy">
+                                            <option value="newest" <%if(cur_sort == 0) { %> selected <% } %>>Newest</option>
+                                            <option value="price" <%if(cur_sort == 1) { %> selected <% } %>>Price</option>
                                         </select>
                                     </form>
                                 </div>
