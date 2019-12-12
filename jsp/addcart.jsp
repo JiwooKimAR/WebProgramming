@@ -2,8 +2,6 @@
 <%
 
 	//Session value checking for security
-System.out.println("????");
-
 	String id = session.getAttribute("id").toString();
 	String pid = request.getParameter("pid"); 
 	int uid=0;
@@ -17,6 +15,19 @@ System.out.println("????");
 		if (rs.next()) {
 			uid=rs.getInt("uid");
 		}
+		PreparedStatement pst1 = conn.prepareStatement("Select * from product_info where pid=?");	
+		pst1.setInt(1,pid_);
+		ResultSet rs1 = pst1.executeQuery();
+		if(rs1.next()){
+			int status=rs1.getInt("status");
+			if(status==1){
+				%>
+					<script>
+	alert("This Product is sold out.")
+	history.go(-1); 
+</script>
+	<%
+			}else{
 		PreparedStatement pst2 = conn.prepareStatement("Select * from wish_cart_info where buyer_id=? and prod_id=? and status=1");
 		System.out.println(uid+" "+pid);
 		pst2.setInt(1,uid);
@@ -36,7 +47,9 @@ System.out.println("????");
 			
 			pst3.setInt(2,pid_);
 			pst3.executeUpdate();
-		}				
+		}	
+		}
+	}
 %> 
 <script>
 	alert("This Product is added to your cart.")
