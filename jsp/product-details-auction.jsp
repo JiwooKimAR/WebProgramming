@@ -22,8 +22,8 @@
   <%@ page import="java.text.SimpleDateFormat" %>
   
   <% 
-  	String id=session.getAttribute("id").toString();
-  
+  	//String id=session.getAttribute("id").toString();
+  	String id="hj";
   	String pid = request.getParameter("pid"); 
   	String prod_name="";
   	int price;
@@ -34,8 +34,8 @@
 	String prod_content="";
   	Date today=new Date();
   	Date duedate;
-  	System.out.println(today);
- 	
+  	double bid_unit=0;
+  	int cur_price=0;
 	Class.forName("com.mysql.jdbc.Driver");
 	Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/final_project?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
 	PreparedStatement pst = conn.prepareStatement("Select * from product_info where pid=?");
@@ -50,12 +50,12 @@
 			trading=rs.getString("trading_place");
 			duedate=rs.getDate("duedate");
 			prod_content=rs.getString("content");
-					  		
+			bid_unit=rs.getDouble("unit");		  		
 			long daydiff=(Math.abs(new Date().getTime()-duedate.getTime()));
-			
+			System.out.println(daydiff);
 			Date daydif=new Date();
 			daydif.setTime(daydiff);	
-
+			
 			double days = (daydiff / (1000.0 * 60.0 * 60.0 * 24.0));
 			double hours=days%1.0*24;
 			double minutes=hours%1.0*60;
@@ -68,6 +68,7 @@
 			try{
 				if(rs2.next()){
 					seller_id=rs2.getString("id");
+				  	System.out.println(seller_id);
 				}
 			}catch(Exception e){
 				out.println(e.toString());
@@ -81,13 +82,12 @@
 					prod_img_path=rs3.getString("path");
 				}
 			}catch(Exception e){
-				out.println(e.toString());
+				System.out.println(e.toString());
 			}
 			PreparedStatement pst4 = conn.prepareStatement("Select * from history where pid=? order by hid desc limit 1");
 			pst4.setString(1,pid);
 			System.out.println(pid);
 			ResultSet rs4 = pst4.executeQuery();
-			int cur_price;
 			try{
 				if(rs4.next()){
 					cur_price=rs4.getInt("price");
@@ -95,7 +95,7 @@
     <div class="wrapper">
       <div class="prod-outline">
         <div class="product">
-          <img class="product-left" src="img/product-img/bicycle.jpeg" alt="bicyle">
+          <img class="product-left" src="<%=prod_img_path%>" alt="bicyle">
           <div class="product-right">
             <div class="prod-header">
               Product Name : <%=prod_name %>
@@ -126,11 +126,14 @@
 	%> 
             </div>
             <div class="prod-btn-lst">
-              <button class="prod-wish-list-btn" title="Add to Wish list">
+              <button class="prod-wish-list-btn" title="Add to Wish list" onclick="location.href='addwish.jsp?pid=<%=pid%>'">
               </button>
-              <form class="prod-bid-lst" action="http://localhost:8080/form.jsp" method="post">
-                <div><input type="text" name="" value="" placeholder="Type your Bid price"></div>
+              <form class="prod-bid-lst" action="bid.jsp" method="post">
+                <div><input type="text" name="bidprice" value="" placeholder="Type your Bid price"></div>              
+                <input type="hidden" name="pid" value="<%=pid%>">
+                <input type="hidden" name="cur_price" value="<%=cur_price%>">
                 <div><button class="bid"type="submit" name="button">BID!</button></div>
+                <div>Bid Unit : $<%=bid_unit%></div>
               </form>
             </div>
           </div>
@@ -158,13 +161,8 @@
         			}
                 	%>
                   <div classs="prod-detail-txt">
-                  <%
-                  	if(prod_content!=null){
-                  %>
-                    <p> <%=prod_content %> </p>
-                    <%
-                                      		
-                  	}%>
+                   <%=prod_content %> 
+                   
                    </div>
                 </div>
               </li>
