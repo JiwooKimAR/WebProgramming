@@ -156,7 +156,7 @@
                                    <tr>
                                         <td class="check-table">
                                             <div class="form-check">
-                                                <input class="form-check-input" name="check" type="checkbox" value="<%=cur_price %>" id="check">
+                                                <input class="form-check-input" name="check" type="checkbox" value="<%=cur_price %>" id="check" checked disabled>
                                                 <label class="form-check-label" for="all"></label>
                                             </div>
                                         </td>
