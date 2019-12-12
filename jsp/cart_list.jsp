@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="css/cart_list-style.css">
 </head>
 <body>
-	<%@ include file="header.jsp" %>
+	<%@ include file="header-buyer.jsp" %>
 	<% 
 	int id_=0;
 	String prod_name="";
@@ -155,8 +155,6 @@
     </div>
     </div>
     <!-- ##### Main Content Wrapper End ##### -->
-
-    
 
     <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
     <script src="js/jquery/jquery-2.2.4.min.js"></script>
