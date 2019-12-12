@@ -25,12 +25,12 @@
   		if (c == 0) {
   			response.sendRedirect("member_list.jsp");
   		}
-  		// TODO: [JW] buyer and seller division
+  		// Seller and buyer has different main page
   		else if (c == 1) {
-  			response.sendRedirect("index.jsp");
+  			response.sendRedirect("product_list_buyer.jsp");
   		}
   		else {
-  			response.sendRedirect("index.jsp");
+  			response.sendRedirect("product_list_seller.jsp");
   		}
   	}
   
