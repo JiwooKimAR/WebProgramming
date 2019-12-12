@@ -127,7 +127,7 @@
           <div class="prod-wish pad outer">
             <div class="title-outer">
           	 <p class="user-info-title">Cart List</p>
-             <button class="more_btn" type="button" name="button"  onclick="location.href='wish_list.jsp'">More</button>
+             <button class="more_btn" type="button" name="button"  onclick="location.href='cart_list.jsp'">More</button>
           	</div>
             <div class="uploaded-prod-lst inner">
             <%
@@ -177,7 +177,7 @@
           <div class="prod-wish pad outer">
            <div class="title-outer">
           	 <p class="user-info-title">Wish List</p>
-             <button class="more_btn" type="button" name="button"  onclick="location.href='cart_list.jsp'">More</button>
+             <button class="more_btn" type="button" name="button"  onclick="location.href='wish_list.jsp'">More</button>
           	</div>
             <div class="uploaded-prod-lst inner">
 			<%
