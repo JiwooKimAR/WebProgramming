@@ -33,8 +33,9 @@ function changeRadioValues(){
   else if(progress == "p") cur_status = 3;
 
   var cur_sort = document.getElementById("cur_sort").value;
-
-  var url = 'product_list_buyer.jsp?cur_status=' + cur_status + "&cur_sort=" + cur_sort;
+  
+  var link = document.location.pathname.split("/");
+  var url = link[2] + '?cur_status=' + cur_status + "&cur_sort=" + cur_sort;
   
   window.location.href = url;
 }
@@ -72,5 +73,6 @@ $("#sortBy").change(function(){
 
   var cur_status = document.getElementById("cur_status").value; 
   
-  window.location.href = "product_list_buyer.jsp?cur_sort=" + cur_sort + "&cur_status=" + cur_status;
+  var link = document.location.pathname.split("/");
+  window.location.href = link[2] + "?cur_sort=" + cur_sort + "&cur_status=" + cur_status;
 });

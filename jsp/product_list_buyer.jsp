@@ -261,7 +261,7 @@ if(request.getParameter("cur_sort") != null){
                                 ResultSet img_rs = img_pst.executeQuery();
                                 if(img_rs.next()) {img_path = img_rs.getString("path"); }
                                 %>
-                                <img src="<%=img_path%>" alt="">
+                                <a href="product-details<%if(status_list.get(i) == 0){ %>-auction<%} %>.jsp?pid=<%=pid_list.get(i)%>"><img src="<%=img_path%>" alt=""></a>
                                 <!-- Hover Thumb -->
                                 <!--<img class="hover-img" src="img/product-img/product2.jpg" alt="">-->
                             </div>
@@ -317,7 +317,7 @@ if(request.getParameter("cur_sort") != null){
                                         }
                                         %>
                                         <p><%=wish_num%></p>
-                                        <a href="cart.html" data-toggle="tooltip" data-placement="left" title="Add to wish list"><img src="img/core-img/wish-star.png" alt=""></a>
+                                        <a href="addwish.jsp?pid=<%=pid_list.get(i)%>" data-toggle="tooltip" data-placement="left" title="Add to wish list"><img src="img/core-img/wish-star.png" alt=""></a>
                                     </div>
                                     <div class="cart_">
                                         <% 
@@ -330,7 +330,7 @@ if(request.getParameter("cur_sort") != null){
                                         }
                                         %>
                                         <p><%=cart_num%></p>
-                                        <a href="cart.html" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="img/core-img/cart.png" alt=""></a>
+                                        <a href="addcart.jsp?pid=<%=pid_list.get(i)%>" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="img/core-img/cart.png" alt=""></a>
                                     </div>
                                 </div>
                             </div>
