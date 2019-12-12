@@ -23,14 +23,13 @@ try {
 			response.sendRedirect("member_list.jsp");
 		}
 		else {
-			// TODO: [JW]Different page for buyer and seller
 			// If user is only a buyer, then go to buyer page
 			if (classification == 1) {
-				response.sendRedirect("index.jsp");
+				response.sendRedirect("product_list_buyer.jsp");
 			}
 			// If user is a seller, then go to seller page
 			else {
-				response.sendRedirect("index.jsp");
+				response.sendRedirect("product_list_seller.jsp");
 			}
 		}
 	}

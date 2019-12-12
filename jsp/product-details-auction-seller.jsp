@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>SKKU Flea Market | Product Details</title>
+    <title>SKKU Flea Market | Product Details For Seller</title>
 
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="/css/mobile-nav-header.css">
@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="css/product-details-auction.css">
   </head>
   <body>
-  <%@ include file="header-buyer.jsp"%>
+  <%@ include file="header.jsp"%>
   <%@ page import="java.sql.*"%>
   <%@ page import="java.util.Date" %>
   <%@ page import="java.text.SimpleDateFormat" %>
@@ -126,23 +126,16 @@
 	%> 
             </div>
             <div class="prod-btn-lst">
-              <button class="prod-wish-list-btn" title="Add to Wish list" onclick="location.href='addwish.jsp?pid=<%=pid%>'">
-              </button>
-              <form class="prod-bid-lst" action="bid.jsp" method="post">
-                <div><input type="text" name="bidprice" value="" placeholder="Type your Bid price"></div>              
-                <input type="hidden" name="pid" value="<%=pid%>">
-                <input type="hidden" name="cur_price" value="<%=cur_price%>">
-                <div><button class="bid"type="submit" name="button">BID!</button></div>
-                <div>Bid Unit : $<%=bid_unit%></div>
-              </form>
+              <button class="editproduct" onclick="location.href='product_edit.jsp?pid=<%=pid%>'">Edit Product</button>
             </div>
           </div>
         </div>
+        
         <div class="prod-detail">
           <div class="tab">
             <ul class="tab-title">
               <li name="detail"class="active" data-tab="con1">Product Detail</li>
-              <li name="auction" data-tab="con2">Auction Detail</li>
+              <li name="auction" data-tab="con2">Auction History</li>
             </ul>
             <ul class="tab-content">
               <li class="content-detail active" id="con1">
@@ -157,18 +150,49 @@
     				System.out.println(prod_img_path);
                 %>
                   <img class="prod-detail-img" src="<%=prod_img_path%>" alt="bicycle"> <br><br>
-                  <%
-        			}
-                	%>
+                 <%
+       			}
+               	%>
                   <div classs="prod-detail-txt">
-                   <%=prod_content %> 
-                   
+                  <%=prod_content %> 
                    </div>
                 </div>
               </li>
               <li class="content-detail" id="con2">
-                <div> Seller : <%=seller_id %></div>
-                <div> Phone Number : <%=seller_phone %></div>
+              	<table>
+              		<tr>
+              		<td> Number</td>
+              		<td> Buyer ID</td>
+              		<td> Bid Price</td>
+              		</tr>
+              		<tr>
+              <%
+              	PreparedStatement pst5 = conn.prepareStatement("Select * from history where pid=? order by hid desc");
+	  			pst5.setString(1,pid);
+	  			ResultSet rs5 = pst5.executeQuery();
+	  			int buyerid=0;
+	  			Double bidprice=0.0;
+	  			int i=0;
+              	while(rs5.next()){
+	  				buyerid=rs5.getInt("buyer_id");
+	  				bidprice=rs5.getDouble("price");
+	  				PreparedStatement pst6 = conn.prepareStatement("Select * from user_info where uid=?");
+		  			pst6.setInt(1,buyerid);
+		  			ResultSet rs6 = pst6.executeQuery();
+		  			String buyer_id="";
+		  			i++;
+		  			if(rs6.next()){
+		  				buyer_id=rs6.getString("id");
+		  			}
+              %>
+				<td><%=i%></td>
+				<td><%=buyer_id%></td>
+				<td>$ <%=bidprice %></td>	
+              	</tr>
+              	<%		  				
+              	}
+              	%>
+              	</table>
               </li>
             </ul>
           </div>
@@ -178,7 +202,57 @@
   </div>
   </div>
 
- 	<%@ include file="footer-buyer.jsp"%>
+  <!-- ##### Footer Area Start ##### -->
+  <footer class="footer_area clearfix">
+      <div class="container">
+          <div class="row align-items-center">
+              <!-- Single Widget Area -->
+              <div class="col-12 col-lg-4">
+                  <div class="single_widget_area">
+                      <!-- Logo -->
+                      <div class="footer-logo mr-50">
+                          <a href="index.html"><img src="img/core-img/logo2.png" alt=""></a>
+                      </div>
+                      <!-- Copywrite Text -->
+                      <p class="copywrite"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with WebProgrammingClas
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                  </div>
+              </div>
+              <!-- Single Widget Area -->
+              <div class="col-12 col-lg-8">
+                  <div class="single_widget_area">
+                      <!-- Footer Menu -->
+                      <div class="footer_menu">
+                          <nav class="navbar navbar-expand-lg justify-content-end">
+                              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#footerNavContent" aria-controls="footerNavContent" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+                              <div class="collapse navbar-collapse" id="footerNavContent">
+                                  <ul class="navbar-nav ml-auto">
+                                      <li class="nav-item active">
+                                          <a class="nav-link" href="index.html">Home</a>
+                                      </li>
+                                      <li class="nav-item">
+                                          <a class="nav-link" href="Product_list_seller.html">Product List (Seller)</a>
+                                      </li>
+                                      <li class="nav-item">
+                                          <a class="nav-link" href="product-details.html">나중에 카테고리 완전히 정해지면 고침</a>
+                                      </li>
+                                      <li class="nav-item">
+                                          <a class="nav-link" href="cart.html">Cart</a>
+                                      </li>
+                                      <li class="nav-item">
+                                          <a class="nav-link" href="checkout.html">Checkout</a>
+                                      </li>
+                                  </ul>
+                              </div>
+                          </nav>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </footer>
+  <!-- ##### Footer Area End ##### -->
 
 	<script type="text/javascript" src="calDate.js"></script> 
     <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->

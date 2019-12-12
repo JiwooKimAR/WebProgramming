@@ -13,14 +13,34 @@ ul {
     margin: 0;
     list-style: none;
 }
-
+table{
+	 margin:auto;
+	  font-family: "helveticaneue";
+	 
+	  font-size:20px;
+}
+tr{
+	font-family: "helveticaneue";
+}
+td{
+	font-family: "helveticaneue";
+	padding-left:10px;
+	padding-right:10px;
+	padding-bottom:5px;
+	padding-top:5px;
+}
 button{
   cursor: pointer;
   color: white;
 }
 .wrapper {
 }
-
+.editproduct{
+	background-color: #ffc107;
+  border: 0;
+  text-align: center;
+  padding:10px;
+}
 .prod-outline {
   position: relative;
 }

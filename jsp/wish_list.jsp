@@ -69,7 +69,7 @@ if(request.getParameter("cur_sort") != null){
   <link rel="stylesheet" href="css/product_list-style.css">
 </head>
 <body onload=check();>
-     <%@ include file="header.jsp" %>
+     <%@ include file="header-buyer.jsp" %>
 
     <input type="hidden" id="cur_status" value="<%=cur_status%>">
     <input type="hidden" id="cur_sort" value="<%=cur_sort%>">
@@ -375,7 +375,7 @@ if(request.getParameter("cur_sort") != null){
     </div>
     <!-- ##### Main Content Wrapper End ##### -->
 
-    
+    <%@ include file="footer-buyer.jsp" %>
 
     <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
     <script src="js/jquery/jquery-2.2.4.min.js"></script>

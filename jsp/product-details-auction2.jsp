@@ -11,16 +11,18 @@
 
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="/css/mobile-nav-header.css">
-    <link rel="stylesheet" href="css/core-style.css">
     <link rel="stylesheet" href="css/header-style.css">
-    <link rel="stylesheet" href="css/product-details-style.css">
+    <link rel="stylesheet" href="css/core-style.css">
+    <link rel="stylesheet" href="css/product-details-auction.css">
   </head>
   <body>
-  <%@ include file="header-buyer.jsp" %>
+  <%@ include file="header-buyer.jsp"%>
   <%@ page import="java.sql.*"%>
+  <%@ page import="java.util.Date" %>
+  <%@ page import="java.text.SimpleDateFormat" %>
+  
   <% 
   	String id=session.getAttribute("id").toString();
-
   
   	String pid = request.getParameter("pid"); 
   	String prod_name="";
@@ -29,10 +31,10 @@
   	String seller_id="";
   	String seller_phone="";
   	String trading="";
-  	String prod_content="";
-  	int amount;
-  	int status;
-  	String status_="";
+	String prod_content="";
+  	Date today=new Date();
+  	Date duedate;
+  	System.out.println(today);
  	
 	Class.forName("com.mysql.jdbc.Driver");
 	Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/final_project?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
@@ -46,16 +48,20 @@
 			seller_uid=rs.getString("seller_id");
 			seller_phone=rs.getString("phone");
 			trading=rs.getString("trading_place");
-			amount=rs.getInt("amount");
+			duedate=rs.getDate("duedate");
 			prod_content=rs.getString("content");
-			status=rs.getInt("status");
-			if(status==0){
-				status_="Auction";
-			}else if(status==1){
-				status_="Sold Out";
-			}else{
-				status_="Selling";
-			}
+					  		
+			long daydiff=(Math.abs(new Date().getTime()-duedate.getTime()));
+			
+			Date daydif=new Date();
+			daydif.setTime(daydiff);	
+
+			double days = (daydiff / (1000.0 * 60.0 * 60.0 * 24.0));
+			double hours=days%1.0*24;
+			double minutes=hours%1.0*60;
+			int daysToInt=(int)Math.floor(days);
+			int hoursToInt=(int)Math.floor(hours);
+			int minutesToInt=(int)Math.ceil(minutes);
 			PreparedStatement pst2 = conn.prepareStatement("Select * from user_info where uid=?");
 			pst2.setString(1,pid);
 			ResultSet rs2 = pst2.executeQuery();
@@ -77,57 +83,55 @@
 			}catch(Exception e){
 				out.println(e.toString());
 			}
+			PreparedStatement pst4 = conn.prepareStatement("Select * from history where pid=? order by hid desc limit 1");
+			pst4.setString(1,pid);
+			System.out.println(pid);
+			ResultSet rs4 = pst4.executeQuery();
+			int cur_price;
+			try{
+				if(rs4.next()){
+					cur_price=rs4.getInt("price");
 	%>
     <div class="wrapper">
       <div class="prod-outline">
         <div class="product">
-          <img class="product-left" src="<%=prod_img_path %>" alt="bicyle">
+          <img class="product-left" src="img/product-img/bicycle.jpeg" alt="bicyle">
           <div class="product-right">
             <div class="prod-header">
               Product Name : <%=prod_name %>
             </div>
             <div class="prod-info">
-              <div class="prod-price">
-                Price : $<%=price %>
-              </div>
               <div class="prod-seller">
-              	<div> Seller : <%=seller_id %></div>
-                <div> Phone Number : <%=seller_phone %></div>
-               
+                Seller : <%=seller_id %> <br>
+                Phone Number : <%=seller_phone %>
               </div>
-              <div class="trdng-plc">
+              <div class="remain-time">
+                Remaining time : <%=daysToInt %>D <%=hoursToInt%>H <%=minutesToInt%>M
+              </div>
+              <div class="current-price">
+                Current Product Price : $<%=cur_price %>
+              </div>
+              <div class="prod-date">
                 Trading Place : <%=trading %>
               </div>
-              <div class="amnt">
-              	Amount : <%=amount %>
-              </div>
-            </div>
-            <div>
-	           	<div>
-	           	 <%=status_ %>
-	           	</div>
-            </div>
-            <%
-				
-           }
-		}catch(Exception e){
-			out.println(e.toString());
+             <% 
+				}
+			}catch(Exception e){
+				System.out.println(e.toString());
+			}
 	}
-	%>
+	}catch(Exception e){
+		out.println(e);
+	}
+	%> 
+            </div>
             <div class="prod-btn-lst">
-              <button class="prod-wish-list-btn" title="Add to Wish list" onclick="location.href='addwish.jsp?pid=<%=pid%>'">
+              <button class="prod-wish-list-btn" title="Add to Wish list">
               </button>
-                <li class="prod-add-cart-btn">
-                  <div class="prod-add-cart">
-                    <a href="#" onclick="location.href='addcart.jsp?pid=<%=pid%>'">Add Cart</a>
-                  </div>
-                </li>
-                <li class="prod-prtcp-actn-btn">
-                  <div class="prod-prtcp-actn">
-                    <a href="#">Buy Now</a>
-                  </div>
-                </li>
-              </ul>
+              <form class="prod-bid-lst" action="http://localhost:8080/form.jsp" method="post">
+                <div><input type="text" name="" value="" placeholder="Type your Bid price"></div>
+                <div><button class="bid"type="submit" name="button">BID!</button></div>
+              </form>
             </div>
           </div>
         </div>
@@ -135,32 +139,38 @@
           <div class="tab">
             <ul class="tab-title">
               <li name="detail"class="active" data-tab="con1">Product Detail</li>
-              <li name="auction" data-tab="con2">Seller Information</li>
+              <li name="auction" data-tab="con2">Auction Detail</li>
             </ul>
             <ul class="tab-content">
               <li class="content-detail active" id="con1">
                 <div class="detail-item">
-                	<%
-                	PreparedStatement pst3 = conn.prepareStatement("Select * from img_info where pid=?");
-        			pst3.setString(1,pid);
-        			ResultSet rs3 = pst3.executeQuery();
-        			String prod_img_path="";
-        			while(rs3.next()){
-        				prod_img_path=rs3.getString("path");
-        				System.out.println(prod_img_path);
-        			%>
-        			
+                <%
+                PreparedStatement pst3 = conn.prepareStatement("Select * from img_info where pid=?");
+    			pst3.setString(1,pid);
+    			ResultSet rs3 = pst3.executeQuery();
+    			String prod_img_path="";
+    			while(rs3.next()){
+    				prod_img_path=rs3.getString("path");
+    				System.out.println(prod_img_path);
+                %>
                   <img class="prod-detail-img" src="<%=prod_img_path%>" alt="bicycle"> <br><br>
-					<%
+                  <%
         			}
                 	%>
                   <div classs="prod-detail-txt">
-                  	<%=prod_content %>
+                  <%
+                  	if(prod_content!=null){
+                  %>
+                    <p> <%=prod_content %> </p>
+                    <%
+                                      		
+                  	}%>
+                   </div>
                 </div>
               </li>
               <li class="content-detail" id="con2">
-                Seller ID : <%=seller_id %> <br>
-                Phone Number : <%= seller_phone %>
+                <div> Seller : <%=seller_id %></div>
+                <div> Phone Number : <%=seller_phone %></div>
               </li>
             </ul>
           </div>
@@ -172,7 +182,7 @@
 
   <%@ include file="footer-buyer.jsp" %>
 
-	<script src="js/addcart.js"></</script>
+	<script type="text/javascript" src="calDate.js"></script> 
     <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
     <script src="js/jquery/jquery-2.2.4.min.js"></script>
     <!-- Popper js -->
