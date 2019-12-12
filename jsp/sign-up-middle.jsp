@@ -38,14 +38,13 @@ try {
 	
 	session.setAttribute("id", id);
 	session.setAttribute("classification", classification);
-	// TODO: [JW]Differnt page for buyer and seller
-	// If user is only a buyer, then go to buyer page
+	// If user is a buyer, then go to buyer page
 	if (classification == 1) {
-		response.sendRedirect("index.jsp");		
+		response.sendRedirect("product_list_buyer.jsp");		
 	}
 	// If user is a seller, then go to seller page
 	else {
-		response.sendRedirect("index.jsp");
+		response.sendRedirect("product_list_seller.jsp");
 	}
 } catch(Exception e) {
 	out.println("Something went wrong !! Please try again");
