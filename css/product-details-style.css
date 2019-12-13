@@ -16,6 +16,13 @@ ul {
 .wrapper {
 }
 
+.editproduct{
+	background-color: #ffc107;
+  border: 0;
+  text-align: center;
+  padding:10px;
+}
+
 .prod-outline{
   position: relative;
 }
