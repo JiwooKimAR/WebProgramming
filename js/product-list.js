@@ -76,3 +76,32 @@ $("#sortBy").change(function(){
   var link = document.location.pathname.split("/");
   window.location.href = link[2] + "?cur_sort=" + cur_sort + "&cur_status=" + cur_status;
 });
+
+$(".sort-price").click(function(){
+	var range = $(".range-price").text();
+	if(range[0] != " "){
+		var min_price = range.split(" ")[0];
+		var max_price = range.split(" ")[2];
+	}else{
+		var min_price = range.split(" ")[1];
+		var max_price = range.split(" ")[3];
+	}
+	min_price = min_price.split("$")[1];
+	max_price = max_price.split("$")[1];
+	
+
+	
+	var link = document.location.pathname.split("/");
+	var query = document.location.href.split("?")[1];
+	
+	
+	var qlist = query.split("&");
+	
+	query = "";
+	for(var i = 0; i < qlist.length; i++){
+		if(qlist[i].indexOf("min") == -1 && qlist[i].indexOf("max") == -1) query += "&" + qlist[i];
+	}
+	
+	window.location.href = link[2] + "?min=" + min_price + "&max=" + max_price + query;
+	
+})

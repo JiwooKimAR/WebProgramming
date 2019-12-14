@@ -12,12 +12,16 @@ ArrayList<Integer> seller_list = new ArrayList<Integer>();
 ArrayList<Double> price_list = new ArrayList<Double>();
 ArrayList<Integer> status_list = new ArrayList<Integer>();
 ArrayList<Integer> amount_list = new ArrayList<Integer>();
+ArrayList<Integer> uid_list = new ArrayList<Integer>();
 
 int total = 0;
 int page_num = 1; 
 int cur_page = 1; // start from 1 page
 int cur_status = 0; // select all
 int cur_sort = 0; // newest 
+
+int min_price = 0;
+int max_price = 1000;
 
 // current item idx range
 int cur_start = 1; 
@@ -33,6 +37,10 @@ String auction_var = "";
 String soldout_var = "";
 String progress_var = "";
 
+
+String search_seller = "";
+String search_pname = "";
+
 if(request.getParameter("cur_page") != null){
     cur_page = Integer.parseInt(request.getParameter("cur_page"));
 }
@@ -45,6 +53,23 @@ if(request.getParameter("cur_sort") != null){
     cur_sort = Integer.parseInt(request.getParameter("cur_sort"));
 }
 
+if(request.getParameter("min") != null){
+    min_price = Integer.parseInt(request.getParameter("min"));
+}
+
+if(request.getParameter("max") != null){
+    max_price = Integer.parseInt(request.getParameter("max"));
+}
+
+if(request.getParameter("seller-name") != null){
+	search_seller = request.getParameter("seller-name");
+}
+
+if(request.getParameter("product-name") != null){
+	search_pname = request.getParameter("product-name");
+}
+
+System.out.println(search_seller + search_pname);
 %>
 
 
@@ -116,6 +141,41 @@ if(request.getParameter("cur_sort") != null){
 
             query += ")";
         }
+        
+        /*if(search_seller.length() > 0){
+
+        	String q = "select * from user_info where name like '%" + search_seller + "%'";
+        	PreparedStatement spst = conn.prepareStatement(q);
+            ResultSet srs = spst.executeQuery();
+            
+            int a = 0;
+        	while(srs.next()){
+        		if(a == 0){
+        			if(cur_status == 0) query += " where (seller_id=" + srs.getInt("uid");
+        			else query += " and (seller_id=" + srs.getInt("uid");
+        		}
+        		else query += " or seller_id=" + srs.getInt("uid");
+        		a++;
+        	}
+        	if(a > 0) query += ")";
+        }
+        
+        if(search_pname.length() > 0){
+        	if(cur_status == 0 && search_seller.length() == 0) query += " where name like '%" + search_pname + "%'";
+        	else query += " and name like '%" + search_pname +"%'";
+        }*/
+
+
+        if(search_seller.length() > 0){
+
+            String q = "select * from user_info where name like '%" + search_seller + "%'";
+            PreparedStatement spst = conn.prepareStatement(q);
+            ResultSet srs = spst.executeQuery();
+
+            while(srs.next()){
+                uid_list.add(srs.getInt("uid"));
+            }
+        }
 
         if(cur_sort == 1) {
             query += " order by price desc";
@@ -127,13 +187,26 @@ if(request.getParameter("cur_sort") != null){
         ResultSet rs = pst.executeQuery();
 
         while(rs.next()){
-            pid_list.add(rs.getInt("pid"));
-            pname_list.add(rs.getString("name"));
-            seller_list.add(rs.getInt("seller_id"));
-            price_list.add(rs.getDouble("price"));
-            status_list.add(rs.getInt("status"));
-            amount_list.add(rs.getInt("amount"));
-            total += 1;
+            boolean sflag = true;
+            boolean pflag = true;
+        	if(rs.getDouble("price") >= min_price && rs.getDouble("price") <= max_price){
+                if(search_seller.length() > 0){
+                    if(!uid_list.contains(rs.getInt("seller_id"))) sflag = false;
+                }
+                if(search_pname.length() > 0){
+                    if(!rs.getString("name").contains(search_pname)) pflag = false;
+                }
+                if(sflag && pflag){
+    	        	price_list.add(rs.getDouble("price"));
+    	            pid_list.add(rs.getInt("pid"));
+    	            pname_list.add(rs.getString("name"));
+    	            seller_list.add(rs.getInt("seller_id"));
+    	            
+    	            status_list.add(rs.getInt("status"));
+    	            amount_list.add(rs.getInt("amount"));
+    	            total += 1;
+                }
+        	}
         }
 
         Collections.reverse(pid_list);
@@ -213,16 +286,17 @@ if(request.getParameter("cur_sort") != null){
                             <!-- ##### Single Widget ##### -->
                             <div class="widget price">
                                 <!-- Widget Title -->
-                                <h6 class="widget-title">Price</h6>
+                                <!--<h6 class="widget-title">Price</h6>-->
+                                <img class="sort-price" src="img/core-img/coin.png" style="width: 50px; height: 50px;">
 
                                 <div class="widget-desc">
                                     <div class="slider-range">
-                                        <div data-min="10" data-max="1000" data-unit="$" class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-value-min="10" data-value-max="1000" data-label-result="">
+                                        <div data-min="0" data-max="700" data-unit="$" class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-value-min="10" data-value-max="1000" data-label-result="">
                                             <div class="ui-slider-range ui-widget-header ui-corner-all"></div>
                                             <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
                                             <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
                                         </div>
-                                        <div class="range-price">$10 - $1000</div>
+                                        <div class="range-price"> $0 - $700</div>
                                     </div>
                                 </div>
                             </div>

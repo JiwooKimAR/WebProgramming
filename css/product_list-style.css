@@ -16,22 +16,21 @@
 
 }
 
-.price h6{
+.price img{
   margin-block-start: 0px;
   margin-block-end: 0px;
   margin-bottom: 0px;
-  float: left;
-  text-align: right;
+  float: right;
   width: 25%;
 }
 
 .price .widget-desc{
   width: 70%;
-  float: right;
+  float: left;
 }
 
 .widget.price .range-price{
-  margin-top: 5px;
+  margin-top: 10px;
   text-align: center;
 }
 
