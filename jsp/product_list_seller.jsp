@@ -2,9 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%
-
 String id=session.getAttribute("id").toString();
-
 
 ArrayList<Integer> pid_list = new ArrayList<Integer>();
 ArrayList<String> pname_list = new ArrayList<String>();
@@ -13,62 +11,46 @@ ArrayList<Double> price_list = new ArrayList<Double>();
 ArrayList<Integer> status_list = new ArrayList<Integer>();
 ArrayList<Integer> amount_list = new ArrayList<Integer>();
 ArrayList<Integer> uid_list = new ArrayList<Integer>();
-
 int total = 0;
 int page_num = 1; 
 int cur_page = 1; // start from 1 page
 int cur_status = 0; // select all
 int cur_sort = 0; // newest 
-
 int min_price = 0;
 int max_price = 1000;
-
 // current item idx range
 int cur_start = 1; 
 int cur_end = 0;
-
 int wish_num = 0; 
 int cart_num = 0;
-
 String seller_name = "";
 String img_path = "";
-
 String auction_var = "";
 String soldout_var = "";
 String progress_var = "";
-
-
 String search_seller = "";
 String search_pname = "";
-
 if(request.getParameter("cur_page") != null){
     cur_page = Integer.parseInt(request.getParameter("cur_page"));
 }
-
 if(request.getParameter("cur_status") != null){
     cur_status = Integer.parseInt(request.getParameter("cur_status"));
 }
-
 if(request.getParameter("cur_sort") != null){
     cur_sort = Integer.parseInt(request.getParameter("cur_sort"));
 }
-
 if(request.getParameter("min") != null){
     min_price = Integer.parseInt(request.getParameter("min"));
 }
-
 if(request.getParameter("max") != null){
     max_price = Integer.parseInt(request.getParameter("max"));
 }
-
 if(request.getParameter("seller-name") != null){
     search_seller = request.getParameter("seller-name");
 }
-
 if(request.getParameter("product-name") != null){
     search_pname = request.getParameter("product-name");
 }
-
 System.out.println(search_seller + search_pname);
 %>
 
@@ -92,8 +74,8 @@ System.out.println(search_seller + search_pname);
   <link rel="stylesheet" href="css/product_list-style.css">
 </head>
 <body onload=check();>
-	<%@ include file="header-seller.jsp" %>
-	<input type="hidden" id="cur_status" value="<%=cur_status%>">
+   <%@ include file="header-seller.jsp" %>
+   <input type="hidden" id="cur_status" value="<%=cur_status%>">
     <input type="hidden" id="cur_sort" value="<%=cur_sort%>">
 
     <%
@@ -101,9 +83,7 @@ System.out.println(search_seller + search_pname);
     try {
         Class.forName("com.mysql.jdbc.Driver");
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/final_project?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
-
         String query = "Select * from product_info";
-
         if(cur_status > 0) {
             query += " where status in (";
             // 1-a, 2-s, 3-p, 4-a/s, 5-a/p, 6-s/p, 7-all
@@ -136,12 +116,10 @@ System.out.println(search_seller + search_pname);
                     progress_var = "p";
                 }
             }
-
             query += ")";
         }
         
         /*if(search_seller.length() > 0){
-
             String q = "select * from user_info where name like '%" + search_seller + "%'";
             PreparedStatement spst = conn.prepareStatement(q);
             ResultSet srs = spst.executeQuery();
@@ -163,32 +141,25 @@ System.out.println(search_seller + search_pname);
             else query += " and name like '%" + search_pname +"%'";
         }*/
 
-
-        if(search_seller.length() > 0){
-
-            String q = "select * from user_info where name like '%" + search_seller + "%'";
+        if(id.length() > 0){
+            String q = "select * from user_info where id like '%" + id + "%'";
             PreparedStatement spst = conn.prepareStatement(q);
             ResultSet srs = spst.executeQuery();
-
             while(srs.next()){
                 uid_list.add(srs.getInt("uid"));
             }
         }
-
         if(cur_sort == 1) {
             query += " order by price desc";
         }
-
         query += ";";
-
         PreparedStatement pst = conn.prepareStatement(query);
         ResultSet rs = pst.executeQuery();
-
         while(rs.next()){
             boolean sflag = true;
             boolean pflag = true;
             if(rs.getDouble("price") >= min_price && rs.getDouble("price") <= max_price){
-                if(search_seller.length() > 0){
+                if(id.length() > 0){
                     if(!uid_list.contains(rs.getInt("seller_id"))) sflag = false;
                 }
                 if(search_pname.length() > 0){
@@ -206,25 +177,21 @@ System.out.println(search_seller + search_pname);
                 }
             }
         }
-
         Collections.reverse(pid_list);
         Collections.reverse(pname_list);
         Collections.reverse(seller_list);
         Collections.reverse(price_list);
         Collections.reverse(status_list);
         Collections.reverse(amount_list);
-
         page_num = (total / 6) + 1; // total page number
         if(total % 6 == 0) page_num -= 1; 
         
-
     %>
 
     <input type="hidden" id="cur_page" value="<%=cur_page%>">
 
     <% 
     cur_start = (cur_page - 1) * 6 + 1;
-
     if(cur_page < page_num) { cur_end = cur_start + 5; }
     else if (cur_page == page_num){ 
         cur_end = cur_start - 1 + total % 6; 
@@ -232,7 +199,6 @@ System.out.println(search_seller + search_pname);
             if(total % 6 == 0) cur_end = cur_start - 1 + 6; 
         }
     }
-
     %>
     <div class="product-list-buyer-area">
         <div class="shop_sidebar_area">
@@ -319,7 +285,6 @@ System.out.println(search_seller + search_pname);
 
                     <%
                     for(int i = cur_start - 1; i < cur_end; i++){
-
                 
                     %>
                     <!-- Single Product Area -->
@@ -425,10 +390,10 @@ System.out.println(search_seller + search_pname);
                                 <% for(int i = 1; i <= page_num; i++) {
                                     if(i != cur_page) {
                                 %>
-                                    <li class="page-item"><a class="page-link" href="product_list_buyer.jsp?cur_page=<%=i%>&cur_status=<%=cur_status%>">0<%=i%>.</a></li>
+                                    <li class="page-item"><a class="page-link" href="product_list_seller.jsp?cur_page=<%=i%>&cur_status=<%=cur_status%>">0<%=i%>.</a></li>
                                 <% }
                                     else{ %>
-                                    <li class="page-item active"><a class="page-link" href="product_list_buyer.jsp?cur_page=<%=i%>&cur_status=<%=cur_status%>">0<%=i%>.</a></li>
+                                    <li class="page-item active"><a class="page-link" href="product_list_seller.jsp?cur_page=<%=i%>&cur_status=<%=cur_status%>">0<%=i%>.</a></li>
                                 <%} }%>
                             </ul>
                         </nav>
@@ -462,8 +427,7 @@ System.out.println(search_seller + search_pname);
 <% 
     rs.close();
     conn.close();
-
 } catch(Exception e) {
-	out.println("Something went wrong !! Please try again");
+   out.println("Something went wrong !! Please try again");
 }
 %>
