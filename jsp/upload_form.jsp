@@ -50,15 +50,12 @@ try {
    if (rs.next()) {
       count = rs.getInt(1) + 1;
    }   
-   PreparedStatement pst2 = conn.prepareStatement("select id from user_info");
+   PreparedStatement pst2 = conn.prepareStatement("select * from user_info where id=?");
+   pst2.setString(1,user_name);
    ResultSet rs2 = pst2.executeQuery();
    int user_id = 0;
    while(rs2.next()){
-      user_id++;
-      if(rs2.getString(1).equals(user_name))
-      {  
-         break;        
-      }  
+      user_id=rs2.getInt("uid");
    }
 
    pst = conn.prepareStatement("insert into product_info values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -72,11 +69,11 @@ try {
      pst.setInt(5,price2); 
       pst.setInt(6, 2);
       pst.setString(10, null);
-      pst.setString(12,null);
+      pst.setInt(12,1);
    }
    else  // auction
    {
-     pst.setString(5,null);
+     pst.setInt(5,1);
       pst.setInt(6,0);
       pst.setString(10, date);
       pst.setDouble(12,price2);
@@ -121,10 +118,9 @@ try {
    
    
 } catch(Exception e) {
-   out.println("Something went wrong !! Please try again");
+   out.println(e.toString());
 }
 %>
-
 
 <!DOCTYPE html>
 <html>
@@ -133,6 +129,6 @@ try {
 <title>Insert title here</title>
 </head>
 <body>
-
+   <meta http-equiv="refresh" content="1;url=product_list_seller.jsp">
 </body>
 </html>

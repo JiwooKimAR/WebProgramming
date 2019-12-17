@@ -78,6 +78,7 @@ $("#sortBy").change(function(){
 });
 
 $(".sort-price").click(function(){
+	alert("CLICK");
 	var range = $(".range-price").text();
 	if(range[0] != " "){
 		var min_price = range.split(" ")[0];
