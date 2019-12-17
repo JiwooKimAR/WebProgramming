@@ -1,5 +1,3 @@
-//changeRadioValues();
-
 $("input[name=status_auction]").change(function(){
 	changeRadioValues();
 });
@@ -63,7 +61,6 @@ function check(){
 	  }); 
 }
 
-
 $("#sortBy").change(function(){
   var sortBy = $(this).val();
   var cur_sort = 0;
@@ -77,8 +74,8 @@ $("#sortBy").change(function(){
   window.location.href = link[2] + "?cur_sort=" + cur_sort + "&cur_status=" + cur_status;
 });
 
+
 $(".sort-price").click(function(){
-	alert("CLICK");
 	var range = $(".range-price").text();
 	if(range[0] != " "){
 		var min_price = range.split(" ")[0];
@@ -90,10 +87,12 @@ $(".sort-price").click(function(){
 	min_price = min_price.split("$")[1];
 	max_price = max_price.split("$")[1];
 	
-
+	//alert("sort by $" + min_price + " ~ $" + max_price );
 	
-	var link = document.location.pathname.split("/");
-	var query = document.location.href.split("?")[1];
+	var query = "";
+	var link = "";
+	link = document.location.pathname.split("/");
+	query += document.location.href.split("?")[1];
 	
 	
 	var qlist = query.split("&");
@@ -102,6 +101,8 @@ $(".sort-price").click(function(){
 	for(var i = 0; i < qlist.length; i++){
 		if(qlist[i].indexOf("min") == -1 && qlist[i].indexOf("max") == -1) query += "&" + qlist[i];
 	}
+
+	//alert("refersh");
 	
 	window.location.href = link[2] + "?min=" + min_price + "&max=" + max_price + query;
 	
