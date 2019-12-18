@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <%@ page import="java.sql.*"%>
-<%@include file="header-buyer.jsp" %>
+<%@include file="header-seller.jsp" %>
 <%
 	//Session value checking for security
 	String id = "";
@@ -73,8 +73,9 @@
           
             </div>
           </div>
+          </div>
 
-	<%@ include file="footer-buyer.jsp" %>
+	<%@ include file="footer-seller.jsp" %>
 
     <script src="js/jquery/jquery-2.2.4.min.js"></script>
     <script src="js/popper.min.js"></script>
