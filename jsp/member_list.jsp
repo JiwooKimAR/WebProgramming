@@ -179,7 +179,7 @@ int cur_count = 0;
 		            <div class="pagination">
 		                <button class="previous"><img src="img/core-img/arrow-pointing-to-left.png" onclick="sendDecVal()"></button>
 		                <p><%=cur_page+1 %> / <%=total_page %></p>
-		                <button class="next"><img src="img/core-img/arrow-pointing-to-right.png" onclick="sendIncVal()"></button>
+		                <button class="next"><img src="img/core-img/arrow-pointing-to-right.png" onclick="sendIncVal(<%=total_page %>)"></button>
 		            </div>
 		        </div>
 				</div>
