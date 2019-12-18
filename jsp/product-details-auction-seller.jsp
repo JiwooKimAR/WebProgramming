@@ -111,7 +111,7 @@
                 Phone Number : <%=seller_phone %>
               </div>
               <div class="remain-time">
-                Remaining time : <%=daysToInt %>D <%=hoursToInt%>H <%=minutesToInt%>M
+                Remaining time : <%=daysToInt %>D <%=hoursToInt%>H <%=minutesToInt%>
               </div>
               <div class="current-price">
                 Current Product Price : $<%=cur_price %>
@@ -121,10 +121,17 @@
               </div>
               <div>
               	<%if(check==1){out.println("This product is sold out");
-              	}
+              	
               	%>
               </div>
-             <% 
+            </div>
+            <div class="prod-btn-lst" id="prod-btn-lst">
+              <button class="editproduct" onclick="location.href='product_edit.jsp?pid=<%=pid%>'" <%if(check==1) {%>style="display:none;"<%} %>>Edit Product</button>
+              <button class="editproduct" onClick="location.href='close_auction.jsp?pid=<%=pid%>'" <%if(check==1) {%>style="display:none;"<%} %>>Close Auction</button>
+            </div>
+   
+            <%
+			}
 			}catch(Exception e){
 				System.out.println(e.toString());
 			}
@@ -132,12 +139,7 @@
 	}catch(Exception e){
 		out.println(e);
 	}
-	%> 
-            </div>
-            <div class="prod-btn-lst" id="prod-btn-lst">
-              <button class="editproduct" onclick="location.href='product_edit.jsp?pid=<%=pid%>'">Edit Product</button>
-              <button class="editproduct" onClick="location.href='close_auction.jsp?pid=<%=pid%>'">Close Auction</button>
-            </div>
+            %>
           </div>
         </div>
         
@@ -210,6 +212,7 @@
     </div>
   </div>
   </div>
+  
 
   <%@ include file="footer-seller.jsp"%>
 

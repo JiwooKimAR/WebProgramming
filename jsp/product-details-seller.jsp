@@ -33,7 +33,7 @@
   	int amount;
   	int status;
   	String status_="";
- 	
+ 	int check=0;
 	Class.forName("com.mysql.jdbc.Driver");
 	Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/final_project?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
 	PreparedStatement pst = conn.prepareStatement("Select * from product_info where pid=?");
@@ -108,6 +108,9 @@
 	           	 <%=status_ %>
 	           	</div>
             </div>
+            <%if(check==1){out.println("This product is sold out");}
+              	
+              	%>
             <%
 				
            }

@@ -35,6 +35,7 @@
   	Date duedate;
   	double bid_unit=0;
   	int cur_price=0;
+  	int check=0;
 	Class.forName("com.mysql.jdbc.Driver");
 	Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/final_project?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
 	PreparedStatement pst = conn.prepareStatement("Select * from product_info where pid=?");
@@ -45,7 +46,6 @@
 			prod_name=rs.getString("name");
 			price=rs.getInt("price");
 			seller_uid=rs.getInt("seller_id");
-			System.out.println(seller_uid);
 			seller_phone=rs.getString("phone");
 			trading=rs.getString("trading_place");
 			duedate=rs.getDate("duedate");
@@ -91,6 +91,7 @@
 			try{
 				if(rs4.next()){
 					cur_price=rs4.getInt("price");
+					check=1;
 				}else{
 					cur_price=price;
 				}
@@ -117,8 +118,8 @@
               <div class="prod-date">
                 Trading Place : <%=trading %>
               </div>
-             <% 
-
+              <%if(check==1){out.println("This product is sold out");}
+              
 			}catch(Exception e){
 				System.out.println(e.toString());
 			}
@@ -128,8 +129,8 @@
 	}
 	%> 
             </div>
-            <div class="prod-btn-lst">
-              <button class="prod-wish-list-btn" title="Add to Wish list" onclick="location.href='addwish.jsp?pid=<%=pid%>'">
+            <div class="prod-btn-lst"<%if(check==1) {%>style="display:none;"<%} %>>
+              <button class="prod-wish-list-btn" title="Add to Wish list" onclick="location.href='addwish.jsp?pid=<%=pid%>'" >
               </button>
               <form class="prod-bid-lst" action="bid.jsp" method="post">
                 <div><input type="text" name="bidprice" value="" placeholder="Type your Bid price"></div>              
