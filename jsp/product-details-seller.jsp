@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="css/product-details-style.css">
   </head>
   <body>
-  <%@ include file="header-buyer.jsp" %>
+  <%@ include file="header-seller.jsp" %>
   <%@ page import="java.sql.*"%>
   <% 
   	String id=session.getAttribute("id").toString();
@@ -156,9 +156,9 @@
   </div>
   </div>
 
-  <%@ include file="footer-buyer.jsp" %>
+  <%@ include file="footer-seller.jsp" %>
 
-	<script src="js/addcart.js"></</script>
+	<script src="js/addcart.js"></script>
     <!-- ##### jQuery (Necessary for All JavaScript Plugins) ##### -->
     <script src="js/jquery/jquery-2.2.4.min.js"></script>
     <!-- Popper js -->

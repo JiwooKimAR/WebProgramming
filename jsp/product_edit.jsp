@@ -30,9 +30,9 @@
 <%@ page import = "java.sql.*" %>
 <%
 
-  //int pid = Integer.parseInt(request.getParameter("pid"));
+  int pid = Integer.parseInt(request.getParameter("pid"));
   // System.out.println(pid);
-  int pid=19;
+  //int pid=19;
 
    String title;
    

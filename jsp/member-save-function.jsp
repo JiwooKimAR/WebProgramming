@@ -30,11 +30,17 @@
 		if (c == 0) {
 			response.sendRedirect("member_list.jsp");
 		}
-		else {
+		else if (c == 1) {
 			// Change the session information
 			session.setAttribute("id", id);
 			session.setAttribute("classification", classification);
 			response.sendRedirect("mypage.jsp");
+		}
+		else {
+			// Change the session information
+			session.setAttribute("id", id);
+			session.setAttribute("classification", classification);
+			response.sendRedirect("mypage_seller.jsp");
 		}
 	} catch(Exception e) {
 		out.println("Something went wrong !! Please try again");
