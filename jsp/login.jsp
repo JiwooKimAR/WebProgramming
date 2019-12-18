@@ -27,7 +27,7 @@
   		}
   		// Seller and buyer has different main page
   		else if (c == 1) {
-  			response.sendRedirect("product_list_buyer.jsp");
+  			response.sendRedirect("index.jsp");
   		}
   		else {
   			response.sendRedirect("product_list_seller.jsp");

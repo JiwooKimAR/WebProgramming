@@ -40,7 +40,7 @@ try {
 	session.setAttribute("classification", classification);
 	// If user is a buyer, then go to buyer page
 	if (classification == 1) {
-		response.sendRedirect("product_list_buyer.jsp");		
+		response.sendRedirect("index.jsp");		
 	}
 	// If user is a seller, then go to seller page
 	else {
