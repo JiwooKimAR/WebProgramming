@@ -5,7 +5,7 @@
 			</div>
 			<div class="container">
 				<div class="row">
-					<form id="search-box-small" method="get" action="header-buyer-search.jsp">
+					<form id="search-box-small" method="get" action="header-search.jsp">
 						<div class="search-bar">
 							<span class="search-type"> <label for="seller-name"
 								class="label">Seller Name</label> <input id="seller-name"
