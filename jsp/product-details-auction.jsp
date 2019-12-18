@@ -26,7 +26,7 @@
   	String pid = request.getParameter("pid"); 
   	String prod_name="";
   	int price;
-  	String seller_uid="";
+  	int seller_uid=0;
   	String seller_id="";
   	String seller_phone="";
   	String trading="";
@@ -44,7 +44,7 @@
 		if (rs.next()) {
 			prod_name=rs.getString("name");
 			price=rs.getInt("price");
-			seller_uid=rs.getString("seller_id");
+			seller_uid=rs.getInt("seller_id");
 			seller_phone=rs.getString("phone");
 			trading=rs.getString("trading_place");
 			duedate=rs.getDate("duedate");
@@ -62,7 +62,7 @@
 			int hoursToInt=(int)Math.floor(hours);
 			int minutesToInt=(int)Math.ceil(minutes);
 			PreparedStatement pst2 = conn.prepareStatement("Select * from user_info where uid=?");
-			pst2.setString(1,pid);
+			pst2.setInt(1,seller_uid);
 			ResultSet rs2 = pst2.executeQuery();
 			try{
 				if(rs2.next()){
@@ -91,7 +91,7 @@
 				if(rs4.next()){
 					cur_price=rs4.getInt("price");
 				}else{
-				
+					cur_price=price;
 				}
 	%>
     <div class="wrapper">

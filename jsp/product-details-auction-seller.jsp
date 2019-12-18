@@ -27,7 +27,7 @@
   	String pid = request.getParameter("pid"); 
   	String prod_name="";
   	int price;
-  	String seller_uid="";
+  	int seller_uid=0;
   	String seller_id="";
   	String seller_phone="";
   	String trading="";
@@ -45,14 +45,13 @@
 		if (rs.next()) {
 			prod_name=rs.getString("name");
 			price=rs.getInt("price");
-			seller_uid=rs.getString("seller_id");
+			seller_uid=rs.getInt("seller_id");
 			seller_phone=rs.getString("phone");
 			trading=rs.getString("trading_place");
 			duedate=rs.getDate("duedate");
 			prod_content=rs.getString("content");
 			bid_unit=rs.getDouble("unit");		  		
 			long daydiff=(Math.abs(new Date().getTime()-duedate.getTime()));
-			System.out.println(daydiff);
 			Date daydif=new Date();
 			daydif.setTime(daydiff);	
 			
@@ -63,12 +62,12 @@
 			int hoursToInt=(int)Math.floor(hours);
 			int minutesToInt=(int)Math.ceil(minutes);
 			PreparedStatement pst2 = conn.prepareStatement("Select * from user_info where uid=?");
-			pst2.setString(1,pid);
+
+			pst2.setInt(1,seller_uid);
 			ResultSet rs2 = pst2.executeQuery();
 			try{
 				if(rs2.next()){
 					seller_id=rs2.getString("id");
-				  	System.out.println(seller_id);
 				}
 			}catch(Exception e){
 				out.println(e.toString());
@@ -86,11 +85,13 @@
 			}
 			PreparedStatement pst4 = conn.prepareStatement("Select * from history where pid=? order by hid desc limit 1");
 			pst4.setString(1,pid);
-			System.out.println(pid);
 			ResultSet rs4 = pst4.executeQuery();
 			try{
 				if(rs4.next()){
 					cur_price=rs4.getInt("price");
+				}
+				else{
+					cur_price=price;
 				}
 	%>
     <div class="wrapper">
@@ -147,7 +148,6 @@
     			String prod_img_path="";
     			while(rs3.next()){
     				prod_img_path=rs3.getString("path");
-    				System.out.println(prod_img_path);
                 %>
                   <img class="prod-detail-img" src="<%=prod_img_path%>" alt="bicycle"> <br><br>
                  <%
