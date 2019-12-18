@@ -59,7 +59,14 @@ try {
             <div class="amado-pro-catagory clearfix">
             <!-- Single Catagory -->
             <%
-            	for (int i = 0; i < 3; i++) {
+            	int j = 0;
+            	if (pPid.size() < 3) {
+            		j = pPid.size();
+            	}
+            	else {
+            		j = 3;
+            	}
+            	for (int i = 0; i < j; i++) {
             		String name = "";
             		double price = 0.0;
             		int status = 0;
@@ -105,7 +112,14 @@ try {
             <div class="amado-pro-catagory clearfix">
                 <!-- Single Catagory -->
                 <%
-            	for (int i = 0; i < 2; i++) {
+                j = 0;
+                if (aPid.size() < 3) {
+                	j = aPid.size();
+                }
+                else {
+                	j = 3;
+                }
+            	for (int i = 0; i < j; i++) {
             		String name = "";
             		double price = 0.0;
             		String date = "";
