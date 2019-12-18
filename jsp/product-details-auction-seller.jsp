@@ -86,13 +86,16 @@
 			PreparedStatement pst4 = conn.prepareStatement("Select * from history where pid=? order by hid desc limit 1");
 			pst4.setString(1,pid);
 			ResultSet rs4 = pst4.executeQuery();
+			int check=0;
 			try{
 				if(rs4.next()){
 					cur_price=rs4.getInt("price");
+					check=1;
 				}
 				else{
 					cur_price=price;
 				}
+
 	%>
     <div class="wrapper">
       <div class="prod-outline">
@@ -116,6 +119,11 @@
               <div class="prod-date">
                 Trading Place : <%=trading %>
               </div>
+              <div>
+              	<%if(check==1){out.println("This product is sold out");
+              	}
+              	%>
+              </div>
              <% 
 			}catch(Exception e){
 				System.out.println(e.toString());
@@ -126,8 +134,9 @@
 	}
 	%> 
             </div>
-            <div class="prod-btn-lst">
+            <div class="prod-btn-lst" id="prod-btn-lst">
               <button class="editproduct" onclick="location.href='product_edit.jsp?pid=<%=pid%>'">Edit Product</button>
+              <button class="editproduct" onClick="location.href='close_auction.jsp?pid=<%=pid%>'">Close Auction</button>
             </div>
           </div>
         </div>
