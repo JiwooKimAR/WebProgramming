@@ -90,6 +90,9 @@
 			try{
 				if(rs4.next()){
 					cur_price=rs4.getInt("price");
+				}else{
+				
+				}
 	%>
     <div class="wrapper">
       <div class="prod-outline">
@@ -114,7 +117,7 @@
                 Trading Place : <%=trading %>
               </div>
              <% 
-				}
+
 			}catch(Exception e){
 				System.out.println(e.toString());
 			}
