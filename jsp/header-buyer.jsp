@@ -5,7 +5,7 @@
 			</div>
 			<div class="container">
 				<div class="row">
-					<form id="search-box-small" method="get" action="#">
+					<form id="search-box-small" method="get" action="header-buyer-search.jsp">
 						<div class="search-bar">
 							<span class="search-type"> <label for="seller-name"
 								class="label">Seller Name</label> <input id="seller-name"
@@ -91,7 +91,7 @@
 				<div class="top-area-line">
 					<div class="search-space"></div>
 					<div class="search-area">
-						<form id="search-box" method="get">
+						<form id="search-box" method="get" action="header-search.jsp">
 							<div class="search-bar">
 								<span class="search-type">
 									<label for="seller-name" class="label">Seller Name</label>

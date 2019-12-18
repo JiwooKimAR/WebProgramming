@@ -81,5 +81,11 @@ function formCheckI() {
 		alert("PASSWORD is empty. Please enter your PASSWORD.");
 		return false;
 	}
+	if ($('input:checkbox[id="check-i"]').is(":checked")) {
+		localStorage.setItem('ID', document.getElementById("user").value);
+	}
+	if (!$('input:checkbox[id="check-i"]').is(":checked")) {
+		localStorage.clear();
+	}
 	return true;
 }
