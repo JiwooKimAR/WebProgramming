@@ -45,6 +45,7 @@
 			prod_name=rs.getString("name");
 			price=rs.getInt("price");
 			seller_uid=rs.getInt("seller_id");
+			System.out.println(seller_uid);
 			seller_phone=rs.getString("phone");
 			trading=rs.getString("trading_place");
 			duedate=rs.getDate("duedate");

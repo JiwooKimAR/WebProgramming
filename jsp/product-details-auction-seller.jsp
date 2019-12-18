@@ -22,8 +22,7 @@
   <%@ page import="java.text.SimpleDateFormat" %>
   
   <% 
-  	//String id=session.getAttribute("id").toString();
-  	String id="hj";
+  	String id=session.getAttribute("id").toString();
   	String pid = request.getParameter("pid"); 
   	String prod_name="";
   	int price;
@@ -68,6 +67,7 @@
 			try{
 				if(rs2.next()){
 					seller_id=rs2.getString("id");
+					System.out.println(seller_id);
 				}
 			}catch(Exception e){
 				out.println(e.toString());

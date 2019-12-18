@@ -44,6 +44,7 @@
 			prod_name=rs.getString("name");
 			price=rs.getInt("price");
 			seller_uid=rs.getString("seller_id");
+			System.out.println("seller_uid");
 			seller_phone=rs.getString("phone");
 			trading=rs.getString("trading_place");
 			amount=rs.getInt("amount");
@@ -57,7 +58,7 @@
 				status_="Selling";
 			}
 			PreparedStatement pst2 = conn.prepareStatement("Select * from user_info where uid=?");
-			pst2.setString(1,pid);
+			pst2.setString(1,seller_uid);
 			ResultSet rs2 = pst2.executeQuery();
 			try{
 				if(rs2.next()){

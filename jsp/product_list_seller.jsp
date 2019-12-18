@@ -327,13 +327,13 @@ System.out.println(search_seller + search_pname);
                                         <%}
                                         if(status_list.get(i) == 2){%>
                                         <p class="product-status">SELLING</p>
-                                        <a href="product-details.jsp?pid=<%=pid_list.get(i)%>" class="product-name">
+                                        <a href="product-details-seller.jsp?pid=<%=pid_list.get(i)%>" class="product-name">
                                             <p><%= pname_list.get(i)%></p>
                                         </a>
                                         <%}
                                         if(status_list.get(i) == 1){%>
                                         <p class="product-status" style="color: red;">SOLD OUT</p>
-                                        <a href="product-details.jsp?pid=<%=pid_list.get(i)%>" class="product-name">
+                                        <a href="product-details-seller.jsp?pid=<%=pid_list.get(i)%>" class="product-name">
                                             <p><%= pname_list.get(i)%></p>
                                         </a>
                                         <%}%>

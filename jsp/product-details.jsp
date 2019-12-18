@@ -57,7 +57,7 @@
 				status_="Selling";
 			}
 			PreparedStatement pst2 = conn.prepareStatement("Select * from user_info where uid=?");
-			pst2.setString(1,pid);
+			pst2.setString(1,seller_uid);
 			ResultSet rs2 = pst2.executeQuery();
 			try{
 				if(rs2.next()){
