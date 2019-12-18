@@ -59,8 +59,8 @@
               <input id="pass" type="password" class="input" data-type="password" name="password">
             </div>
             <div class="group">
-              <input id="check" type="checkbox" class="check" checked>
-              <label for="check"><span class="icon"></span>Keep me Signed in</label>
+              <input id="check-i" type="checkbox" class="check" checked>
+              <label for="check-i"><span class="icon"></span>Remember ID</label>
             </div>
             <div class="group">
               <input type="submit" class="button" value="Sign In">
@@ -126,5 +126,10 @@
     </div>
     <script src="js/jquery/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="js/login.js"></script>
+    <script>
+    	if (localStorage.getItem('ID') != null) {
+    		document.getElementById("user").value = localStorage.getItem('ID');
+    	}
+    </script>
   </body>
 </html>
