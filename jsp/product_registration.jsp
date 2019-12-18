@@ -208,10 +208,12 @@ else {
          var submit_btn = document.getElementById('submit_btn');
        var content = document.getElementById('content');
        var thumbnail = document.getElementById('uploadBtn');
-        var phone = document.getElementById("phone");
-     
+        var phone = document.getElementById("phone");     
        
          $("#submit_btn").click(function () {
+             if (market_op.value == "1" && price.value == "") {
+             	price.value = "0";
+             }
              
         	 if(number.value=="")
                  number.value=1;
