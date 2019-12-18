@@ -10,6 +10,15 @@
 	else {
 		id=session.getAttribute("id").toString();
 	}
+	if (session.getAttribute("classification") == null) {
+		response.sendRedirect("authority-error-message.jsp");
+	}
+	else {
+		int c = (int)session.getAttribute("classification");
+		if (c != 2) {
+			response.sendRedirect("authority-error-message.jsp");
+		}
+	}
 	String user_name = "";
 	Class.forName("com.mysql.jdbc.Driver");
 	Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/final_project?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");

@@ -25,6 +25,10 @@
 <%@ page import="java.util.*" %>
 <%
 String id = (String)session.getAttribute("id");
+int c = (int)session.getAttribute("classification");
+if (c != 1) {
+	response.sendRedirect("authority-error-message.jsp");
+}
 
 ArrayList<Integer> pPid = new ArrayList<Integer>();
 ArrayList<Integer> aPid = new ArrayList<Integer>();

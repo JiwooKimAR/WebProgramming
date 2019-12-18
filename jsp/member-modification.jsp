@@ -38,6 +38,16 @@
 
 <body>
 <%
+if (session.getAttribute("classification") == null) {
+	response.sendRedirect("authority-error-message.jsp");
+}
+else {
+	int c = (int)session.getAttribute("classification");
+	if (c != 0) {
+		response.sendRedirect("authority-error-message.jsp");
+	}
+}
+
 String user = "";
 if (request.getParameter("user") != null) {
 	user = request.getParameter("user");

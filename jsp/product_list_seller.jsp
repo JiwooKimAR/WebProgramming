@@ -2,6 +2,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%
+if (session.getAttribute("classification") == null) {
+	response.sendRedirect("authority-error-message.jsp");
+}
+else {
+	int c = (int)session.getAttribute("classification");
+	if (c != 2) {
+		response.sendRedirect("authority-error-message.jsp");
+	}
+}
+
 String id=session.getAttribute("id").toString();
 
 ArrayList<Integer> pid_list = new ArrayList<Integer>();

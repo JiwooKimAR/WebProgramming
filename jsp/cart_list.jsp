@@ -21,6 +21,16 @@
 <body>
 	<%@ include file="header-buyer.jsp" %>
 	<% 
+	if (session.getAttribute("classification") == null) {
+		response.sendRedirect("authority-error-message.jsp");
+	}
+	else {
+		int c = (int)session.getAttribute("classification");
+		if (c != 1) {
+			response.sendRedirect("authority-error-message.jsp");
+		}
+	}
+	
 	int id_=0;
 	String prod_name="";
 	String prod_img_path="";

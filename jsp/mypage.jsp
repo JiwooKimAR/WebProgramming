@@ -10,6 +10,15 @@
 	else {
 		id=session.getAttribute("id").toString();
 	}
+	if (session.getAttribute("classification") == null) {
+		response.sendRedirect("authority-error-message.jsp");
+	}
+	else {
+		int c = (int)session.getAttribute("classification");
+		if (c != 1) {
+			response.sendRedirect("authority-error-message.jsp");
+		}
+	}
 	int classification;
 	String user_name = "";
 	Class.forName("com.mysql.jdbc.Driver");
