@@ -88,7 +88,6 @@
 						<a href="#" class="search-nav"><img src="img/core-img/search-icon.png" alt=""></a>
 					</div>
 					<div class="user-specific">
-						<% //TODO: [JW] connect seller mypage %>
 						<a href="mypage_seller.jsp"><img src="img/core-img/mypage-icon.png"></a>
 					</div>
 				</div>

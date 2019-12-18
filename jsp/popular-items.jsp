@@ -27,23 +27,14 @@
 String id = (String)session.getAttribute("id");
 
 ArrayList<Integer> pPid = new ArrayList<Integer>();
-ArrayList<Integer> aPid = new ArrayList<Integer>();
 
 try {
 	Class.forName("com.mysql.jdbc.Driver");
 	Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/final_project?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
-	PreparedStatement pst = conn.prepareStatement("select pid from product_info where status=0 and date(duedate) <= date(adddate(now(), INTERVAL 7 DAY))");
-	// Find the auction product that's duedate is up to finish
-	// The auction product that is finished within 7 days
-	ResultSet rs = pst.executeQuery();
-	while (rs.next()) {
-		aPid.add(rs.getInt(1));
-	}
-	
-	pst = conn.prepareStatement("select count(*), prod_id from wish_cart_info group by prod_id order by count(*) desc");
+	PreparedStatement pst = conn.prepareStatement("select count(*), prod_id from wish_cart_info group by prod_id order by count(*) desc");
 	// Find the popular product
 	// The product that is on the cart list most
-	rs = pst.executeQuery();
+	ResultSet rs = pst.executeQuery();
 	while (rs.next()) {
 		pPid.add(rs.getInt(2));
 	}
@@ -59,7 +50,7 @@ try {
             <div class="amado-pro-catagory clearfix">
             <!-- Single Catagory -->
             <%
-            	for (int i = 0; i < 3; i++) {
+            	for (int i = 0; i < pPid.size(); i++) {
             		String name = "";
             		double price = 0.0;
             		int status = 0;
@@ -87,54 +78,6 @@ try {
                         <div class="hover-content">
                             <div class="line"></div>
                             <p>From $<%=price %></p>
-                            <h4><%=name %></h4>
-                        </div>
-                    </a>
-                </div>
-            <%
-            	}
-            %>
-            </div>
-        </div>
-     	
-     	<div class="index-blank"> </div>
-     
-        <!-- 7 Days Left in Auciton -->
-        <div class="area">
-        	<div class="index-title">7 Days Left</div>
-            <div class="amado-pro-catagory clearfix">
-                <!-- Single Catagory -->
-                <%
-            	for (int i = 0; i < 2; i++) {
-            		String name = "";
-            		double price = 0.0;
-            		String date = "";
-            		String path = "";
-            		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-            		pst = conn.prepareStatement("select name, price, duedate from product_info where pid=?");
-            		pst.setInt(1, aPid.get(i));
-            		// Get the name, price, status information from popular product items
-            		rs = pst.executeQuery();
-            		if (rs.next()) {
-            			name = rs.getString("name");
-            			price = rs.getDouble("price");
-            			date = dateformat.format(rs.getDate("duedate"));
-            		}
-            		pst = conn.prepareStatement("select * from img_info where pid=?");
-            		pst.setInt(1, aPid.get(i));
-            		rs = pst.executeQuery();
-            		if (rs.next()) {
-            			path = rs.getString("path");
-            		}
-            %>
-                <div class="single-products-catagory clearfix">
-                    <a href="product-details-auction.jsp?pid=<%=aPid.get(i) %>">
-                        <img src="<%=path %>" alt="">
-                        <!-- Hover Content -->
-                        <div class="hover-content">
-                            <div class="line"></div>
-                            <p>From $<%=price %></p>
-                            <p>Due date <%=date %></p>
                             <h4><%=name %></h4>
                         </div>
                     </a>

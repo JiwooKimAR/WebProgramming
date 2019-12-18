@@ -9,7 +9,7 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title  -->
-    <title>SKKU Flea Market | Home</title>
+    <title>SKKU Flea Market | 7 Days Left</title>
 
     <!-- Favicon  -->
     <link rel="icon" href="img/core-img/favicon.ico">
@@ -26,7 +26,6 @@
 <%
 String id = (String)session.getAttribute("id");
 
-ArrayList<Integer> pPid = new ArrayList<Integer>();
 ArrayList<Integer> aPid = new ArrayList<Integer>();
 
 try {
@@ -39,73 +38,18 @@ try {
 	while (rs.next()) {
 		aPid.add(rs.getInt(1));
 	}
-	
-	pst = conn.prepareStatement("select count(*), prod_id from wish_cart_info group by prod_id order by count(*) desc");
-	// Find the popular product
-	// The product that is on the cart list most
-	rs = pst.executeQuery();
-	while (rs.next()) {
-		pPid.add(rs.getInt(2));
-	}
-
 %>
 
 <body>
     <%@ include file="header-buyer.jsp" %>
 
-        <!-- Popular Items -->
-        <div class="area">
-        	<div class="index-title">Popular Items</div>
-            <div class="amado-pro-catagory clearfix">
-            <!-- Single Catagory -->
-            <%
-            	for (int i = 0; i < 3; i++) {
-            		String name = "";
-            		double price = 0.0;
-            		int status = 0;
-            		String path = "";
-            		pst = conn.prepareStatement("select name, price, status from product_info where pid=?");
-            		pst.setInt(1, pPid.get(i));
-            		// Get the name, price, status information from popular product items
-            		rs = pst.executeQuery();
-            		if (rs.next()) {
-            			name = rs.getString("name");
-            			price = rs.getDouble("price");
-            			status = rs.getInt("status");
-            		}
-            		pst = conn.prepareStatement("select * from img_info where pid=?");
-            		pst.setInt(1, pPid.get(i));
-            		rs = pst.executeQuery();
-            		if (rs.next()) {
-            			path = rs.getString("path");
-            		}
-            %>
-                <div class="single-products-catagory clearfix">
-                    <a href="product-details<%if(status==0) {%>-auction<%} %>.jsp?pid=<%=pPid.get(i) %>">
-                        <img src="<%=path %>" alt="">
-                        <!-- Hover Content -->
-                        <div class="hover-content">
-                            <div class="line"></div>
-                            <p>From $<%=price %></p>
-                            <h4><%=name %></h4>
-                        </div>
-                    </a>
-                </div>
-            <%
-            	}
-            %>
-            </div>
-        </div>
-     	
-     	<div class="index-blank"> </div>
-     
         <!-- 7 Days Left in Auciton -->
         <div class="area">
         	<div class="index-title">7 Days Left</div>
             <div class="amado-pro-catagory clearfix">
                 <!-- Single Catagory -->
                 <%
-            	for (int i = 0; i < 2; i++) {
+            	for (int i = 0; i < aPid.size(); i++) {
             		String name = "";
             		double price = 0.0;
             		String date = "";

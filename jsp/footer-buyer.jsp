@@ -31,10 +31,10 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                                             <a class="nav-link" href="product_list_buyer.jsp">Product List</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Popular Items</a>
+                                            <a class="nav-link" href="popular-items.jsp">Popular Items</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">New This Week</a>
+                                            <a class="nav-link" href="7-days-left.jsp">7 Days Left</a>
                                         </li>
                                     </ul>
                                 </div>
