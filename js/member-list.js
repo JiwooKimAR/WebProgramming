@@ -1,13 +1,19 @@
 // Go to previous page
 function sendDecVal() {
-	var cur = document.getElementById("cur_page").value - 1;
+	var cur = parseInt(document.getElementById("cur_page").value) - 1;
+	if (cur < 0) {
+		cur = 0;
+	}
 	var url = 'member_list.jsp?cur_page=' + cur;
 	window.location.href = url;
 }
 
 // Go to next page
-function sendIncVal() {
-	var cur = document.getElementById("cur_page").value + 1;
+function sendIncVal(max) {
+	var cur = parseInt(document.getElementById("cur_page").value) + 1;
+	if (cur > (max -1)) {
+		cur = (max - 1);
+	}
 	var url = 'member_list.jsp?cur_page=' + cur;
 	window.location.href = url;
 }

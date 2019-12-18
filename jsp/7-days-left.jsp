@@ -24,6 +24,16 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.*" %>
 <%
+if (session.getAttribute("classification") == null) {
+	response.sendRedirect("authority-error-message.jsp");
+}
+else {
+	int c = (int)session.getAttribute("classification");
+	if (c != 1) {
+		response.sendRedirect("authority-error-message.jsp");
+	}
+}
+
 String id = (String)session.getAttribute("id");
 
 ArrayList<Integer> aPid = new ArrayList<Integer>();
