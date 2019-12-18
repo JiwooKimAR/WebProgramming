@@ -298,7 +298,7 @@ System.out.println(search_seller + search_pname);
                                 ResultSet img_rs = img_pst.executeQuery();
                                 if(img_rs.next()) {img_path = img_rs.getString("path"); }
                                 %>
-                                <a href="product-details-seller<%if(status_list.get(i) == 0){ %>-auction<%} %>.jsp?pid=<%=pid_list.get(i)%>"><img src="<%=img_path%>" alt=""></a>
+                                <a href="product-details<%if(status_list.get(i) == 0){ %>-auction<%}%>-seller.jsp?pid=<%=pid_list.get(i)%>"><img src="<%=img_path%>" alt=""></a>
                                 <!-- Hover Thumb -->
                                 <!--<img class="hover-img" src="img/product-img/product2.jpg" alt="">-->
                             </div>
